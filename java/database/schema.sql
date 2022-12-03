@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 
 DROP TABLE IF EXISTS users, user_data, insulin, insulin_data, insulin_data_join, meals, meals_user_join, blood_sugar CASCADE;
-DROP SEQUENCE IF EXISTS seq_user_id, seq_insulin_id, meal_id CASCADE;
+DROP SEQUENCE IF EXISTS seq_user_id, seq_insulin_id, seq_meal_id CASCADE;
 
 CREATE SEQUENCE seq_user_id
   INCREMENT BY 1
@@ -41,7 +41,6 @@ CREATE TABLE user_data (
 	diabetes_type int,
 	user_age int,
 	last_updated TIMESTAMP DEFAULT CURRENT_DATE,
-	age int,
 	weight int,
 	height int,
 	-- bmi (weight/height)**2 calc on server
@@ -82,7 +81,7 @@ CREATE TABLE meals (
 	carbs int NOT NULL,
 	food varchar (32),
 	glycemic_index int, --FDA API
-	meal_time TIMESTAMP DEFAULT CURRENT_DATE
+	meal_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE meals_user_join (
@@ -106,5 +105,23 @@ CREATE TABLE blood_sugar (
 
 INSERT INTO users (username,password_hash,role) VALUES ('user','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
 INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
+
+INSERT INTO user_data (user_id, a1c, fasting_glucose, diabetes_type, user_age, last_updated, weight, height) 
+VALUES (1, 7.50, 99, 1, 47, '2022/12/12', 120, 500);
+
+INSERT INTO insulin (user_id, base_level, avg_level, time_last_dose) 
+VALUES (1, 50.500, 50.500, '2022/12/12');
+
+INSERT INTO insulin_data (insulin_id, insulin_type, insulin_strength, half_life, onset, peak, duration)
+VALUES (1, 'fast-acting', 'test strength', 4, 4, 5, 6);
+
+INSERT INTO meals (meal_id, carbs, food, glycemic_index, meal_time) 
+VALUES (1, 50, 'test food', 300, '2022/12/12 13:10:11');
+
+INSERT INTO insulin_data_join (user_id, insulin_id) VALUES (1, 1);
+INSERT INTO meals_user_join (meal_id, user_id) VALUES (1, 1);
+
+INSERT INTO blood_sugar (user_id, target_low, target_high, input_level, last_measurement)
+VALUES (1, 50, 200, 130, '2022/12/12');
 
 COMMIT TRANSACTION;
