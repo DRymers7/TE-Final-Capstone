@@ -1,6 +1,6 @@
-package com.techelevator.dao;
+package com.techelevator.dao.dao;
 
-import com.techelevator.model.Insulin;
+import com.techelevator.model.ModelClasses.Insulin;
 
 public interface InsulinDao {
 
