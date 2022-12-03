@@ -1,11 +1,10 @@
-package com.techelevator.dao;
+package com.techelevator.dao.jdbcdao;
 
-import com.techelevator.model.Insulin;
+import com.techelevator.dao.dao.InsulinDao;
+import com.techelevator.model.ModelClasses.Insulin;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDateTime;
 
 @Component
 public class JdbcInsulinDao implements InsulinDao {

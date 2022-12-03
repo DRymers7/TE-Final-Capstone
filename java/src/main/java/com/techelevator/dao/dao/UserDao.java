@@ -1,4 +1,4 @@
-package com.techelevator.dao;
+package com.techelevator.dao.dao;
 
 import com.techelevator.model.User;
 

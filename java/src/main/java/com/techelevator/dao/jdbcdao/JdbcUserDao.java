@@ -1,10 +1,11 @@
-package com.techelevator.dao;
+package com.techelevator.dao.jdbcdao;
 
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.techelevator.model.UserNotFoundException;
+import com.techelevator.dao.dao.UserDao;
+import com.techelevator.model.Exceptions.UserNotFoundException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;

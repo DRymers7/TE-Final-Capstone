@@ -1,13 +1,13 @@
 package com.techelevator.dao;
 
-import com.techelevator.model.Insulin;
+import com.techelevator.dao.jdbcdao.JdbcInsulinDao;
+import com.techelevator.model.ModelClasses.Insulin;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class JDBCInsulinDAOTests extends BaseDaoTests {
 
