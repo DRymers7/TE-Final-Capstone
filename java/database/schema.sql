@@ -1,6 +1,6 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS users, insulin, user_insulin, meals, user_meals, blood_sugar, user_blood_sugar CASCADE;
+DROP TABLE IF EXISTS users, user_data, insulin, insulin_data, insulin_data_join, meals, blood_sugar CASCADE;
 DROP SEQUENCE IF EXISTS seq_user_id;
 
 CREATE SEQUENCE seq_user_id
@@ -14,69 +14,73 @@ CREATE TABLE users (
 	username varchar(50) NOT NULL UNIQUE,
 	password_hash varchar(200) NOT NULL,
 	role varchar(50) NOT NULL,
+	
 	CONSTRAINT PK_user PRIMARY KEY (user_id)
 );
 
+-- insulin type
+-- a1c (measure of how much blood cells coated with sugar (percentage to tenths))
+-- sugar remains on blood cells for three months measure of average blood sugar (user input)
 
-CREATE TABLE insulin (
-	user_insulin_id int NOT NULL PRIMARY KEY,
-	insulin_type varchar(32),
-	base_level decimal(10,3),
-	insulin_strength varchar(16),
-	avg_level decimal(10,3),
-	date_updated TIMESTAMP DEFAULT CURRENT_DATE
+CREATE TABLE user_data (
+	user_id int NOT NULL PRIMARY KEY,
+	a1c decimal(4, 2),
+	fasting_glucose int,
+	diabetes_type int,
 	
+	CONSTRAINT FK_user_data_user FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
-CREATE TABLE user_insulin (
-	user_id int NOT NULL,
-	user_insulin_id int NOT NULL,
+CREATE TABLE insulin (
+	user_id int NOT NULL PRIMARY KEY,
+	insulin_type varchar(32) NOT NULL UNIQUE, --Fast acting, long acting, glucagon, etc.
+	base_level decimal(10,3),
+	avg_level decimal(10,3),
+	date_updated TIMESTAMP DEFAULT CURRENT_DATE,
 	
-	CONSTRAINT PK_user_insulin PRIMARY KEY (user_id, user_insulin_id),
-	CONSTRAINT fk_user_insulin_insulin FOREIGN KEY (user_id) REFERENCES users(user_id),
-	CONSTRAINT fk_user_insulin_user FOREIGN KEY (user_insulin_id) 
-		REFERENCES insulin(user_insulin_id)
+	CONSTRAINT FK_insulin_user FOREIGN KEY (user_id) REFERENCES user_data(user_id)
+);
+
+CREATE TABLE insulin_data (
+	insulin_id serial PRIMARY KEY,
+	insulin_type varchar(32) NOT NULL UNIQUE,
+	insulin_strength varchar(32),
+	half_life int, --minutes
+	onset int, --display information for when to check blood sugar
+	peak int,
+	duration int,
+
+	CONSTRAINT FK_insulin_data_insulin FOREIGN KEY (insulin_type) REFERENCES insulin(insulin_type)
+);
+
+CREATE TABLE insulin_data_join (
+	user_id bigint,
+	insulin_id bigint,
 	
+	CONSTRAINT PK_insulin_data_join PRIMARY KEY (user_id, insulin_id),
+	CONSTRAINT FK_insulin_data_join_insulin FOREIGN KEY (user_id) REFERENCES insulin(user_id),
+	CONSTRAINT FK_insulin_data_join_insulin_data FOREIGN KEY (insulin_id) REFERENCES insulin_data(insulin_id)
 );
 
 CREATE TABLE meals (
-	meals_id int NOT NULL PRIMARY KEY,
+	meal_id serial PRIMARY KEY,
+	user_id int NOT NULL,
 	carbs int NOT NULL,
 	food varchar (32),
-	date_updated TIMESTAMP DEFAULT CURRENT_DATE
-
-);
-
-CREATE TABLE user_meals (
-	user_id int NOT NULL,
-	user_meals_id int NOT NULL,
+	glycemic_index int, --FDA API
+	date_updated TIMESTAMP DEFAULT CURRENT_DATE,
 	
-	CONSTRAINT PK_user_meals PRIMARY KEY (user_id, user_meals_id),
-	CONSTRAINT fk_user_meals_meals FOREIGN KEY (user_meals_id) REFERENCES meals(meals_id),
-	CONSTRAINT fk_user_meals_user FOREIGN KEY (user_id) REFERENCES users(user_id)
-	
-	
-
+	CONSTRAINT FK_meals_user FOREIGN KEY (user_id) REFERENCES user_data(user_id)
 );
 
 CREATE TABLE blood_sugar (
-	user_id_bs int NOT NULL PRIMARY KEY,
+	user_id int NOT NULL PRIMARY KEY,
 	target_low int NOT NULL,
 	target_high int NOT NULL,
 	input_level int NOT NULL,
-	date_updated TIMESTAMP DEFAULT CURRENT_DATE
+	date_updated TIMESTAMP DEFAULT CURRENT_DATE,
 	
-);
-
-CREATE TABLE user_blood_sugar (
-	user_id int NOT NULL,
-	user_id_bs int NOT NULL,
-	
-	CONSTRAINT PK_user_blood_sugar PRIMARY KEY (user_id, user_id_bs),
-	CONSTRAINT fk_user_blood_sugar_user FOREIGN KEY (user_id) REFERENCES users(user_id),
-	CONSTRAINT fk_user_blood_sugar_blood_sugar FOREIGN KEY (user_id_bs) 
-		REFERENCES blood_sugar(user_id_bs)
-	
+	CONSTRAINT FK_blood_sugar_users FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
 INSERT INTO users (username,password_hash,role) VALUES ('user','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
