@@ -4,6 +4,8 @@ import com.techelevator.dao.dao.InsulinDao;
 import com.techelevator.exceptions.ServersideOpException;
 import com.techelevator.model.ModelClasses.BaseInsulin;
 import com.techelevator.model.ModelClasses.Insulin;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.InvalidResultSetAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -61,11 +63,33 @@ public class JdbcInsulinDao implements InsulinDao {
     }
 
     @Override
-    public BaseInsulin updateInsulin(int userId, BaseInsulin baseInsulin) {
+    public boolean updateInsulin(BaseInsulin baseInsulin) throws ServersideOpException {
 
-        String sql = "";
+        String sql = "UPDATE insulin SET base_level = ?, avg_level = ?, " +
+                "time_last_dose = ?, insulin_type = ?, insulin_strength = ?, insulin_ration = ? WHERE insulin_id = ?;";
 
-        return null;
+        try {
+            jdbcTemplate.update(sql, baseInsulin.getBaseLevel(), baseInsulin.getAverageLevel(), baseInsulin.getTimeSinceLastDose(),
+                    baseInsulin.getInsulinType(), baseInsulin.getInsulinStrength(), baseInsulin.getInsulinRation(), baseInsulin.getInsulinId());
+            return true;
+        } catch (InvalidResultSetAccessException e) {
+            throw new ServersideOpException("Operation failed.");
+        }
+
+    }
+
+    @Override
+    public boolean deleteInsulin(BaseInsulin baseInsulin) throws ServersideOpException {
+
+        deleteFromJoinTable(baseInsulin.getInsulinId());
+        String sql = "DELETE FROM insulin WHERE insulin_id = ?;";
+
+        try {
+            jdbcTemplate.update(sql, baseInsulin.getInsulinId());
+            return true;
+        } catch (InvalidResultSetAccessException e) {
+            throw new ServersideOpException("Operation failed.");
+        }
     }
 
     @Override
@@ -101,6 +125,11 @@ public class JdbcInsulinDao implements InsulinDao {
             return false;
         }
 
+    }
+
+    private void deleteFromJoinTable(int insulinId) {
+        String sql = "DELETE FROM insulin_user_data_join WHERE insulin_id = ?;";
+        jdbcTemplate.update(sql, insulinId);
     }
 
     private Insulin mapToRowSet(SqlRowSet row) {

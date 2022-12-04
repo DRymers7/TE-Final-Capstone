@@ -10,7 +10,8 @@ public interface InsulinDao {
     public List<Insulin> getInsulinList(int userId);
 
     BaseInsulin createNewInsulin(int userId, BaseInsulin baseInsulin) throws ServersideOpException;
-    BaseInsulin updateInsulin(int userId, BaseInsulin baseInsulin);
+    boolean updateInsulin(BaseInsulin baseInsulin) throws ServersideOpException;
+    boolean deleteInsulin(BaseInsulin baseInsulin) throws ServersideOpException;
 
     void setBaseLevel(double baseLevel, int userId);
 

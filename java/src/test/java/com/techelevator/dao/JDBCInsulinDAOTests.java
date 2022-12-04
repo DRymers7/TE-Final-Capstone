@@ -44,8 +44,18 @@ public class JDBCInsulinDAOTests extends BaseDaoTests {
         Assert.assertEquals(insulin.getInsulinId(), INSULIN_1.getInsulinId());
     }
 
+    @Test
+    public void update_insulin_test() throws ServersideOpException {
+        dao.createNewInsulin(1, BASE_INSULIN_1);
+        BaseInsulin insulin = new BaseInsulin(3, 11.0, 11.0, LocalDateTime.now(), "test1", "test1", 0.41);
+        Assert.assertTrue(dao.updateInsulin(insulin));
+    }
 
-
+    @Test
+    public void delete_insulin_test() throws ServersideOpException {
+        BaseInsulin baseInsulin = dao.createNewInsulin(1, BASE_INSULIN_1);
+        Assert.assertTrue(dao.deleteInsulin(baseInsulin));
+    }
 
 
 

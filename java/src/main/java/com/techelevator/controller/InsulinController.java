@@ -56,6 +56,24 @@ public class InsulinController {
 
     }
 
+    @RequestMapping(path = "/insulin", method = RequestMethod.PUT)
+    public void updateInsulinDetails(@RequestBody BaseInsulin baseInsulin) {
+        try {
+            insulinDao.updateInsulin(baseInsulin);
+        } catch (ServersideOpException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(path = "/insulin", method = RequestMethod.DELETE)
+    public void deleteInsulin(@RequestBody BaseInsulin baseInsulin) {
+        try {
+            insulinDao.deleteInsulin(baseInsulin);
+        } catch (ServersideOpException e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+    }
+
     @RequestMapping(path="/dashboard/profile/base-insulin", method= RequestMethod.PUT)
     public void setBaseInsulin(Principal principal) {
         int userID = userDao.findIdByUsername(principal.getName());
