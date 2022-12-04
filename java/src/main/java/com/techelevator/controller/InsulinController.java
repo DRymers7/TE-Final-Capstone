@@ -46,7 +46,14 @@ public class InsulinController {
     @RequestMapping(path = "/insulin", method = RequestMethod.POST)
     public BaseInsulin createNewInsulin(@RequestBody BaseInsulin baseInsulin, Principal principal) {
 
-        return null;
+        try {
+            int userId = userDao.findIdByUsername(principal.getName());
+            return insulinDao.createNewInsulin(userId, baseInsulin);
+
+        } catch (ServersideOpException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     @RequestMapping(path="/dashboard/profile/base-insulin", method= RequestMethod.PUT)
@@ -59,6 +66,7 @@ public class InsulinController {
     public Insulin getInsulinTest() {
         return insulinDao.getInsulin();
     }
+
 
     /*
     @RequestMapping(path="/dashboard/profile/blood-sugar", method = RequestMethod.GET)

@@ -1,6 +1,10 @@
 package com.techelevator.model.ModelClasses;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class BaseInsulin {
@@ -8,6 +12,7 @@ public class BaseInsulin {
     private int insulinId;
     private double baseLevel;
     private double averageLevel;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ", shape = JsonFormat.Shape.STRING)
     private LocalDateTime timeSinceLastDose;
     private String insulinType;
     private String insulinStrength;

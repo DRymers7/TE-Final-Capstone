@@ -121,6 +121,9 @@ VALUES (1, 7.50, 99, 1, 47, '2022/12/12', 120, 500, 'Active');
 INSERT INTO user_data (user_id, a1c, fasting_glucose, diabetes_type, user_age, last_updated, weight, height, activity_level) 
 VALUES (2, 8.50, 100, 2, 48, '2022/12/12', 121, 501, 'Active');
 
+INSERT INTO user_data (user_id, a1c, fasting_glucose, diabetes_type, user_age, last_updated, weight, height, activity_level) 
+VALUES (3, 8.60, 100, 3, 49, '2022/12/12', 122, 502, 'Active');
+
 INSERT INTO insulin (base_level, avg_level, insulin_type, insulin_strength, half_life, onset, peak, insulin_ration, duration) 
 VALUES (10, 10, 'Fast acting', 'Strong', 10, 10, 10, 0.45, 20);
 INSERT INTO insulin (base_level, avg_level, insulin_type, insulin_strength, half_life, onset, peak, insulin_ration, duration) 
