@@ -1,6 +1,7 @@
 package com.techelevator.dao.dao;
 
 import com.techelevator.exceptions.ServersideOpException;
+import com.techelevator.model.ModelClasses.BaseInsulin;
 import com.techelevator.model.ModelClasses.Insulin;
 
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
 public interface InsulinDao {
     public List<Insulin> getInsulinList(int userId);
 
-    Insulin createNewInsulin(int userId, Insulin insulin) throws ServersideOpException;
+    BaseInsulin createNewInsulin(int userId, BaseInsulin baseInsulin) throws ServersideOpException;
 
     void setBaseLevel(double baseLevel, int userId);
 

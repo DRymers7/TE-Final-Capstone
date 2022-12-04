@@ -5,6 +5,7 @@ import java.util.Objects;
 
 public class BaseInsulin {
 
+    private int insulinId;
     private double baseLevel;
     private double averageLevel;
     private LocalDateTime timeSinceLastDose;
@@ -14,13 +15,22 @@ public class BaseInsulin {
 
     public BaseInsulin() {};
 
-    public BaseInsulin(double baseLevel, double averageLevel, LocalDateTime timeSinceLastDose, String insulinType, String insulinStrength, double insulinRation) {
+    public BaseInsulin(int insulinId, double baseLevel, double averageLevel, LocalDateTime timeSinceLastDose, String insulinType, String insulinStrength, double insulinRation) {
+        this.insulinId = insulinId;
         this.baseLevel = baseLevel;
         this.averageLevel = averageLevel;
         this.timeSinceLastDose = timeSinceLastDose;
         this.insulinType = insulinType;
         this.insulinStrength = insulinStrength;
         this.insulinRation = insulinRation;
+    }
+
+    public int getInsulinId() {
+        return insulinId;
+    }
+
+    public void setInsulinId(Integer insulinId) {
+        this.insulinId = insulinId;
     }
 
     public double getBaseLevel() {
@@ -76,18 +86,19 @@ public class BaseInsulin {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BaseInsulin that = (BaseInsulin) o;
-        return Double.compare(that.baseLevel, baseLevel) == 0 && Double.compare(that.averageLevel, averageLevel) == 0 && Double.compare(that.insulinRation, insulinRation) == 0 && Objects.equals(timeSinceLastDose, that.timeSinceLastDose) && Objects.equals(insulinType, that.insulinType) && Objects.equals(insulinStrength, that.insulinStrength);
+        return insulinId == that.insulinId && Double.compare(that.baseLevel, baseLevel) == 0 && Double.compare(that.averageLevel, averageLevel) == 0 && Double.compare(that.insulinRation, insulinRation) == 0 && Objects.equals(timeSinceLastDose, that.timeSinceLastDose) && Objects.equals(insulinType, that.insulinType) && Objects.equals(insulinStrength, that.insulinStrength);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(baseLevel, averageLevel, timeSinceLastDose, insulinType, insulinStrength, insulinRation);
+        return Objects.hash(insulinId, baseLevel, averageLevel, timeSinceLastDose, insulinType, insulinStrength, insulinRation);
     }
 
     @Override
     public String toString() {
         return "BaseInsulin{" +
-                "baseLevel=" + baseLevel +
+                "insulinId=" + insulinId +
+                ", baseLevel=" + baseLevel +
                 ", averageLevel=" + averageLevel +
                 ", timeSinceLastDose=" + timeSinceLastDose +
                 ", insulinType='" + insulinType + '\'' +

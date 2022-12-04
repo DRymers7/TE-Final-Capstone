@@ -2,6 +2,7 @@ package com.techelevator.dao.jdbcdao;
 
 import com.techelevator.dao.dao.InsulinDao;
 import com.techelevator.exceptions.ServersideOpException;
+import com.techelevator.model.ModelClasses.BaseInsulin;
 import com.techelevator.model.ModelClasses.Insulin;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -43,20 +44,14 @@ public class JdbcInsulinDao implements InsulinDao {
     }
 
     @Override
-    public Insulin createNewInsulin(int userId, Insulin insulin) throws ServersideOpException {
+    public BaseInsulin createNewInsulin(int userId, BaseInsulin baseInsulin) throws ServersideOpException {
 
-        String sql = "INSERT INTO insulin (base_level, avg_level, time_last_dose, insulin_type, insulin_strength, half_life, onset, peak, insulin_ration, duration) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING insulin_id;";
+        String sql = "INSERT INTO insulin (base_level, avg_level, time_last_dose, insulin_type, insulin_strength, insulin_ration) " +
+                "VALUES (?, ?, ?, ?, ?, ?) RETURNING insulin_id;";
 
-        Integer id = jdbcTemplate.queryForObject(sql, Integer.class, insulin.getBaseLevel(), insulin.getAverageLevel(), insulin.getTimeSinceLastDose(),
-                insulin.getInsulinType(), insulin.getInsulinStrength(), insulin.getHalfLife(), insulin.getOnset(), insulin.getInsulinRation(), insulin.getDuration());
-
-        if (createNewJoinInsulinEntry(userId, id) == false) {
-            throw new ServersideOpException("Operation failed.");
-        } else {
-            insulin.setInsulinId(id);
-            return insulin;
-        }
+        Integer id = jdbcTemplate.queryForObject(sql, Integer.class, baseInsulin.getBaseLevel(), baseInsulin.getAverageLevel(), baseInsulin.getTimeSinceLastDose(), baseInsulin.getInsulinType(), baseInsulin.getInsulinStrength(), baseInsulin.getInsulinRation());
+        baseInsulin.setInsulinId(id);
+        return baseInsulin;
     }
 
     @Override
@@ -82,7 +77,10 @@ public class JdbcInsulinDao implements InsulinDao {
     }
 
     private boolean createNewJoinInsulinEntry(int userId, int insulinId) {
-        return false;
+
+        String sql = "INSERT INTO insulin_user_data_join (user_id, insulin_id) VALUES (?, ?) RETURNING insulin_id;";
+        Integer id = jdbcTemplate.queryForObject(sql, Integer.class, userId, insulinId);
+        return id > 0;
     }
 
     private Insulin mapToRowSet(SqlRowSet row) {
