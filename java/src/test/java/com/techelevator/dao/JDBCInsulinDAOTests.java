@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class JDBCInsulinDAOTests extends BaseDaoTests {
 
 
-    private static final Insulin insulin_1 = new Insulin(1, 10.0, 10.0, LocalDate.now());
+    private static final Insulin insulin_test = new Insulin(1, 50.500, 50.500, LocalDate.of(2022, 12, 12));
     private JdbcInsulinDao dao;
 
 
@@ -24,8 +24,7 @@ public class JDBCInsulinDAOTests extends BaseDaoTests {
 
     @Test
     public void test_for_jdbc_base_insulin_update() {
-        insulin_1.setBaseLevel(10);
-        Assert.assertEquals(insulin_1.getBaseLevel(), 10, 0.009);
+        Assert.assertEquals(insulin_test, dao.getInsulin());
     }
 
 
