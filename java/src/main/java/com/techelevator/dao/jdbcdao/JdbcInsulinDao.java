@@ -61,6 +61,14 @@ public class JdbcInsulinDao implements InsulinDao {
     }
 
     @Override
+    public BaseInsulin updateInsulin(int userId, BaseInsulin baseInsulin) {
+
+        String sql = "";
+
+        return null;
+    }
+
+    @Override
     public void setBaseLevel(double baseLevel, int userId) {
 
         String sql = "UPDATE insulin " +
