@@ -3,25 +3,43 @@ package com.techelevator.controller;
 import com.techelevator.dao.dao.BloodSugarDao;
 import com.techelevator.dao.dao.InsulinDao;
 import com.techelevator.dao.dao.UserDao;
+import com.techelevator.exceptions.ServersideOpException;
 import com.techelevator.model.ModelClasses.BloodSugar;
 import com.techelevator.model.ModelClasses.Insulin;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 import java.util.List;
 
 @RestController
 @CrossOrigin
-public class ProfileController {
+public class InsulinController {
 
     private InsulinDao insulinDao;
     private UserDao userDao;
-    private BloodSugarDao bloodSugarDao;
 
-    public ProfileController(InsulinDao insulinDao, UserDao userDao, BloodSugarDao bloodSugarDao) {
+
+    public InsulinController(InsulinDao insulinDao, UserDao userDao, BloodSugarDao bloodSugarDao) {
         this.insulinDao = insulinDao;
         this.userDao = userDao;
-        this.bloodSugarDao = bloodSugarDao;
+    }
+
+    @RequestMapping(path = "/insulin", method = RequestMethod.GET)
+    public List<Insulin> getActiveInsulin(Principal principal) {
+        try {
+            if (insulinDao.getInsulinList(userDao.findIdByUsername(principal.getName())).size() == 0) {
+                throw new ServersideOpException("No insulin associated with this account");
+            } else {
+                return insulinDao.getInsulinList(userDao.findIdByUsername(principal.getName()));
+            }
+
+        } catch (ServersideOpException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
     }
 
     @RequestMapping(path="/dashboard/profile/base-insulin", method= RequestMethod.PUT)
@@ -35,6 +53,7 @@ public class ProfileController {
         return insulinDao.getInsulin();
     }
 
+    /*
     @RequestMapping(path="/dashboard/profile/blood-sugar", method = RequestMethod.GET)
     public List<BloodSugar> getBloodSugarData(Principal principal) {
         return bloodSugarDao.getBloodSugarInformation(userDao.findIdByUsername(principal.getName()));
@@ -45,6 +64,8 @@ public class ProfileController {
     public void bloodSugarUpdate(@RequestBody int targetLow, @RequestBody int targetHigh, Principal principal) {
         bloodSugarDao.updateBloodSugar(targetLow, targetHigh, userDao.findIdByUsername(principal.getName()));
     }
+
+     */
 
     //todo write post request for blood_sugar endpoint
 

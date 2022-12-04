@@ -1,6 +1,6 @@
 package com.techelevator.helperclasses;
 
-public class BloodSugarHelper {
+public class InsulinValidationHelper {
 
 
 }
