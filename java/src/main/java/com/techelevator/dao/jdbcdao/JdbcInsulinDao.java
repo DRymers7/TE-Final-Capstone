@@ -24,9 +24,9 @@ public class JdbcInsulinDao implements InsulinDao {
 
     // get insulin object
     // get list of active insulin objects - done
-    // create a new insulin data point
-    // update insulin attributes
-    // delete insulin objects
+    // create a new insulin data point - done
+    // update insulin attributes - done
+    // delete insulin objects - done  
 
     @Override
     public List<Insulin> getInsulinList(int userId) {
