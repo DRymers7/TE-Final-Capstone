@@ -51,7 +51,13 @@ public class JdbcInsulinDao implements InsulinDao {
 
         Integer id = jdbcTemplate.queryForObject(sql, Integer.class, baseInsulin.getBaseLevel(), baseInsulin.getAverageLevel(), baseInsulin.getTimeSinceLastDose(), baseInsulin.getInsulinType(), baseInsulin.getInsulinStrength(), baseInsulin.getInsulinRation());
         baseInsulin.setInsulinId(id);
-        return baseInsulin;
+
+        if (createNewJoinInsulinEntry(userId, id)) {
+            return baseInsulin;
+        } else {
+            throw new ServersideOpException("Operation failed.");
+        }
+
     }
 
     @Override
@@ -76,11 +82,17 @@ public class JdbcInsulinDao implements InsulinDao {
         return insulin;
     }
 
-    private boolean createNewJoinInsulinEntry(int userId, int insulinId) {
+    private boolean createNewJoinInsulinEntry(int userId, Integer insulinId) {
 
         String sql = "INSERT INTO insulin_user_data_join (user_id, insulin_id) VALUES (?, ?) RETURNING insulin_id;";
+
         Integer id = jdbcTemplate.queryForObject(sql, Integer.class, userId, insulinId);
-        return id > 0;
+        if (id > 0) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     private Insulin mapToRowSet(SqlRowSet row) {

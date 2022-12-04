@@ -4,6 +4,7 @@ import com.techelevator.dao.dao.BloodSugarDao;
 import com.techelevator.dao.dao.InsulinDao;
 import com.techelevator.dao.dao.UserDao;
 import com.techelevator.exceptions.ServersideOpException;
+import com.techelevator.model.ModelClasses.BaseInsulin;
 import com.techelevator.model.ModelClasses.BloodSugar;
 import com.techelevator.model.ModelClasses.Insulin;
 import org.springframework.http.HttpStatus;
@@ -40,6 +41,12 @@ public class InsulinController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
+    }
+
+    @RequestMapping(path = "/insulin", method = RequestMethod.POST)
+    public BaseInsulin createNewInsulin(@RequestBody BaseInsulin baseInsulin, Principal principal) {
+
+        return null;
     }
 
     @RequestMapping(path="/dashboard/profile/base-insulin", method= RequestMethod.PUT)
