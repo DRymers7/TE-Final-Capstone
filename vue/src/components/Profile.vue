@@ -2,22 +2,43 @@
     <div>
         <h1>Profile Setup</h1>
     <div class="profile">
-        
+
          <form v-on:submit.prevent>
     <div class="profile-form-element">
       <label for="baseInsulin">Base Insulin</label>
-      <input name="base_insulin" type="text" v-model="baseInsulin" />
+      <input placeholder="Enter Base Insulin Level" name="base_insulin" type="text" v-model="baseInsulin" />
     </div>
-   
+
+<h2>Type of Insulin</h2>
+
+<select class="profile" v-model="insulinType">
+  <option disabled value="">Select</option>
+  <option>Fast Acting</option>
+  <option>Slow Acting</option>
+</select>
+
+<h2>Insulin Strength</h2>
+<select class="profile" v-model="strength">
+  <option disabled value="">Select</option>
+  <option>U-100</option>
+  <option>U-200</option>
+  <option>U-300</option>
+  <option>U-400</option>
+  <option>U-500</option>
+</select>
+
+
+
+ 
     <div class="actions">
-      <button type="submit" v-on:click="setBaseInsulin()">Update Base Insulin</button>
+      <button type="submit" v-on:click="setBaseInsulin()">Update Profile</button>
     </div>
   </form>
+    </div>
+
+
+
     </div>    
-
-
-   
-  </div>
 </template>
 
 <script>
@@ -27,7 +48,9 @@ export default {
     name:"profile",
     data(){
         return{
-            baseInsulin: ""
+            baseInsulin: "",
+            insulinType: "",
+            strength: ""
         }
 
     },
@@ -50,6 +73,11 @@ export default {
     h1{
         display: flex;
         align-items: center;
+        justify-content: center;
+    }
+
+    h2{
+        display: flex;
         justify-content: center;
     }
 
