@@ -24,6 +24,15 @@ header{
   color: #4f6d7aff;
 }
 
+/* 
+body {
+  margin:0;
+  padding:0;
+  font-family: sans-serif;
+  background: linear-gradient(#141e30, #243b55);
+}
+*/
+
 app{
   background-color: #dbe9eeff;
 

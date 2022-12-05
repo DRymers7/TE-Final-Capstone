@@ -1,31 +1,32 @@
 <template>
 <div>
     <Header />
+    <AboutUs />
+    <Footer />
 </div>
 </template>
-
+    
 <script>
 import Header from '../components/Header.vue'
+import AboutUs from '../components/AboutUs.vue'
+import Footer from '../components/Footer.vue'
 export default {
     components: {
-        Header
+        Header,
+        AboutUs,
+        Footer
     }
 
 }
 </script>
-
+    
 <style>
-html, body{
-margin: 0;
-padding: 0;
-font-family: 'Lato', sans-serif;
-color: #1f4568;
+* {
+    box-sizing: border-box;
 }
-body{
-background-image: url("https://image.ibb.co/de6JzG/bitmap_1_1.png");
-background-size:cover;
-background-repeat:no-repeat;
-background-position: center;
+
+body {
+    font-family: 'Open Sans', sans-serif;
 }
 
 </style>
