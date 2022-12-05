@@ -6,6 +6,8 @@ import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
 import store from '../store/index'
 import Profile from '../components/Profile'
+import NotFound from '../views/NotFound'
+import SplashPage from '../views/SplashPage'
 
 Vue.use(Router)
 
@@ -62,6 +64,16 @@ const router = new Router({
         requiresAuth: false
       }
 
+    },
+    {
+      path: "/about",
+      name: "splash",
+      component: SplashPage
+    },
+    {
+      path: '*',
+      name: 'not-found',
+      component: NotFound
     }
   ]
 })

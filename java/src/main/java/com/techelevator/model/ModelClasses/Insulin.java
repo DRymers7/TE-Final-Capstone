@@ -1,76 +1,69 @@
 package com.techelevator.model.ModelClasses;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Insulin {
+public class Insulin extends BaseInsulin {
 
-    private int userId;
-    private double baseLevel;
-    private double averageLevel;
-    private LocalDate daySinceLastDose;
+    private int halfLife;
+    private int onset;
+    private int peak;
+    private int duration;
 
     public Insulin(){}
 
-    public Insulin(int userId, double baseLevel, double averageLevel, LocalDate daySinceLastDose) {
-        this.userId = userId;
-        this.baseLevel = baseLevel;
-        this.averageLevel = averageLevel;
-        this.daySinceLastDose = daySinceLastDose;
+    public Insulin(int insulinId, double baseLevel, double averageLevel, LocalDateTime timeSinceLastDose, String insulinType, String insulinStrength, int halfLife, int onset, int peak, double insulinRation, int duration) {
+        super(insulinId, baseLevel, averageLevel, timeSinceLastDose, insulinType, insulinStrength, insulinRation);
+        this.halfLife = halfLife;
+        this.onset = onset;
+        this.peak = peak;
+        this.duration = duration;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getHalfLife() {
+        return halfLife;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setHalfLife(int halfLife) {
+        this.halfLife = halfLife;
     }
 
-    public double getBaseLevel() {
-        return baseLevel;
+    public int getOnset() {
+        return onset;
     }
 
-    public void setBaseLevel(double baseLevel) {
-        this.baseLevel = baseLevel;
+    public void setOnset(int onset) {
+        this.onset = onset;
     }
 
-    public double getAverageLevel() {
-        return averageLevel;
+    public int getPeak() {
+        return peak;
     }
 
-    public void setAverageLevel(double averageLevel) {
-        this.averageLevel = averageLevel;
+    public void setPeak(int peak) {
+        this.peak = peak;
     }
 
-    public LocalDate getDaySinceLastDose() {
-        return daySinceLastDose;
+    public int getDuration() {
+        return duration;
     }
 
-    public void setDaySinceLastDose(LocalDate daySinceLastDose) {
-        this.daySinceLastDose = daySinceLastDose;
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         Insulin insulin = (Insulin) o;
-        return userId == insulin.userId && Double.compare(insulin.baseLevel, baseLevel) == 0 && Double.compare(insulin.averageLevel, averageLevel) == 0 && Objects.equals(daySinceLastDose, insulin.daySinceLastDose);
+        return halfLife == insulin.halfLife && onset == insulin.onset && peak == insulin.peak && duration == insulin.duration;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, baseLevel, averageLevel, daySinceLastDose);
-    }
-
-    @Override
-    public String toString() {
-        return "Insulin{" +
-                "userId=" + userId +
-                ", baseLevel=" + baseLevel +
-                ", averageLevel=" + averageLevel +
-                ", daySinceLastDose=" + daySinceLastDose +
-                '}';
+        return Objects.hash(super.hashCode(), halfLife, onset, peak, duration);
     }
 }
