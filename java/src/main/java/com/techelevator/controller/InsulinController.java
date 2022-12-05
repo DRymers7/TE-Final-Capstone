@@ -23,7 +23,7 @@ public class InsulinController {
     private UserDao userDao;
 
 
-    public InsulinController(InsulinDao insulinDao, UserDao userDao, BloodSugarDao bloodSugarDao) {
+    public InsulinController(InsulinDao insulinDao, UserDao userDao) {
         this.insulinDao = insulinDao;
         this.userDao = userDao;
     }

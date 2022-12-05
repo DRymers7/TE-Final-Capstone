@@ -22,11 +22,11 @@ public class JdbcInsulinDao implements InsulinDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    // get insulin object
+    // get single insulin object
     // get list of active insulin objects - done
     // create a new insulin data point - done
     // update insulin attributes - done
-    // delete insulin objects - done  
+    // delete insulin objects - done
 
     @Override
     public List<Insulin> getInsulinList(int userId) {
