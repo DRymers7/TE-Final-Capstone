@@ -48,6 +48,7 @@ export default {
     name:"profile",
     data(){
         return{
+            userID: "",
             baseInsulin: "",
             insulinType: "",
             strength: ""
@@ -58,14 +59,16 @@ export default {
         setBaseInsulin(){
             const baseInsulin = {
             user: this.userId, insulinLevel: this.BaseInsulin };
-            ProfileService.setBaseInsulin(baseInsulin.userId, baseInsulin);
+            ProfileService.setBaseInsulin(baseInsulin);
 
             }
+        },
+        setInsulinStrength(){
+            const insulinStrength = {
+            user: this.userId, strength: this.strength};
+            ProfileService.setInsulinStrength(insulinStrength);
+            }
         }
-
-
-
-    }
 </script>
 
 <style>
