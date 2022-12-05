@@ -24,6 +24,7 @@ header{
   color: #4f6d7aff;
 }
 
+<<<<<<< HEAD
 /* 
 body {
   margin:0;
@@ -34,8 +35,11 @@ body {
 */
 
 app{
+=======
+#app{
+>>>>>>> be0fc0b8d897072ec1ba5db4fb57dbce4bb13f46
   background-color: #dbe9eeff;
-
+  font-family: open sans, Arial, Helvetica, sans-serif;
 }
 
 
