@@ -1,4 +1,5 @@
 <template>
+
     <div>
         <h1>Profile Setup</h1>
     <div class="profile">
@@ -85,6 +86,7 @@ export default {
     }
 
     .profile{
+        background: linear-gradient(120DEG, #dbe9eeff,#35495E);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -99,7 +101,17 @@ export default {
     }
     .profile-form-element{
         display: flex;
-        justify-content: center;
-        align-items: center;
+        font-weight: bold;
+        font-size: 1.5rem;
+
+
     }
 </style>
+
+
+--cadet: #4f6d7aff;
+--columbia-blue: #c0d6dfff;
+--alice-blue: #dbe9eeff;
+--blue-yonder: #4a6fa5ff;
+--blue-sapphire: #166088ff;
+
