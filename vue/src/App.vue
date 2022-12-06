@@ -22,7 +22,6 @@ header{
   color: #4f6d7aff;
 }
 
-
 /* 
 body {
   margin:0;
@@ -35,7 +34,6 @@ body {
 app{
   background-color: #dbe9eeff;
 }
-
 #app{
   font-family: open sans, Arial, Helvetica, sans-serif;
 }
