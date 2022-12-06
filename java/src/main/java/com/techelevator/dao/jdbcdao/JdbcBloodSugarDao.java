@@ -107,7 +107,9 @@ public class JdbcBloodSugarDao implements BloodSugarDao {
         return true;
     }
 
+
     //todo Should return Bloodsugar for integration test
+
 
     private BloodSugar mapRowToObject(SqlRowSet row) {
         BloodSugar bloodSugar = new BloodSugar();
@@ -115,7 +117,7 @@ public class JdbcBloodSugarDao implements BloodSugarDao {
         bloodSugar.setBloodSugarId(row.getInt("blood_sugar_id"));
         bloodSugar.setTargetLow(row.getInt("target_low"));
         bloodSugar.setTargetHigh(row.getInt("target_high"));
-        bloodSugar.setLastMeasurement(row.getTimestamp("last_measurement").toLocalDateTime());
+        bloodSugar.setLastMeasurement(row.getTimestamp("last_measurement"));
         return bloodSugar;
     }
 

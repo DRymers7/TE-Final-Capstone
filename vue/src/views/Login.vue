@@ -138,13 +138,13 @@ export default {
       class="alert alert-danger"
       role="alert"
       v-if="invalidCredentials"
-    >Invalid username and password!</div>
+    >Invalid username or password!</div>
     <div
       class="alert alert-success"
       role="alert"
       v-if="this.$route.query.registration"
     >Thank you for registering, please sign in.</div>
-    <form class="form-signin" @submit.prevent="login">
+    <form if="form-id" class="form-signin" @submit.prevent="login">
       <div class="user-box">
         <input type="text"
             id="username"
@@ -167,7 +167,9 @@ export default {
         <label for="password" class="sr-only">Password</label>
       </div>
       <router-link :to="{ name: 'register' }">Create Account</router-link>
-      <a href="#">
+     
+     <a v-on:click.prevent="login($event)" href="http://localhost:8081/profile">
+
         <span></span>
         <span></span>
         <span></span>
@@ -201,7 +203,8 @@ export default {
           if (response.status == 200) {
             this.$store.commit("SET_AUTH_TOKEN", response.data.token);
             this.$store.commit("SET_USER", response.data.user);
-            this.$router.push("/");
+            //login will push to dashboard later
+            this.$router.push("/profile");
           }
         })
         .catch(error => {

@@ -4,10 +4,7 @@ import com.techelevator.dao.dao.MealDao;
 import com.techelevator.dao.dao.UserDao;
 import com.techelevator.model.ModelClasses.Meal;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
@@ -34,6 +31,44 @@ public class MealController {
             return meals;
         } catch (SQLException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(path = "/meals", method = RequestMethod.POST)
+    public Meal createNewMeal(@RequestBody Meal meal, Principal principal) {
+
+        try {
+            int userId = userDao.findIdByUsername(principal.getName());
+            return mealDao.createUserMeal(userId, meal);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+
+        }
+    }
+
+    @RequestMapping(path = "/meals", method = RequestMethod.PUT)
+    public boolean updateMealData(@RequestBody Meal meal) {
+
+        try {
+            mealDao.updateUserMealData(meal.getMealId(), meal);
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(path = "/meals", method = RequestMethod.DELETE)
+    public boolean deleteMealData(@RequestBody Meal meal, Principal principal) {
+
+        try {
+            int userId = userDao.findIdByUsername(principal.getName());
+            mealDao.deleteMealData(userId, meal);
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
     }
 }

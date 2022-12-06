@@ -1,15 +1,19 @@
 import axios from 'axios';
+  
 
 export default {
 
-  setBaseInsulin( insulinLevel, user) {
-    return axios.put('/insulin', insulinLevel, user)
+  setBaseInsulin( insulinLevel) {
+    return axios.put('/insulin', insulinLevel)
+  },
+
+  postNewInsulin(insulin, insulinId) {
+    return axios.post('/insulin', insulin, insulinId )
   },
 
   getBaseInsulin(user) {
     return axios.get('/insulin', user)
   },
-
 
   setInsulinStrength( insulinStrength, user){
     return axios.put('/insulin', insulinStrength, user )

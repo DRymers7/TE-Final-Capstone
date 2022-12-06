@@ -13,8 +13,6 @@
 </template>
 
 
-
-
 <style scoped>
 header{
   display: flex;
@@ -24,21 +22,25 @@ header{
   color: #4f6d7aff;
 }
 
+<<<<<<< HEAD
 /* 
+=======
+
+
+>>>>>>> 394e99105af10f153a7d6a30edd735c8e0949775
 body {
   margin:0;
   padding:0;
-  font-family: sans-serif;
-  background: linear-gradient(#141e30, #243b55);
+  font-family: open sans, Arial, Helvetica, sans-serif;
+
+
 }
-*/
+
 
 app{
   background-color: #dbe9eeff;
   font-family: open sans, Arial, Helvetica, sans-serif;
 }
-
-
 
 </style>
 

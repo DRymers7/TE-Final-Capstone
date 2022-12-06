@@ -7,8 +7,6 @@
   </div>
 </template>
 
-
-
 <script>
 
 import ProfileService from '../services/ProfileService';

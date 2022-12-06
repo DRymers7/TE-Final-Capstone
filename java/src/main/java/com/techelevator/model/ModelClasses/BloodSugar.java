@@ -2,6 +2,8 @@ package com.techelevator.model.ModelClasses;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -12,13 +14,12 @@ public class BloodSugar {
     private int targetLow;
     private int targetHigh;
     private int inputLevel;
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ", shape = JsonFormat.Shape.STRING)
-    private LocalDateTime lastMeasurement;
+    private Timestamp lastMeasurement;
 
     public BloodSugar() {
     }
 
-    public BloodSugar(int bloodSugarId, int targetLow, int targetHigh, int inputLevel, LocalDateTime lastMeasurement) {
+    public BloodSugar(int bloodSugarId, int targetLow, int targetHigh, int inputLevel, Timestamp lastMeasurement) {
         this.bloodSugarId = bloodSugarId;
         this.targetLow = targetLow;
         this.targetHigh = targetHigh;
@@ -58,11 +59,11 @@ public class BloodSugar {
         this.inputLevel = inputLevel;
     }
 
-    public LocalDateTime getLastMeasurement() {
+    public Timestamp getLastMeasurement() {
         return lastMeasurement;
     }
 
-    public void setLastMeasurement(LocalDateTime lastMeasurement) {
+    public void setLastMeasurement(Timestamp lastMeasurement) {
         this.lastMeasurement = lastMeasurement;
     }
 

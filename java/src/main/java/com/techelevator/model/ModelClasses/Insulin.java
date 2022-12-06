@@ -1,7 +1,8 @@
 package com.techelevator.model.ModelClasses;
 
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Insulin extends BaseInsulin {
@@ -10,15 +11,17 @@ public class Insulin extends BaseInsulin {
     private int onset;
     private int peak;
     private int duration;
+    private Timestamp timeSinceLastDose;
 
     public Insulin(){}
 
-    public Insulin(int insulinId, double baseLevel, double averageLevel, LocalDateTime timeSinceLastDose, String insulinType, String insulinStrength, int halfLife, int onset, int peak, double insulinRation, int duration) {
+    public Insulin(int insulinId, double baseLevel, double averageLevel, Timestamp timeSinceLastDose, String insulinType, String insulinStrength, int halfLife, int onset, int peak, double insulinRation, int duration) {
         super(insulinId, baseLevel, averageLevel, timeSinceLastDose, insulinType, insulinStrength, insulinRation);
         this.halfLife = halfLife;
         this.onset = onset;
         this.peak = peak;
         this.duration = duration;
+        this.timeSinceLastDose = timeSinceLastDose;
     }
 
     public int getHalfLife() {
@@ -51,6 +54,15 @@ public class Insulin extends BaseInsulin {
 
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+
+    @Override
+    public Timestamp getTimeSinceLastDose() {
+        return timeSinceLastDose;
+    }
+
+    public void setTimeSinceLastDose(Timestamp timeSinceLastDose) {
+        this.timeSinceLastDose = timeSinceLastDose;
     }
 
     @Override
