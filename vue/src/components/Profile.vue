@@ -6,18 +6,18 @@
     <form v-on:submit.prevent="setBaseInsulin">
     <div class="profile-form-element">
       <label for="baseInsulin">Base Insulin</label>
-      <input placeholder="Enter Base Insulin Level" name="base_insulin" type="text" v-model="userProfile.baseInsulin" />
+      <input placeholder="Enter Base Insulin Level" name="base_insulin" type="text" v-model="BaseInsulin.baseInsulin" />
     </div>
 <h2>Type of Insulin</h2>
 
-<select class="profile" v-model="userProfile.insulinType">
+<select class="profile" v-model="BaseInsulin.insulinType">
   <option disabled value="">Select</option>
   <option>Fast Acting</option>
   <option>Slow Acting</option>
 </select>
 
 <h2>Insulin Strength</h2>
-<select class="profile" v-model="userProfile.strength">
+<select class="profile" v-model="BaseInsulin.insulinStrength">
   <option disabled value="">Select</option>
   <option>U-100</option>
   <option>U-200</option>
@@ -48,17 +48,21 @@ export default {
     data(){
         return{
             
-            userProfile: {
-             baseInsulin: "",
+            BaseInsulin: {
+             insulinId: "",
+             baseLevel: "",
+             averageLevel: "",
+             timeSinceLastDose: "",
              insulinType: "",
-             strength: ""
+             insulinStrength: "",
+             insulinRation: ""
             }
         }
 
     },
     methods: {
         setBaseInsulin(){
-            ProfileService.setBaseInsulin(this.userProfile)
+            ProfileService.setBaseInsulin(this.BaseInsulin.baseLevel)
             .then((response) => {
                 if (response.status <300){
                     this.$router.push({
@@ -71,7 +75,7 @@ export default {
         },
         setInsulinStrength(){
             const insulinStrength = {
-            user: this.userId, strength: this.strength};
+            user: this.userId, insulinStrength: this.BaseInsulin.insulinStrength};
             ProfileService.setInsulinStrength(insulinStrength);
             }
         }
