@@ -107,7 +107,9 @@ public class JdbcBloodSugarDao implements BloodSugarDao {
         return true;
     }
 
+
     //todo Should return Bloodsugar for integration test
+
 
     private BloodSugar mapRowToObject(SqlRowSet row) {
         BloodSugar bloodSugar = new BloodSugar();

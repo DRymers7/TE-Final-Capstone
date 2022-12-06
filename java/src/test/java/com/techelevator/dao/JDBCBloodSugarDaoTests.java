@@ -15,7 +15,7 @@ import java.util.List;
 
 public class JDBCBloodSugarDaoTests extends BaseDaoTests {
 
-    private static final BloodSugar BLOOD_SUGAR_1 = new BloodSugar(4, 10, 10, 10, Timestamp.valueOf("2022/12/12"));
+    private static final BloodSugar BLOOD_SUGAR_1 = new BloodSugar(4, 10, 10, 10, Timestamp.valueOf("2022-12-12 00:00:00"));
 
     private JdbcBloodSugarDao dao;
 
@@ -42,7 +42,7 @@ public class JDBCBloodSugarDaoTests extends BaseDaoTests {
     @Test
     public void update_blood_sugar_test() throws SQLException {
         BloodSugar bloodSugar = dao.createBloodSugarReading(1, BLOOD_SUGAR_1);
-        BloodSugar bloodSugar1 = new BloodSugar(1, 10, 10, 10, Timestamp.valueOf("2022/12/12"));
+        BloodSugar bloodSugar1 = new BloodSugar(1, 10, 10, 10, Timestamp.valueOf("2022-12-12 00:00:00"));
         Assert.assertTrue(dao.updateBloodSugarReading(bloodSugar1.getBloodSugarId(), bloodSugar1));
     }
 

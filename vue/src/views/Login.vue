@@ -138,13 +138,13 @@ export default {
       class="alert alert-danger"
       role="alert"
       v-if="invalidCredentials"
-    >Invalid username and password!</div>
+    >Invalid username or password!</div>
     <div
       class="alert alert-success"
       role="alert"
       v-if="this.$route.query.registration"
     >Thank you for registering, please sign in.</div>
-    <form class="form-signin">
+    <form if="form-id" class="form-signin" @submit.prevent="login">
       <div class="user-box">
         <input type="text"
             id="username"
