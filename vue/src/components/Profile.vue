@@ -1,14 +1,13 @@
 <template>
 
     <div>
-        <h1>Profile Setup</h1>
+     <h1>Profile Setup</h1>
     <div class="profile">
     <form v-on:submit.prevent="setBaseInsulin">
     <div class="profile-form-element">
       <label for="baseInsulin">Base Insulin</label>
       <input placeholder="Enter Base Insulin Level" name="base_insulin" type="text" v-model="userProfile.baseInsulin" />
     </div>
-
 <h2>Type of Insulin</h2>
 
 <select class="profile" v-model="userProfile.insulinType">
@@ -30,7 +29,11 @@
       <button type="submit" v-on:click="setBaseInsulin()">Update Profile</button>
     </div>
   </form>
-    </div>
+
+
+
+
+  </div>
 
 
 
