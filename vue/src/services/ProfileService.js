@@ -7,6 +7,10 @@ export default {
     return axios.put('/insulin', insulinLevel)
   },
 
+  postNewInsulin(insulin, insulinId) {
+    return axios.post('/insulin', insulin, insulinId )
+  },
+
   getBaseInsulin(user) {
     return axios.get('/insulin', user)
   },
