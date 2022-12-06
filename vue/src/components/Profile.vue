@@ -3,23 +3,22 @@
     <div>
         <h1>Profile Setup</h1>
     <div class="profile">
-
-         <form v-on:submit.prevent>
+    <form v-on:submit.prevent="setBaseInsulin">
     <div class="profile-form-element">
       <label for="baseInsulin">Base Insulin</label>
-      <input placeholder="Enter Base Insulin Level" name="base_insulin" type="text" v-model="baseInsulin" />
+      <input placeholder="Enter Base Insulin Level" name="base_insulin" type="text" v-model="userProfile.baseInsulin" />
     </div>
 
 <h2>Type of Insulin</h2>
 
-<select class="profile" v-model="insulinType">
+<select class="profile" v-model="userProfile.insulinType">
   <option disabled value="">Select</option>
   <option>Fast Acting</option>
   <option>Slow Acting</option>
 </select>
 
 <h2>Insulin Strength</h2>
-<select class="profile" v-model="strength">
+<select class="profile" v-model="userProfile.strength">
   <option disabled value="">Select</option>
   <option>U-100</option>
   <option>U-200</option>
@@ -27,10 +26,6 @@
   <option>U-400</option>
   <option>U-500</option>
 </select>
-
-
-
- 
     <div class="actions">
       <button type="submit" v-on:click="setBaseInsulin()">Update Profile</button>
     </div>
@@ -49,18 +44,25 @@ export default {
     name:"profile",
     data(){
         return{
-            userID: "",
-            baseInsulin: "",
-            insulinType: "",
-            strength: ""
+            
+            userProfile: {
+             baseInsulin: "",
+             insulinType: "",
+             strength: ""
+            }
         }
 
     },
     methods: {
         setBaseInsulin(){
-            const baseInsulin = {
-            user: this.userId, insulinLevel: this.BaseInsulin };
-            ProfileService.setBaseInsulin(baseInsulin);
+            ProfileService.setBaseInsulin(this.userProfile)
+            .then((response) => {
+                if (response.status <300){
+                    this.$router.push({
+                        name: "home",
+                    })
+                }
+            }).catch (error => console.error(error));
 
             }
         },
