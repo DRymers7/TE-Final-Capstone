@@ -137,7 +137,7 @@ public class JdbcInsulinDao implements InsulinDao {
         insulin.setInsulinId(row.getInt("insulin_id"));
         insulin.setBaseLevel(row.getDouble("base_level"));
         insulin.setAverageLevel(row.getDouble("avg_level"));
-        insulin.setTimeSinceLastDose(row.getTimestamp("time_last_dose").toLocalDateTime());
+        insulin.setTimeSinceLastDose(row.getTimestamp("time_last_dose"));
         insulin.setInsulinType(row.getString("insulin_type"));
         insulin.setInsulinStrength(row.getString("insulin_strength"));
         insulin.setHalfLife(row.getInt("half_life"));
