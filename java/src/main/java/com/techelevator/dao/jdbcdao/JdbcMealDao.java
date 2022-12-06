@@ -2,6 +2,8 @@ package com.techelevator.dao.jdbcdao;
 
 import com.techelevator.dao.dao.MealDao;
 import com.techelevator.model.ModelClasses.Meal;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -34,6 +36,61 @@ public class JdbcMealDao implements MealDao {
             returnList.add(mapRowToObject(rowSet));
         }
         return returnList;
+    }
+
+    @Override
+    public Meal createUserMeal(int userId, Meal meal) throws SQLException {
+
+        String sql ="INSERT INTO meals (carbs, food, glycemic_index, meal_time) VALUES (?, ?, ?, ?) RETURNING meal_id;";
+
+        Integer id = jdbcTemplate.queryForObject(sql, Integer.class, meal.getCarbs(), meal.getFood(),
+                meal.getGlycemicIndex(), meal.getMealTime());
+        meal.setMealId(id);
+
+        if (createMealJoinEntry(id, userId)) {
+            return meal;
+        } else {
+            throw new SQLException("Create meal error.");
+        }
+    }
+
+    @Override
+    public boolean updateUserMealData(int mealId, Meal meal) throws SQLException {
+
+        String sql = "UPDATE meals SET carbs = ?, food = ?, glycemic_index = ?, meal_time = ? WHERE meal_id = ?;";
+
+        jdbcTemplate.update(sql, meal.getCarbs(), meal.getFood(), meal.getGlycemicIndex(), meal.getMealTime());
+        return true;
+    }
+
+    @Override
+    public boolean deleteMealData(int userId, Meal meal) throws SQLException {
+
+        if (createMealJoinEntry(meal.getMealId(), userId)) {
+            String sql = "DELETE FROM meals WHERE meal_id = ?;";
+            jdbcTemplate.update(sql, meal.getMealId());
+            return true;
+        } else {
+            throw new SQLException("Delete meal failed.");
+        }
+    }
+
+
+    private boolean createMealJoinEntry(Integer mealId, int userId) {
+
+        String sql = "INSERT INTO meals_user_join (meal_id, user_id) VALUES (?, ?) RETURNING meal_id;";
+        Integer id = jdbcTemplate.queryForObject(sql, Integer.class, mealId, userId);
+        if (id > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean deleteMealFromJoinTable(int mealId, int userId) {
+        String sql = "DELETE FROM meals_user_join WHERE meal_id = ? AND user_id = ?;";
+        jdbcTemplate.update(sql, mealId, userId);
+        return true;
     }
 
     private Meal mapRowToObject(SqlRowSet rowSet) {

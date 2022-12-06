@@ -1,5 +1,6 @@
 package com.techelevator.model.ModelClasses;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -10,6 +11,7 @@ public class Insulin extends BaseInsulin {
     private int onset;
     private int peak;
     private int duration;
+    private Timestamp timeSinceLastDose;
 
     public Insulin(){}
 
@@ -19,6 +21,7 @@ public class Insulin extends BaseInsulin {
         this.onset = onset;
         this.peak = peak;
         this.duration = duration;
+        this.timeSinceLastDose = timeSinceLastDose;
     }
 
     public int getHalfLife() {
@@ -51,6 +54,15 @@ public class Insulin extends BaseInsulin {
 
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+
+    @Override
+    public Timestamp getTimeSinceLastDose() {
+        return timeSinceLastDose;
+    }
+
+    public void setTimeSinceLastDose(Timestamp timeSinceLastDose) {
+        this.timeSinceLastDose = timeSinceLastDose;
     }
 
     @Override
