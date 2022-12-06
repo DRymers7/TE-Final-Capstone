@@ -51,9 +51,21 @@ CREATE TABLE user_data (
 	activity_level varchar(16),
 	emergency_contact_1 varchar(32),
 	emergency_contact_2 varchar(32),
+	emergency_contact_1 varchar(32),
+	emergency_contact_2 varchar(32),
 	-- bmi (weight/height)**2 calc on server
 	
 	CONSTRAINT FK_user_data_user FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+CREATE TABLE insulin_information (
+	insulin_brand_name varchar(32) NOT NULL PRIMARY KEY,
+	insulin_type varchar(32) NOT NULL,
+	half_life int, --minutes
+	onset_low int, --display information for when to check blood sugar
+	onset_high int,
+	peak int,
+	duration int
 );
 
 CREATE TABLE insulin_information (
@@ -72,7 +84,11 @@ CREATE TABLE insulin (
 	avg_level decimal(10,3),
 	time_last_dose TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	insulin_brand_name varchar(32),
+	insulin_brand_name varchar(32),
 	insulin_strength varchar(32),
+	insulin_ratio decimal(3,2) NOT NULL,
+	
+	CONSTRAINT FK_insulin_insulin_information FOREIGN KEY (insulin_brand_name) REFERENCES insulin_information(insulin_brand_name)
 	insulin_ratio decimal(3,2) NOT NULL,
 	
 	CONSTRAINT FK_insulin_insulin_information FOREIGN KEY (insulin_brand_name) REFERENCES insulin_information(insulin_brand_name)
@@ -127,7 +143,7 @@ INSERT INTO user_data (user_id, a1c, fasting_glucose, diabetes_type, user_age, l
 VALUES (1, 7.50, 99, 1, 47, '2022/12/12', 120, 500, 'Active');
 INSERT INTO user_data (user_id, a1c, fasting_glucose, diabetes_type, user_age, last_updated, weight, height, activity_level)
 VALUES (2, 8.50, 100, 2, 48, '2022/12/12', 121, 501, 'Active');
-INSERT INTO meals (carbs, food, glycemic_index, meal_time)
+INSERT INTO meals (carbs, food, glycemic_index, meal_time) 
 VALUES (50, 'test food', 300, '2022/12/12 13:10:11');
 INSERT INTO meals (carbs, food, glycemic_index, meal_time)
 VALUES (51, 'test food', 300, '2022/12/12 13:11:11');

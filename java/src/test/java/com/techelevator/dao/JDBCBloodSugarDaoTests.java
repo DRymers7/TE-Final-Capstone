@@ -15,7 +15,9 @@ import java.util.List;
 
 public class JDBCBloodSugarDaoTests extends BaseDaoTests {
 
+
     private static final BloodSugar BLOOD_SUGAR_1 = new BloodSugar(4, 10, 10, 10, Timestamp.valueOf("2022-12-12 00:00:00"));
+
 
     private JdbcBloodSugarDao dao;
 

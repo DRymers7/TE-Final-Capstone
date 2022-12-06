@@ -4,16 +4,13 @@ import com.techelevator.exceptions.ServersideOpException;
 import com.techelevator.model.ModelClasses.BaseInsulin;
 import com.techelevator.model.ModelClasses.Insulin;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface InsulinDao {
-    public List<Insulin> getInsulinList(int userId);
-
-    BaseInsulin createNewInsulin(int userId, BaseInsulin baseInsulin) throws ServersideOpException;
-    boolean updateInsulin(BaseInsulin baseInsulin) throws ServersideOpException;
-    boolean deleteInsulin(BaseInsulin baseInsulin) throws ServersideOpException;
-
-    void setBaseLevel(double baseLevel, int userId);
-
-    Insulin getInsulin();
+    List<BaseInsulin> getInsulinList(int userId) throws SQLException;
+    BaseInsulin createNewInsulin(int userId, BaseInsulin baseInsulin) throws SQLException;
+    boolean updateInsulin(BaseInsulin baseInsulin) throws SQLException;
+    boolean deleteInsulin(BaseInsulin baseInsulin) throws SQLException;
+    BaseInsulin getSingleInsulin(int insulinId, int userId, BaseInsulin insulin) throws SQLException;
 }
