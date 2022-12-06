@@ -10,5 +10,7 @@ public interface BloodSugarDao {
 
     List<BloodSugar> getBloodSugarReadings(int userId);
     BloodSugar createBloodSugarReading(int userId, BloodSugar bloodSugar) throws SQLException;
-    void updateBloodSugar(int targetLow, int targetHigh, int userID);
+    boolean updateBloodSugarReading(int bloodSugarId, BloodSugar bloodSugar) throws SQLException;
+    boolean deleteBloodSugar(int userId, BloodSugar bloodSugar) throws SQLException;
+
 }
