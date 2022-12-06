@@ -1,6 +1,6 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS users, user_data, insulin, insulin_user_data_join, meals, meals_user_join, blood_sugar, blood_sugar_user_data_join CASCADE;
+DROP TABLE IF EXISTS blood_sugar, blood_sugar_user_data_join, insulin, insulin_data, insulin_information, insulin_data_join, insulin_user_data_join, meals, meals_user_join, user_data, users CASCADE;
 DROP SEQUENCE IF EXISTS seq_user_id, seq_insulin_id, seq_meal_id, seq_blood_sugar_id CASCADE;
 
 CREATE SEQUENCE seq_user_id
@@ -50,9 +50,21 @@ CREATE TABLE user_data (
 	weight int,
 	height int,
 	activity_level varchar(16),
+	emergency_contact_1 varchar(32),
+	emergency_contact_2 varchar(32),
 	-- bmi (weight/height)**2 calc on server
 	
 	CONSTRAINT FK_user_data_user FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+CREATE TABLE insulin_information (
+	insulin_brand_name varchar(32) NOT NULL PRIMARY KEY,
+	insulin_type varchar(32) NOT NULL,
+	half_life int, --minutes
+	onset_low int, --display information for when to check blood sugar
+	onset_high int,
+	peak int,
+	duration int
 );
 
 CREATE TABLE insulin (
@@ -60,13 +72,11 @@ CREATE TABLE insulin (
 	base_level decimal(10,3),
 	avg_level decimal(10,3),
 	time_last_dose TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	insulin_type varchar(32) NOT NULL,
+	insulin_brand_name varchar(32),
 	insulin_strength varchar(32),
-	half_life int, --minutes
-	onset int, --display information for when to check blood sugar
-	peak int,
-	insulin_ration decimal(3,2) NOT NULL,
-	duration int
+	insulin_ratio decimal(3,2) NOT NULL,
+	
+	CONSTRAINT FK_insulin_insulin_information FOREIGN KEY (insulin_brand_name) REFERENCES insulin_information(insulin_brand_name)
 );
 
 CREATE TABLE insulin_user_data_join (
@@ -121,16 +131,7 @@ VALUES (1, 7.50, 99, 1, 47, '2022/12/12', 120, 500, 'Active');
 INSERT INTO user_data (user_id, a1c, fasting_glucose, diabetes_type, user_age, last_updated, weight, height, activity_level) 
 VALUES (2, 8.50, 100, 2, 48, '2022/12/12', 121, 501, 'Active');
 
-INSERT INTO insulin (base_level, avg_level, insulin_type, insulin_strength, half_life, onset, peak, insulin_ration, duration) 
-VALUES (10, 10, 'Fast acting', 'Strong', 10, 10, 10, 0.45, 20);
-INSERT INTO insulin (base_level, avg_level, insulin_type, insulin_strength, half_life, onset, peak, insulin_ration, duration) 
-VALUES (10, 10, 'Fast acting', 'Strong', 10, 10, 10, 0.45, 20);
-INSERT INTO insulin (base_level, avg_level, insulin_type, insulin_strength, half_life, onset, peak, insulin_ration, duration) 
-VALUES (10, 10, 'Slow acting', 'Strong', 10, 10, 10, 0.35, 20);
-
-INSERT INTO insulin_user_data_join (user_id, insulin_id) VALUES (1, 1);
-INSERT INTO insulin_user_data_join (user_id, insulin_id) VALUES (2, 2);
-INSERT INTO insulin_user_data_join (user_id, insulin_id) VALUES (1, 3);
+INSERT INTO insulin_information (insulin_brand_name, insulin_type, half_life, onset_low, onset_high, peak, duration) VALUES ('Brand', 'type', 10, 10, 10, 10, 10);
 
 INSERT INTO meals (carbs, food, glycemic_index, meal_time) 
 VALUES (50, 'test food', 300, '2022/12/12 13:10:11');

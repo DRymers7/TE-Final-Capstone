@@ -23,19 +23,21 @@ public class InsulinController {
 
     private InsulinDao insulinDao;
     private UserDao userDao;
-    private InsulinValidationHelper insulinValidationHelper = new InsulinValidationHelper();
+    private InsulinValidationHelper insulinValidationHelper;
 
 
     public InsulinController(InsulinDao insulinDao, UserDao userDao)  {
         this.insulinDao = insulinDao;
         this.userDao = userDao;
+        this.insulinValidationHelper = new InsulinValidationHelper(insulinDao);
     }
 
     @RequestMapping(path = "/insulin", method = RequestMethod.GET)
-    public List<Insulin> getActiveInsulin(Principal principal) {
+    public List<BaseInsulin> getActiveInsulin(Principal principal) {
         try {
             return insulinDao.getInsulinList(userDao.findIdByUsername(principal.getName()));
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
@@ -49,6 +51,7 @@ public class InsulinController {
             return insulinDao.createNewInsulin(userId, baseInsulin);
 
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
@@ -57,9 +60,13 @@ public class InsulinController {
     @RequestMapping(path = "/insulin", method = RequestMethod.PUT)
     public boolean updateInsulinDetails(@RequestBody BaseInsulin baseInsulin, Principal principal) {
         try {
-            insulinValidationHelper.validateInsulin(baseInsulin, userDao.findIdByUsername(principal.getName()));
-            return insulinDao.updateInsulin(baseInsulin);
+            if (insulinValidationHelper.validateInsulin(baseInsulin, userDao.findIdByUsername(principal.getName()))) {
+                return insulinDao.updateInsulin(baseInsulin);
+            } else {
+                throw new ServersideOpException("Could not validate insulin.");
+            }
         } catch (SQLException | ServersideOpException e) {
+            System.out.println(e.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
     }

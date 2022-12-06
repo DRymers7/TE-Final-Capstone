@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface InsulinDao {
-    public List<Insulin> getInsulinList(int userId) throws SQLException;
+    List<BaseInsulin> getInsulinList(int userId) throws SQLException;
     BaseInsulin createNewInsulin(int userId, BaseInsulin baseInsulin) throws SQLException;
     boolean updateInsulin(BaseInsulin baseInsulin) throws SQLException;
     boolean deleteInsulin(BaseInsulin baseInsulin) throws SQLException;

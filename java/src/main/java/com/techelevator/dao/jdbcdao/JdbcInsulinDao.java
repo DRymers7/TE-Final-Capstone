@@ -30,9 +30,9 @@ public class JdbcInsulinDao implements InsulinDao {
     // delete insulin objects - done
 
     @Override
-    public List<Insulin> getInsulinList(int userId) throws SQLException {
+    public List<BaseInsulin> getInsulinList(int userId) throws SQLException {
 
-        List<Insulin> insulinList = new ArrayList<>();
+        List<BaseInsulin> insulinList = new ArrayList<>();
 
         String sql = "SELECT i.insulin_id, i.base_level, i.avg_level, i.time_last_dose, i.insulin_type, i.insulin_strength, i.half_life, i.onset, i.peak, i.insulin_ration, i.duration FROM insulin i " +
                 "JOIN insulin_user_data_join ij ON ij.insulin_id = i.insulin_id " +

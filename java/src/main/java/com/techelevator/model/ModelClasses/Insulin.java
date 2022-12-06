@@ -11,7 +11,6 @@ public class Insulin extends BaseInsulin {
     private int onset;
     private int peak;
     private int duration;
-    private Timestamp timeSinceLastDose;
 
     public Insulin(){}
 
@@ -21,7 +20,6 @@ public class Insulin extends BaseInsulin {
         this.onset = onset;
         this.peak = peak;
         this.duration = duration;
-        this.timeSinceLastDose = timeSinceLastDose;
     }
 
     public int getHalfLife() {
@@ -57,15 +55,6 @@ public class Insulin extends BaseInsulin {
     }
 
     @Override
-    public Timestamp getTimeSinceLastDose() {
-        return timeSinceLastDose;
-    }
-
-    public void setTimeSinceLastDose(Timestamp timeSinceLastDose) {
-        this.timeSinceLastDose = timeSinceLastDose;
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -78,4 +67,15 @@ public class Insulin extends BaseInsulin {
     public int hashCode() {
         return Objects.hash(super.hashCode(), halfLife, onset, peak, duration);
     }
+
+    @Override
+    public String toString() {
+        return "Insulin{" +
+                "halfLife=" + halfLife +
+                ", onset=" + onset +
+                ", peak=" + peak +
+                ", duration=" + duration +
+                '}';
+    }
+
 }

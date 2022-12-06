@@ -1,6 +1,5 @@
 package com.techelevator.helperclasses;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.techelevator.dao.dao.InsulinDao;
 import com.techelevator.exceptions.ServersideOpException;
 import com.techelevator.model.ModelClasses.BaseInsulin;
@@ -11,7 +10,9 @@ public class InsulinValidationHelper {
 
     private InsulinDao insulinDao;
 
-    public InsulinValidationHelper() {}
+    public InsulinValidationHelper(InsulinDao insulinDao) {
+        this.insulinDao = insulinDao;
+    }
 
     public boolean validateInsulin(BaseInsulin insulin, int userId) throws SQLException, ServersideOpException {
         return populateInsulinNullValues(insulin, userId);
