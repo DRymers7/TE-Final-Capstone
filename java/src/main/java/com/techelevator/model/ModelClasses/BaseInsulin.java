@@ -3,6 +3,7 @@ package com.techelevator.model.ModelClasses;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
@@ -13,14 +14,14 @@ public class BaseInsulin {
     private double baseLevel;
     private double averageLevel;
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ", shape = JsonFormat.Shape.STRING)
-    private LocalDateTime timeSinceLastDose;
+    private Timestamp timeSinceLastDose;
     private String insulinType;
     private String insulinStrength;
     private double insulinRation;
 
     public BaseInsulin() {};
 
-    public BaseInsulin(int insulinId, double baseLevel, double averageLevel, LocalDateTime timeSinceLastDose, String insulinType, String insulinStrength, double insulinRation) {
+    public BaseInsulin(int insulinId, double baseLevel, double averageLevel, Timestamp timeSinceLastDose, String insulinType, String insulinStrength, double insulinRation) {
         this.insulinId = insulinId;
         this.baseLevel = baseLevel;
         this.averageLevel = averageLevel;
@@ -34,7 +35,7 @@ public class BaseInsulin {
         return insulinId;
     }
 
-    public void setInsulinId(Integer insulinId) {
+    public void setInsulinId(int insulinId) {
         this.insulinId = insulinId;
     }
 
@@ -54,11 +55,11 @@ public class BaseInsulin {
         this.averageLevel = averageLevel;
     }
 
-    public LocalDateTime getTimeSinceLastDose() {
+    public Timestamp getTimeSinceLastDose() {
         return timeSinceLastDose;
     }
 
-    public void setTimeSinceLastDose(LocalDateTime timeSinceLastDose) {
+    public void setTimeSinceLastDose(Timestamp timeSinceLastDose) {
         this.timeSinceLastDose = timeSinceLastDose;
     }
 
