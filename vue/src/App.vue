@@ -13,8 +13,6 @@
 </template>
 
 
-
-
 <style scoped>
 header{
   display: flex;
@@ -41,8 +39,6 @@ app{
 #app{
   font-family: open sans, Arial, Helvetica, sans-serif;
 }
-
-
 
 </style>
 
