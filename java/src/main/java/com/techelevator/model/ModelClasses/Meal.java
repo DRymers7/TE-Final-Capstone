@@ -24,7 +24,7 @@ public class Meal {
         return mealId;
     }
 
-    public void setMealId(int mealId) {
+    public void setMealId(Integer mealId) {
         this.mealId = mealId;
     }
 
