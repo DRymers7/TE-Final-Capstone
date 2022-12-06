@@ -1,12 +1,8 @@
 <template>
 <div>
     <Header />
-<<<<<<< HEAD
     <AboutUs />
     <Footer />
-=======
-    
->>>>>>> be0fc0b8d897072ec1ba5db4fb57dbce4bb13f46
 </div>
 </template>
     

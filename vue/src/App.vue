@@ -24,23 +24,16 @@ header{
   color: #4f6d7aff;
 }
 
-<<<<<<< HEAD
-/* 
+
+
 body {
   margin:0;
   padding:0;
-  font-family: sans-serif;
+  font-family: open sans, Arial, Helvetica, sans-serif;
+  background-color: #dbe9eeff;
   background: linear-gradient(#141e30, #243b55);
 }
-*/
 
-app{
-=======
-#app{
->>>>>>> be0fc0b8d897072ec1ba5db4fb57dbce4bb13f46
-  background-color: #dbe9eeff;
-  font-family: open sans, Arial, Helvetica, sans-serif;
-}
 
 
 
