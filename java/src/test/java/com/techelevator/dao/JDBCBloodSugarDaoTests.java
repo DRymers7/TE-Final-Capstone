@@ -38,6 +38,18 @@ public class JDBCBloodSugarDaoTests extends BaseDaoTests {
         Assert.assertEquals(bloodSugar.getBloodSugarId(), BLOOD_SUGAR_1.getBloodSugarId());
     }
 
+    @Test
+    public void update_blood_sugar_test() throws SQLException {
+        BloodSugar bloodSugar = dao.createBloodSugarReading(1, BLOOD_SUGAR_1);
+        BloodSugar bloodSugar1 = new BloodSugar(1, 10, 10, 10, LocalDateTime.now());
+        Assert.assertTrue(dao.updateBloodSugarReading(bloodSugar1.getBloodSugarId(), bloodSugar1));
+    }
+
+    @Test
+    public void delete_blood_sugar_test() throws SQLException {
+        BloodSugar bloodSugar = dao.createBloodSugarReading(1, BLOOD_SUGAR_1);
+        Assert.assertTrue(dao.deleteBloodSugar(1, BLOOD_SUGAR_1));
+    }
 
 
 }

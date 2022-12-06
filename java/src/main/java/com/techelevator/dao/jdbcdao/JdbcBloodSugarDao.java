@@ -65,6 +65,29 @@ public class JdbcBloodSugarDao implements BloodSugarDao {
 
     }
 
+    @Override
+    public boolean updateBloodSugarReading(int bloodSugarId, BloodSugar bloodSugar) throws SQLException  {
+
+        String sql = "UPDATE blood_sugar SET target_low = ?, target_high = ?, input_level = ?, last_measurement = ? " +
+                "WHERE blood_sugar_id = ?;";
+
+        jdbcTemplate.update(sql, bloodSugar.getTargetLow(), bloodSugar.getTargetHigh(), bloodSugar.getInputLevel(), bloodSugar.getLastMeasurement(),
+                bloodSugar.getBloodSugarId());
+        return true;
+    }
+
+    @Override
+    public boolean deleteBloodSugar(int userId, BloodSugar bloodSugar) {
+
+        if (deleteFromJoinTable(bloodSugar.getBloodSugarId(), userId)) {
+            String sql = "DELETE FROM blood_sugar WHERE blood_sugar_id = ?;";
+            jdbcTemplate.update(sql, bloodSugar.getBloodSugarId());
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     private boolean createBloodSugarJoinEntry(Integer bloodSugarId, int userId) throws SQLException {
 
         String sql = "INSERT INTO blood_sugar_user_data_join (blood_sugar_id, user_id) VALUES (?, ?) RETURNING blood_sugar_id;";
@@ -76,6 +99,12 @@ public class JdbcBloodSugarDao implements BloodSugarDao {
             return false;
         }
 
+    }
+
+    private boolean deleteFromJoinTable(int bloodSugarId, int userId) {
+        String sql = "DELETE FROM blood_sugar_user_data_join WHERE blood_sugar_id = ? AND user_id = ?;";
+        jdbcTemplate.update(sql, bloodSugarId, userId);
+        return true;
     }
 
     //todo Should return Bloodsugar for integration test

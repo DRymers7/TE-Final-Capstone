@@ -57,6 +57,4 @@ public class JDBCInsulinDAOTests extends BaseDaoTests {
         Assert.assertTrue(dao.deleteInsulin(baseInsulin));
     }
 
-
-
 }
