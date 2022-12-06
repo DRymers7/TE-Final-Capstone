@@ -35,6 +35,11 @@ body {
 }
 
 
+app{
+  background-color: #dbe9eeff;
+  font-family: open sans, Arial, Helvetica, sans-serif;
+}
+
 
 
 </style>

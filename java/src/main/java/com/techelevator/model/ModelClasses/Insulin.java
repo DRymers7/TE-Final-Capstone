@@ -1,7 +1,7 @@
 package com.techelevator.model.ModelClasses;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Insulin extends BaseInsulin {
@@ -13,7 +13,7 @@ public class Insulin extends BaseInsulin {
 
     public Insulin(){}
 
-    public Insulin(int insulinId, double baseLevel, double averageLevel, LocalDateTime timeSinceLastDose, String insulinType, String insulinStrength, int halfLife, int onset, int peak, double insulinRation, int duration) {
+    public Insulin(int insulinId, double baseLevel, double averageLevel, Timestamp timeSinceLastDose, String insulinType, String insulinStrength, int halfLife, int onset, int peak, double insulinRation, int duration) {
         super(insulinId, baseLevel, averageLevel, timeSinceLastDose, insulinType, insulinStrength, insulinRation);
         this.halfLife = halfLife;
         this.onset = onset;
