@@ -13,8 +13,6 @@
 </template>
 
 
-
-
 <style scoped>
 header{
   display: flex;
@@ -39,8 +37,6 @@ app{
   background-color: #dbe9eeff;
   font-family: open sans, Arial, Helvetica, sans-serif;
 }
-
-
 
 </style>
 
