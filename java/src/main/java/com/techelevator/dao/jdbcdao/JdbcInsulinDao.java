@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class JdbcInsulinDao implements InsulinDao {
     // delete insulin objects - done
 
     @Override
-    public List<Insulin> getInsulinList(int userId) {
+    public List<Insulin> getInsulinList(int userId) throws SQLException {
 
         List<Insulin> insulinList = new ArrayList<>();
 
@@ -42,11 +43,16 @@ public class JdbcInsulinDao implements InsulinDao {
         while (rowSet.next()) {
             insulinList.add(mapToRowSet(rowSet));
         }
-        return insulinList;
+        if (insulinList.size() != 0) {
+            return insulinList;
+        } else {
+            throw new SQLException("No insulin available.");
+        }
+
     }
 
     @Override
-    public BaseInsulin createNewInsulin(int userId, BaseInsulin baseInsulin) throws ServersideOpException {
+    public BaseInsulin createNewInsulin(int userId, BaseInsulin baseInsulin) throws SQLException {
 
         String sql = "INSERT INTO insulin (base_level, avg_level, time_last_dose, insulin_type, insulin_strength, insulin_ration) " +
                 "VALUES (?, ?, ?, ?, ?, ?) RETURNING insulin_id;";
@@ -57,29 +63,29 @@ public class JdbcInsulinDao implements InsulinDao {
         if (createNewJoinInsulinEntry(userId, id)) {
             return baseInsulin;
         } else {
-            throw new ServersideOpException("Operation failed.");
+            throw new SQLException("Operation failed.");
         }
 
     }
 
     @Override
-    public boolean updateInsulin(BaseInsulin baseInsulin) throws ServersideOpException {
+    public boolean updateInsulin(BaseInsulin baseInsulin) throws SQLException {
 
         String sql = "UPDATE insulin SET base_level = ?, avg_level = ?, " +
                 "time_last_dose = ?, insulin_type = ?, insulin_strength = ?, insulin_ration = ? WHERE insulin_id = ?;";
 
-        try {
-            jdbcTemplate.update(sql, baseInsulin.getBaseLevel(), baseInsulin.getAverageLevel(), baseInsulin.getTimeSinceLastDose(),
-                    baseInsulin.getInsulinType(), baseInsulin.getInsulinStrength(), baseInsulin.getInsulinRation(), baseInsulin.getInsulinId());
-            return true;
-        } catch (InvalidResultSetAccessException e) {
-            throw new ServersideOpException("Operation failed.");
-        }
+        int success = jdbcTemplate.update(sql, baseInsulin.getBaseLevel(), baseInsulin.getAverageLevel(), baseInsulin.getTimeSinceLastDose(),
+                baseInsulin.getInsulinType(), baseInsulin.getInsulinStrength(), baseInsulin.getInsulinRation(), baseInsulin.getInsulinId());
 
+        if (success == 1) {
+            return true;
+        } else {
+            throw new SQLException("Update insulin failed.");
+        }
     }
 
     @Override
-    public boolean deleteInsulin(BaseInsulin baseInsulin) throws ServersideOpException {
+    public boolean deleteInsulin(BaseInsulin baseInsulin) throws SQLException {
 
         deleteFromJoinTable(baseInsulin.getInsulinId());
         String sql = "DELETE FROM insulin WHERE insulin_id = ?;";
@@ -88,12 +94,12 @@ public class JdbcInsulinDao implements InsulinDao {
             jdbcTemplate.update(sql, baseInsulin.getInsulinId());
             return true;
         } catch (InvalidResultSetAccessException e) {
-            throw new ServersideOpException("Operation failed.");
+            throw new SQLException("Operation failed.");
         }
     }
 
     @Override
-    public Insulin getSingleInsulin(int userId, int insulinId, BaseInsulin insulin) {
+    public BaseInsulin getSingleInsulin(int userId, int insulinId, BaseInsulin insulin) throws SQLException {
 
         String sql = "SELECT insulin.insulin_id, base_level, avg_level, time_last_dose, insulin_type, insulin_strength, half_life, onset, peak, insulin_ration, duration " +
                 "FROM insulin " +
@@ -104,30 +110,12 @@ public class JdbcInsulinDao implements InsulinDao {
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId, insulin);
 
         if (rowSet.next()) {
-            BmapToRowSet(rowSet);
+            BaseInsulin baseInsulin = mapToRowSetBaseInsulin(rowSet);
+            return baseInsulin;
+        } else {
+            throw new SQLException("Cannot find single Insulin object");
         }
-    }
 
-    @Override
-    public void setBaseLevel(double baseLevel, int userId) {
-
-        String sql = "UPDATE insulin " +
-                     "SET base_level = ? " +
-                     "WHERE user_id = ? ";
-
-        jdbcTemplate.update(sql, baseLevel, userId);
-    }
-
-    @Override
-    public Insulin getInsulin() {
-        Insulin insulin = null;
-        String sql = "SELECT user_id, base_level, avg_level, time_last_dose FROM insulin;";
-
-        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql);
-        if (rowSet.next()) {
-            insulin = mapToRowSet(rowSet);
-        }
-        return insulin;
     }
 
     private boolean createNewJoinInsulinEntry(int userId, Integer insulinId) {
