@@ -13,7 +13,7 @@ public class BaseInsulin {
     private int insulinId;
     private double baseLevel;
     private double averageLevel;
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ", shape = JsonFormat.Shape.STRING)
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", shape = JsonFormat.Shape.STRING)
     private Timestamp timeSinceLastDose;
     private String insulinType;
     private String insulinStrength;

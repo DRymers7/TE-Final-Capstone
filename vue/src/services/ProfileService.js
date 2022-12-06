@@ -1,4 +1,5 @@
 import axios from 'axios';
+  
 
 export default {
 
@@ -9,7 +10,6 @@ export default {
   getBaseInsulin(user) {
     return axios.get('/insulin', user)
   },
-
 
   setInsulinStrength( insulinStrength, user){
     return axios.put('/insulin', insulinStrength, user )
