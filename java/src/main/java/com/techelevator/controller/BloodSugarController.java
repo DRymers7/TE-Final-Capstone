@@ -5,7 +5,6 @@ import com.techelevator.dao.dao.UserDao;
 import com.techelevator.exceptions.ServersideOpException;
 import com.techelevator.model.ModelClasses.BloodSugar;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -47,6 +46,29 @@ public class BloodSugarController {
             int userId = userDao.findIdByUsername(principal.getName());
             return bloodSugarDao.createBloodSugarReading(userId, bloodSugar);
 
+        } catch (SQLException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(path = "/blood-sugars", method = RequestMethod.PUT)
+    public boolean updateBloodSugar(@RequestBody BloodSugar bloodSugar) {
+
+        try {
+            bloodSugarDao.updateBloodSugarReading(bloodSugar.getBloodSugarId(), bloodSugar);
+            return true;
+        } catch (SQLException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(path = "/blood-sugars", method = RequestMethod.DELETE)
+    public boolean deleteBloodSugar(@RequestBody BloodSugar bloodSugar, Principal principal) {
+
+        try {
+            int userId = userDao.findIdByUsername(principal.getName());
+            bloodSugarDao.deleteBloodSugar(userId, bloodSugar);
+            return true;
         } catch (SQLException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
