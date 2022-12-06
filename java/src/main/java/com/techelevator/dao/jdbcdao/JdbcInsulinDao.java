@@ -93,6 +93,22 @@ public class JdbcInsulinDao implements InsulinDao {
     }
 
     @Override
+    public Insulin getSingleInsulin(int userId, int insulinId, BaseInsulin insulin) {
+
+        String sql = "SELECT insulin.insulin_id, base_level, avg_level, time_last_dose, insulin_type, insulin_strength, half_life, onset, peak, insulin_ration, duration " +
+                "FROM insulin " +
+                "JOIN insulin_data_join ij ON ij.insulin_id = insulin.insulin_id " +
+                "JOIN user_data ud ON ud.user_id = ij.user_id " +
+                "WHERE ud.user_id = ? AND insulin.insulin_id = ?";
+
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId, insulin);
+
+        if (rowSet.next()) {
+            BmapToRowSet(rowSet);
+        }
+    }
+
+    @Override
     public void setBaseLevel(double baseLevel, int userId) {
 
         String sql = "UPDATE insulin " +
@@ -145,6 +161,18 @@ public class JdbcInsulinDao implements InsulinDao {
         insulin.setPeak(row.getInt("peak"));
         insulin.setInsulinRation(row.getDouble("insulin_ration"));
         insulin.setDuration(row.getInt("duration"));
+        return insulin;
+    }
+
+    private BaseInsulin mapToRowSetBaseInsulin(SqlRowSet rowSet) {
+        BaseInsulin insulin = new BaseInsulin();
+        insulin.setInsulinId(rowSet.getInt("insulin_id"));
+        insulin.setBaseLevel(rowSet.getDouble("base_level"));
+        insulin.setAverageLevel(rowSet.getDouble("avg_level"));
+        insulin.setTimeSinceLastDose(rowSet.getTimestamp("time_last_dose"));
+        insulin.setInsulinType(rowSet.getString("insulin_type"));
+        insulin.setInsulinStrength(rowSet.getString("insulin_strength"));
+        insulin.setInsulinRation(rowSet.getDouble("insulin_ration"));
         return insulin;
     }
 
