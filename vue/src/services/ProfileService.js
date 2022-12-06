@@ -10,7 +10,6 @@ export default {
     return axios.get('/insulin', user)
   },
 
-
   setInsulinStrength( insulinStrength, user){
     return axios.put('/insulin', insulinStrength, user )
   },
