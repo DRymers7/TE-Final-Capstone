@@ -34,11 +34,6 @@ public class JdbcUserDataDao implements UserDataDao {
 
     }
 
-    @Override
-    public boolean updateUserData(int userId) throws SQLException {
-
-        return false;
-    }
 
     private UserData mapRowToUserData(SqlRowSet rowSet) {
         UserData userData = new UserData();
@@ -56,3 +51,6 @@ public class JdbcUserDataDao implements UserDataDao {
     }
 
 }
+
+
+
