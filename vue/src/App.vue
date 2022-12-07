@@ -2,8 +2,7 @@
   <div id="app">
     <div id="nav">
 
-      <header>Insulin Hero</header>
-      <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
+      <header>Insulin Hero </header>
       <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
       <nav></nav>  
 
@@ -19,7 +18,8 @@ header{
   align-items: center;
   justify-content: center;
   font-size: 100px;
-  color: #4f6d7aff;
+  color: #173054;
+  margin-top: 25px;
 }
 
 
