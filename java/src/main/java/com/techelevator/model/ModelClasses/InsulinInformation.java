@@ -15,9 +15,9 @@ public class InsulinInformation extends BaseInsulin {
     public InsulinInformation(){}
 
     public InsulinInformation(int insulinId, double baseLevel, double averageLevel, Timestamp timeSinceLastDose,
-                              String insulinBrandName, String insulinType, String insulinStrength, double insulinRation,
+                              String insulinBrandName, String insulinType, String insulinStrength, double insulinRatio,
                               int halfLife, int onsetLow, int onsetHigh, int peak, int duration) {
-        super(insulinId, baseLevel, averageLevel, timeSinceLastDose, insulinBrandName, insulinStrength, insulinRation);
+        super(insulinId, baseLevel, averageLevel, timeSinceLastDose, insulinBrandName, insulinStrength, insulinRatio);
         this.insulinType = insulinType;
         this.halfLife = halfLife;
         this.onsetLow = onsetLow;

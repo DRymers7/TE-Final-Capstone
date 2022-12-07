@@ -42,14 +42,14 @@ public class InsulinValidationHelper {
         if (insulin.getTimeSinceLastDose() == null) {
             insulin.setTimeSinceLastDose(baseInsulin.getTimeSinceLastDose());
         }
-        if (insulin.getInsulinType() == null) {
-            insulin.setInsulinType(baseInsulin.getInsulinType());
+        if (insulin.getInsulinBrandName() == null) {
+            insulin.setInsulinBrandName(baseInsulin.getInsulinBrandName());
         }
         if (insulin.getInsulinStrength() == null) {
             insulin.setInsulinStrength(baseInsulin.getInsulinStrength());
         }
-        if (insulin.getInsulinRation() == 0) {
-            insulin.setInsulinRation(baseInsulin.getInsulinRation());
+        if (insulin.getInsulinRatio() == 0) {
+            insulin.setInsulinRatio(baseInsulin.getInsulinRatio());
         }
         return insulin;
     }
