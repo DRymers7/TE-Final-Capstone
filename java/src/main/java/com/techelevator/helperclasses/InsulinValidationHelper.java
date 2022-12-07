@@ -5,6 +5,7 @@ import com.techelevator.exceptions.ServersideOpException;
 import com.techelevator.model.ModelClasses.BaseInsulin;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class InsulinValidationHelper {
 
@@ -14,44 +15,50 @@ public class InsulinValidationHelper {
         this.insulinDao = insulinDao;
     }
 
-    public boolean validateInsulin(BaseInsulin insulin, int userId) throws SQLException, ServersideOpException {
-        return populateInsulinNullValues(insulin, userId);
+    public boolean validateInsulinUpdate(BaseInsulin insulin, int userId) throws SQLException {
+        List<BaseInsulin> insulinList = insulinDao.getInsulinList(userId);
+        insulinList.removeIf(item -> (item.getInsulinId() != insulin.getInsulinId()));
+        return populateResultingObject(cleanAndPrepareForPopulation(insulinList), insulin);
     }
 
-    private boolean populateInsulinNullValues(BaseInsulin insulin, int userId) throws SQLException, ServersideOpException {
-        try {
-            BaseInsulin baseInsulin = insulinDao.getSingleInsulin(insulin.getInsulinId(), userId, insulin);
-            BaseInsulin completedObject = setMissingValues(insulin, baseInsulin);
-            insulinDao.updateInsulin(completedObject);
+    private BaseInsulin cleanAndPrepareForPopulation(List<BaseInsulin> list) throws SQLException {
+        if (list.size() == 1) {
+            return list.get(0);
+        } else {
+            throw new SQLException("Too many insulin objects returned.");
+        }
+    }
+
+    private boolean populateResultingObject(BaseInsulin insulinFromRecords, BaseInsulin insulinToUpdate) throws SQLException {
+        if (insulinFromRecords.equals(insulinToUpdate)) {
             return true;
-        } catch (SQLException e) {
-            throw new ServersideOpException("Could not populate correctly.");
+        } else {
+            if (insulinToUpdate.getBaseLevel() == 0) {
+                insulinToUpdate.setBaseLevel(insulinFromRecords.getBaseLevel());
+            }
+            if (insulinToUpdate.getAverageLevel() == 0) {
+                insulinToUpdate.setAverageLevel(insulinFromRecords.getAverageLevel());
+            }
+            if (insulinToUpdate.getTimeSinceLastDose().equals(null) || insulinToUpdate.getTimeSinceLastDose().equals("")) {
+                System.out.println("AAAA");
+                insulinToUpdate.setTimeSinceLastDose(insulinFromRecords.getTimeSinceLastDose());
+            }
+            cleanPotentiallyNullStringValues(insulinFromRecords, insulinToUpdate);
+            insulinDao.updateInsulin(insulinToUpdate);
+            return true;
         }
     }
 
-    private BaseInsulin setMissingValues(BaseInsulin insulin, BaseInsulin baseInsulin) {
-        if (insulin.getInsulinId() == 0) {
-            insulin.setInsulinId(baseInsulin.getInsulinId());
+    private void cleanPotentiallyNullStringValues(BaseInsulin insulinFromRecords, BaseInsulin insulinToUpdate) {
+        if (insulinToUpdate.getInsulinBrandName() == null || insulinToUpdate.getInsulinBrandName().equals("")) {
+            insulinToUpdate.setInsulinBrandName(insulinFromRecords.getInsulinBrandName());
         }
-        if (insulin.getBaseLevel() == 0) {
-            insulin.setBaseLevel(baseInsulin.getBaseLevel());
+        if (insulinToUpdate.getInsulinStrength() == null || insulinToUpdate.getInsulinStrength().equals("")) {
+            insulinToUpdate.setInsulinStrength(insulinFromRecords.getInsulinStrength());
         }
-        if (insulin.getAverageLevel() == 0) {
-            insulin.setAverageLevel(baseInsulin.getAverageLevel());
+        if (insulinToUpdate.getInsulinRatio() == 0) {
+            insulinToUpdate.setInsulinRatio(insulinFromRecords.getInsulinRatio());
         }
-        if (insulin.getTimeSinceLastDose() == null) {
-            insulin.setTimeSinceLastDose(baseInsulin.getTimeSinceLastDose());
-        }
-        if (insulin.getInsulinBrandName() == null) {
-            insulin.setInsulinBrandName(baseInsulin.getInsulinBrandName());
-        }
-        if (insulin.getInsulinStrength() == null) {
-            insulin.setInsulinStrength(baseInsulin.getInsulinStrength());
-        }
-        if (insulin.getInsulinRatio() == 0) {
-            insulin.setInsulinRatio(baseInsulin.getInsulinRatio());
-        }
-        return insulin;
     }
 
 

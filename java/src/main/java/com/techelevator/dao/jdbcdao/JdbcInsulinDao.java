@@ -48,7 +48,7 @@ public class JdbcInsulinDao implements InsulinDao {
     @Override
     public BaseInsulin createNewInsulin(int userId, BaseInsulin baseInsulin) throws SQLException {
 
-        String sql = "INSERT INTO insulin (base_level, avg_level, time_last_dose, insulin_brand_name, insulin_strength, insulin_ratio)\n" +
+        String sql = "INSERT INTO insulin (base_level, avg_level, time_last_dose, insulin_brand_name, insulin_strength, insulin_ratio) " +
                 "VALUES (?, ?, ?, ?, ?, ?) RETURNING insulin_id;";
 
         Integer id = jdbcTemplate.queryForObject(sql, Integer.class, baseInsulin.getBaseLevel(), baseInsulin.getAverageLevel(), baseInsulin.getTimeSinceLastDose(),
@@ -58,7 +58,7 @@ public class JdbcInsulinDao implements InsulinDao {
         if (createNewJoinInsulinEntry(userId, id)) {
             return baseInsulin;
         } else {
-            throw new SQLException("Operation failed.");
+            throw new SQLException("Create insulin error.");
         }
 
     }
@@ -66,11 +66,11 @@ public class JdbcInsulinDao implements InsulinDao {
     @Override
     public boolean updateInsulin(BaseInsulin baseInsulin) throws SQLException {
 
-        String sql = "UPDATE insulin SET base_level = ?, avg_level = ? time_last_dose = ?, insulin_brand_name = ?, " +
+        String sql = "UPDATE insulin SET base_level = ?, avg_level = ?, time_last_dose = ?, insulin_brand_name = ?, " +
                 "insulin_strength = ?, insulin_ratio = ? WHERE insulin_id = ?;";
 
         int success = jdbcTemplate.update(sql, baseInsulin.getBaseLevel(), baseInsulin.getAverageLevel(), baseInsulin.getTimeSinceLastDose(),
-                baseInsulin.getInsulinStrength(), baseInsulin.getInsulinRatio(), baseInsulin.getInsulinId());
+                baseInsulin.getInsulinBrandName(), baseInsulin.getInsulinStrength(), baseInsulin.getInsulinRatio(), baseInsulin.getInsulinId());
 
         if (success == 1) {
             return true;

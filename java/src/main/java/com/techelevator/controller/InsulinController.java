@@ -56,8 +56,8 @@ public class InsulinController {
     @RequestMapping(path = "/insulin", method = RequestMethod.PUT)
     public boolean updateInsulinDetails(@RequestBody BaseInsulin baseInsulin, Principal principal) {
         try {
-            if (insulinValidationHelper.validateInsulin(baseInsulin, userDao.findIdByUsername(principal.getName()))) {
-                return insulinDao.updateInsulin(baseInsulin);
+            if (insulinValidationHelper.validateInsulinUpdate(baseInsulin, userDao.findIdByUsername(principal.getName()))) {
+                return true;
             } else {
                 throw new ServersideOpException("Could not validate insulin.");
             }
