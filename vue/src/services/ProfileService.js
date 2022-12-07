@@ -23,8 +23,8 @@ export default {
     return axios.get('/insulin', user)
   },
 
-  postNewBloodSugar() {
-    return axios.post('/blood_sugar')
+  postNewBloodSugar(bloodSugar) {
+    return axios.post('/blood-sugars', bloodSugar)
   }
 
 }
