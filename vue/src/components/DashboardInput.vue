@@ -5,7 +5,7 @@
     <h2>How Much Insulin Do I Need?</h2>
     </div>
    <div>
-     <form id=insulin-reader class="form" v-on:submit.prevent="">
+     <form id=insulin-reader class="readings-form" v-on:submit.prevent="">
         <div class="dashboard-reader-form-element">
                 <label for="blood_sugar">Insert Current Blood Sugar: </label>
                 <input placeholder="Insert Current Blood Sugar" name="blood_sugar_input" type="text" v-model="Reading.bloodSugar" />
@@ -84,7 +84,7 @@ export default {
     border: 1px solid black;
   }
 
-  form {
+  .readings-form {
         display: flex;
         align-items: center;
         justify-content: center;
