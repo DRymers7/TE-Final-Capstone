@@ -11,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 import java.sql.SQLException;
+import java.util.Map;
 
 @RestController
 public class DosageController {
@@ -33,7 +34,7 @@ public class DosageController {
     }
 
     @RequestMapping(path = "/dose", method = RequestMethod.GET)
-    public int getUserInsulinDose(Principal principal) {
+    public Map<String,Integer> getUserInsulinDose(Principal principal) {
         try {
             return insulinCalculator.calculateUserInsulinDose(userDao.findIdByUsername(principal.getName()));
         } catch (NullPointerException | SQLException e) {

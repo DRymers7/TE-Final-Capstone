@@ -9,8 +9,10 @@ import com.techelevator.model.ModelClasses.BloodSugar;
 import com.techelevator.model.ModelClasses.Meal;
 import com.techelevator.services.FDAService;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,19 +37,61 @@ public class InsulinCalculator {
 
     // insert logic to throw alerts for non-optimal ranges
 
-    public int calculateUserInsulinDose(int userId) throws SQLException, NullPointerException {
-        List<Integer> targetRanges = getUserBloodSugarData(userId);
-        int carbs = getUserCarbs(userId);
-        double userRatio = getUserInsulinInfo(userId);
-        return (int) Math.ceil(carbs/userRatio);
+    // look at target low vs target high with current bs (input_level)
+    // if the bs is higher than the high, we need a correction dose
+    // if it is lower than the lower bound we need an alert
+    // if it is within the range we need a normal calc
+
+    public Map<String,Integer> calculateUserInsulinDose(int userId) throws SQLException, NullPointerException {
+        Map<String, Integer> dosageKey = new HashMap<>();
+        if (determineCorrectionalDose(userId) == 1) {
+             dosageKey.put("CorrectionalDoseHigh", createHighCorrectionalDose(userId));
+             return dosageKey;
+        } else if (determineCorrectionalDose(userId) == 2) {
+             dosageKey.put("CorrectionalDoseLow", createLowCorrectionalDose(userId));
+             return dosageKey;
+        } else {
+            int carbs = getUserCarbs(userId);
+            double userRatio = getUserInsulinInfo(userId).getInsulinRatio();
+            dosageKey.put("CorrectionalDoseNormal", (int) Math.ceil(carbs/userRatio));
+            return dosageKey;
+        }
     }
 
-    private List<Integer> getUserBloodSugarData(int userId) throws NullPointerException{
+    private int determineCorrectionalDose(int userId) { // switch statement
+        Map<String,Integer> userBloodSugar = getUserBloodSugarData(userId);
+        int targetLow = userBloodSugar.get("TargetLow");
+        int targetHigh = userBloodSugar.get("TargetHigh");
+        int currentLevel = userBloodSugar.get("CurrentLevel");
+        if (currentLevel > targetHigh) {
+            return 1;
+        } else if (currentLevel < targetLow) {
+            return 2;
+        } else {
+            return 3;
+        }
+
+    }
+
+    private int createHighCorrectionalDose(int userId) throws SQLException {
+        double correctionFactor = (1700 / getUserInsulinInfo(userId).getBaseLevel());
+        Map<String,Integer> bloodSugars = getUserBloodSugarData(userId);
+        return (int) Math.ceil((bloodSugars.get("CurrentLevel") - bloodSugars.get("TargetHigh")) / correctionFactor);
+    }
+
+    private int createLowCorrectionalDose(int userId) throws SQLException {
+        double correctionFactor = (1700 / getUserInsulinInfo(userId).getBaseLevel());
+        Map<String,Integer> bloodSugars = getUserBloodSugarData(userId);
+        return (int) Math.ceil((bloodSugars.get("CurrentLevel") - bloodSugars.get("TargetLow")) / correctionFactor);
+    }
+
+    private Map<String,Integer> getUserBloodSugarData(int userId) throws NullPointerException{
         BloodSugar mostRecentReading = bloodSugarDao.getMostRecentReading(userId);
-        List<Integer> targetBloodSugarRange = new ArrayList<>();
-        targetBloodSugarRange.add(mostRecentReading.getTargetLow());
-        targetBloodSugarRange.add(mostRecentReading.getTargetHigh());
-        return targetBloodSugarRange;
+        Map<String,Integer> dataMap = new HashMap<>();
+        dataMap.put("CurrentLevel", mostRecentReading.getInputLevel());
+        dataMap.put("TargetLow", mostRecentReading.getTargetLow());
+        dataMap.put("TargetHigh", mostRecentReading.getTargetHigh());
+        return dataMap;
     }
 
     private int getUserCarbs(int userId) throws SQLException {
@@ -55,9 +99,9 @@ public class InsulinCalculator {
         return meal.getCarbs();
     }
 
-    private double getUserInsulinInfo(int userId) throws SQLException {
+    private BaseInsulin getUserInsulinInfo(int userId) throws SQLException {
         BaseInsulin insulin = insulinDao.getPrimaryInsulin(userId);
-        return insulin.getInsulinRatio();
+        return insulin;
     }
 
 
