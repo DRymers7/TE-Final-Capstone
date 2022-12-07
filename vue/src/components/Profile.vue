@@ -36,7 +36,7 @@
         </select>
         <h2>Insulin Ratio</h2>
                 <label for="baseInsulin">Insulin Ratio: </label>
-                <input placeholder="Enter Insulin to Carb Ratio" name="base_insulin" type="text" v-model="Insulin.insulinRation" />
+                <input placeholder="Enter Insulin to Carb Ratio" name="base_insulin" type="text" v-model="Insulin.insulinRatio" />
            <h2>Insulin Type</h2>
             <select class="profile" v-model="Insulin.insulinType" required>
                 <option disabled value="">Select</option>
