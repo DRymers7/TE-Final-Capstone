@@ -14,7 +14,7 @@
           <a class="nav-link" href="#get-started">Get Started</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link nav-link-cta" href="#subscribe">Login</a> <!-- V-bind login -->
+           <router-link class="nav-link nav-link-cta" v-bind:to="{ name:'login' }">Login</router-link>
         </li>
       </ul>
     </nav>

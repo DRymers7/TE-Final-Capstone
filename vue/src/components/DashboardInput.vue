@@ -15,7 +15,6 @@
     </div>
     </form>
   </div>
-
    <div>
      <form id=meal-form class="readings-form" v-on:submit.prevent="">
         <div class="dashboard-reader-form-element">
@@ -36,9 +35,7 @@
     </div>
     </form>
   </div>
-
   </div>
-
   <div class = "table">
     <table>
   <thead>
@@ -61,11 +58,9 @@
   </div>
 </div>
 </template>
-
 <script>
 import DashboardService from '../services/DashboardService';
 export default {
-
     name:"dashboard",
     data(){
       return {
@@ -75,7 +70,6 @@ export default {
           glycemicIndex: "",
           mealTime: "",
         },
-
         Reading: {
                      
                 targetLow: "",
@@ -93,9 +87,7 @@ export default {
       },
 
   methods: {
-
     postNewReading() {
-
       DashboardService.postNewReading(this.Reading)
                   .then(response => {
                 if (response.status==200){
@@ -117,18 +109,16 @@ export default {
       }
     })
   },
-
    resetForm(){
             this.Reading = {};
+            this.Meal = {};
         }
 },
-
   created(){
     DashboardService.getDose()
     .then(response => {
       this.Dose=response.data;
     })
-
   }
 }
 
@@ -137,12 +127,10 @@ export default {
 
 
 </script>
-
 <style>
   table, th, td {
     border: 1px solid black;
   }
-
   .readings-form {
         display: flex;
         align-items: center;
@@ -154,8 +142,5 @@ export default {
         text-align: center;
         width: 50%;
         max-width: 40rem;
-        
     }
-
-
 </style>
