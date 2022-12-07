@@ -125,7 +125,8 @@ export default {
                 targetHigh: ""
             },
 
-            insulinId: 0
+            insulinId: 0,
+            brandNames: ""
         }
 
     },
@@ -160,7 +161,7 @@ export default {
         },
         postNewBloodSugar() {
 
-         ProfileService.postNewBloodSugar()
+         ProfileService.postNewBloodSugar(this.Blood_Sugar)
                   .then(response => {
                 if (response.status==200){
                    this.resetForm();
