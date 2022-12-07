@@ -80,9 +80,9 @@ public class JdbcInsulinDao implements InsulinDao {
     }
 
     @Override
-    public boolean deleteInsulin(BaseInsulin baseInsulin) throws SQLException {
+    public boolean deleteInsulin(BaseInsulin baseInsulin, int userId) throws SQLException {
 
-        deleteFromJoinTable(baseInsulin.getInsulinId());
+        deleteFromJoinTable(baseInsulin.getInsulinId(), userId);
         String sql = "DELETE FROM insulin WHERE insulin_id = ?;";
 
         try {
@@ -91,25 +91,6 @@ public class JdbcInsulinDao implements InsulinDao {
         } catch (InvalidResultSetAccessException e) {
             throw new SQLException("Operation failed.");
         }
-    }
-
-    @Override
-    public BaseInsulin getSingleInsulin(int userId, int insulinId, BaseInsulin insulin) throws SQLException {
-
-        String sql = "SELECT i.insulin_id, base_level, avg_level, time_last_dose, insulin_brand_name, insulin_strength, insulin_ratio " +
-                "FROM insulin i " +
-                "JOIN insulin_user_data_join ij ON i.insulin_id = ij.insulin_id " +
-                "JOIN user_data ud ON ud.user_id = ij.user_id " +
-                "WHERE ud.user_id = ? AND i.insulin_id = ?;";
-
-        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId, insulin);
-
-        if (rowSet.next()) {
-            return mapToRowSetBaseInsulin(rowSet);
-        } else {
-            throw new SQLException("Cannot find single Insulin object");
-        }
-
     }
 
     private boolean createNewJoinInsulinEntry(int userId, Integer insulinId) {
@@ -125,9 +106,9 @@ public class JdbcInsulinDao implements InsulinDao {
 
     }
 
-    private void deleteFromJoinTable(int insulinId) throws SQLException {
+    private void deleteFromJoinTable(int insulinId, int userId) throws SQLException {
         String sql = "DELETE FROM insulin_user_data_join WHERE insulin_id = ? AND user_id = ?;";
-        int rowsAffected = jdbcTemplate.update(sql, insulinId);
+        int rowsAffected = jdbcTemplate.update(sql, insulinId, userId);
         if (rowsAffected != 1) {
             throw new SQLException("Delete failed.");
         }

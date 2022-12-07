@@ -9,4 +9,6 @@ import java.util.List;
 public interface UserDataDao {
 
     UserData getUserData(int userId) throws SQLException;
+    boolean updateUserData(int userId) throws SQLException;
+
 }

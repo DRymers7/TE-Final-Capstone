@@ -68,29 +68,13 @@ public class InsulinController {
     }
 
     @RequestMapping(path = "/insulin", method = RequestMethod.DELETE)
-    public boolean deleteInsulin(@RequestBody BaseInsulin baseInsulin) {
+    public boolean deleteInsulin(@RequestBody BaseInsulin baseInsulin, Principal principal) {
         try {
-            return insulinDao.deleteInsulin(baseInsulin);
+            return insulinDao.deleteInsulin(baseInsulin, userDao.findIdByUsername(principal.getName()));
         } catch (SQLException e) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
     }
-    /*
-    @RequestMapping(path="/dashboard/profile/blood-sugar", method = RequestMethod.GET)
-    public List<BloodSugar> getBloodSugarData(Principal principal) {
-        return bloodSugarDao.getBloodSugarInformation(userDao.findIdByUsername(principal.getName()));
-    }
-
-    //todo make helper pojo that only contains info we're updating
-    @RequestMapping(path="/dashboard/profile/blood-sugar", method = RequestMethod.PUT)
-    public void bloodSugarUpdate(@RequestBody int targetLow, @RequestBody int targetHigh, Principal principal) {
-        bloodSugarDao.updateBloodSugar(targetLow, targetHigh, userDao.findIdByUsername(principal.getName()));
-    }
-
-     */
-
-    //todo write post request for blood_sugar endpoint
-
 
 }
 
