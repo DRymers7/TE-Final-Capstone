@@ -88,6 +88,22 @@ public class JdbcBloodSugarDao implements BloodSugarDao {
         }
     }
 
+    @Override
+    public BloodSugar getMostRecentReading(int userId) throws NullPointerException {
+
+        String sql = "SELECT bs.blood_sugar_id, target_low, target_high, input_level, last_measurement FROM blood_sugar bs JOIN blood_sugar_user_data_join bj ON bj.blood_sugar_id = bs.blood_sugar_id " +
+                "JOIN user_data ud ON ud.user_id = bj.user_id " +
+                "WHERE ud.user_id = ? " +
+                "ORDER BY last_measurement DESC " +
+                "LIMIT 1;";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId);
+        if (rowSet.next()) {
+            return mapRowToObject(rowSet);
+        } else {
+            return null;
+        }
+    }
+
     private boolean createBloodSugarJoinEntry(Integer bloodSugarId, int userId) throws SQLException {
 
         String sql = "INSERT INTO blood_sugar_user_data_join (blood_sugar_id, user_id) VALUES (?, ?) RETURNING blood_sugar_id;";
@@ -106,10 +122,6 @@ public class JdbcBloodSugarDao implements BloodSugarDao {
         jdbcTemplate.update(sql, bloodSugarId, userId);
         return true;
     }
-
-
-    //todo Should return Bloodsugar for integration test
-
 
     private BloodSugar mapRowToObject(SqlRowSet row) {
         BloodSugar bloodSugar = new BloodSugar();

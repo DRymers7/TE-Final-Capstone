@@ -12,5 +12,5 @@ public interface BloodSugarDao {
     BloodSugar createBloodSugarReading(int userId, BloodSugar bloodSugar) throws SQLException;
     boolean updateBloodSugarReading(int bloodSugarId, BloodSugar bloodSugar) throws SQLException;
     boolean deleteBloodSugar(int userId, BloodSugar bloodSugar) throws SQLException;
-
+    BloodSugar getMostRecentReading(int userId) throws NullPointerException;
 }

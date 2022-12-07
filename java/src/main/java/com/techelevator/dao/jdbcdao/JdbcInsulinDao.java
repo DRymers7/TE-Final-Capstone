@@ -107,6 +107,23 @@ public class JdbcInsulinDao implements InsulinDao {
 
     }
 
+    @Override
+    public BaseInsulin getPrimaryInsulin(int userId) throws SQLException {
+
+        String sql = "SELECT i.insulin_id, base_level, avg_level, time_last_dose, insulin_brand_name, insulin_strength, insulin_ratio FROM insulin i " +
+                "JOIN insulin_user_data_join ij ON ij.insulin_id = i.insulin_id " +
+                "JOIN user_data ud ON ud.user_id = ij.user_id " +
+                "WHERE ud.user_id = ? " +
+                "ORDER BY time_last_dose DESC " +
+                "LIMIT 1;";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId);
+        if (rowSet.next()) {
+            return mapToRowSetBaseInsulin(rowSet);
+        } else {
+            throw new SQLException("Could not find primary insulin.");
+        }
+    }
+
     private boolean createNewJoinInsulinEntry(int userId, Integer insulinId) {
 
         String sql = "INSERT INTO insulin_user_data_join (user_id, insulin_id) VALUES (?, ?) RETURNING insulin_id;";
