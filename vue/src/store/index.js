@@ -25,10 +25,13 @@ export default new Vuex.Store({
       return {
         Insulin: {
           
+        },
+        Reading: {
+
         }
 
-
       }
+      
 
     },
 
