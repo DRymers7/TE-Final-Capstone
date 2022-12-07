@@ -1,18 +1,16 @@
 package com.techelevator.controller;
 
-import com.techelevator.dao.dao.BloodSugarDao;
 import com.techelevator.dao.dao.InsulinDao;
 import com.techelevator.dao.dao.UserDao;
 import com.techelevator.exceptions.ServersideOpException;
+import com.techelevator.helperclasses.InsulinValidationHelper;
 import com.techelevator.model.ModelClasses.BaseInsulin;
-import com.techelevator.model.ModelClasses.BloodSugar;
-import com.techelevator.model.ModelClasses.Insulin;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
+import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -21,23 +19,21 @@ public class InsulinController {
 
     private InsulinDao insulinDao;
     private UserDao userDao;
+    private InsulinValidationHelper insulinValidationHelper;
 
 
-    public InsulinController(InsulinDao insulinDao, UserDao userDao) {
+    public InsulinController(InsulinDao insulinDao, UserDao userDao)  {
         this.insulinDao = insulinDao;
         this.userDao = userDao;
+        this.insulinValidationHelper = new InsulinValidationHelper(insulinDao);
     }
 
     @RequestMapping(path = "/insulin", method = RequestMethod.GET)
-    public List<Insulin> getActiveInsulin(Principal principal) {
+    public List<BaseInsulin> getActiveInsulin(Principal principal) {
         try {
-            if (insulinDao.getInsulinList(userDao.findIdByUsername(principal.getName())).size() == 0) {
-                throw new ServersideOpException("No insulin associated with this account");
-            } else {
-                return insulinDao.getInsulinList(userDao.findIdByUsername(principal.getName()));
-            }
-
-        } catch (ServersideOpException e) {
+            return insulinDao.getInsulinList(userDao.findIdByUsername(principal.getName()));
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
@@ -50,44 +46,35 @@ public class InsulinController {
             int userId = userDao.findIdByUsername(principal.getName());
             return insulinDao.createNewInsulin(userId, baseInsulin);
 
-        } catch (ServersideOpException e) {
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
     }
 
     @RequestMapping(path = "/insulin", method = RequestMethod.PUT)
-    public void updateInsulinDetails(@RequestBody BaseInsulin baseInsulin) {
+    public boolean updateInsulinDetails(@RequestBody BaseInsulin baseInsulin, Principal principal) {
         try {
-            insulinDao.updateInsulin(baseInsulin);
-        } catch (ServersideOpException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            if (insulinValidationHelper.validateInsulinUpdate(baseInsulin, userDao.findIdByUsername(principal.getName()))) {
+                return true;
+            } else {
+                throw new ServersideOpException("Could not validate insulin.");
+            }
+        } catch (SQLException | ServersideOpException e) {
+            System.out.println(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
     }
 
     @RequestMapping(path = "/insulin", method = RequestMethod.DELETE)
-    public void deleteInsulin(@RequestBody BaseInsulin baseInsulin) {
+    public boolean deleteInsulin(@RequestBody BaseInsulin baseInsulin) {
         try {
-            insulinDao.deleteInsulin(baseInsulin);
-        } catch (ServersideOpException e) {
+            return insulinDao.deleteInsulin(baseInsulin);
+        } catch (SQLException e) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
     }
-
-    // get specific insulin object
-
-    @RequestMapping(path="/dashboard/profile/base-insulin", method= RequestMethod.PUT)
-    public void setBaseInsulin(Principal principal) {
-        int userID = userDao.findIdByUsername(principal.getName());
-        insulinDao.setBaseLevel(10, userID);
-    }
-
-    @RequestMapping(path="/dashboard/profile/base-insulin", method = RequestMethod.GET)
-    public Insulin getInsulinTest() {
-        return insulinDao.getInsulin();
-    }
-
-
     /*
     @RequestMapping(path="/dashboard/profile/blood-sugar", method = RequestMethod.GET)
     public List<BloodSugar> getBloodSugarData(Principal principal) {
