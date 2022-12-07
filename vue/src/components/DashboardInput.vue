@@ -54,6 +54,10 @@ export default {
           Carbs: "",
           Food: "",
           Meal_Time: "",
+        },
+
+        Reading: {
+          
         }
 
       }
