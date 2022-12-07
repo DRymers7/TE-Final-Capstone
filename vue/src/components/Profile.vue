@@ -24,8 +24,8 @@
      <form id=insulin class="profile" v-on:submit.prevent="postNewInsulin">
         <div class="profile-insulin-form-element">
         <h2>Insulin Name</h2>
-        <select class="profile" v-model="Insulin.name">
-            <option value=""></option>
+        <select class="profile" v-for="name in Brands" v-bind:key="name.id" v-model="BaseInsulin.insulinBrandName">
+        <option value="">{{name}}</option>
         </select>
         <h2>Insulin Ratio</h2>
                 <label for="baseInsulin">Insulin Ratio</label>
@@ -61,6 +61,7 @@
 
 <script>
 import ProfileService from '../services/ProfileService';
+import InsulinService from '../services/InsulinService';
 export default {
 
     name:"profile",
@@ -72,9 +73,9 @@ export default {
              baseLevel: "",
              averageLevel: "",
              timeSinceLastDose: "",
-             insulinType: "",
+             insulinBrandName: "",
              insulinStrength: "",
-             insulinRation: ""
+             insulinRatio: ""
             },
 
 
@@ -92,7 +93,8 @@ export default {
                 insulinStrength: "",
                 insulinRation: ""
             },
-            insulinId: 0
+            insulinId: 0,
+            brandNames: []
         }
 
     },
@@ -115,23 +117,31 @@ export default {
             ProfileService.setInsulinStrength(insulinStrength);
             },
         postNewInsulin(){
-            this.Insulin.insulinId = this.insulinId;
+            this.BaseInsulin.insulinId = this.insulinId;
 
-            ProfileService.postNewInsulin(this.Insulin, this.insulinId)
+            ProfileService.postNewInsulin(this.BaseInsulin, this.BaseInsulin.insulinId)
             .then(response => {
                 if (response.status==200){
                    this.resetForm();
-                } else {
-                    alert("unexpected response returned: ");
                 }
-            })
+            })  .catch (error => console.error(error))
+
 
         },
 
         resetForm(){
             this.Insulin = {};
         }
-    }
+    },
+
+        created(){
+            InsulinService.getInsulinBrands()
+            .then(response => {
+                this.brandNames =response.data;
+            })
+            .catch (error => console.error(error))
+    
+        }
 
  
         }

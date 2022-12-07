@@ -89,7 +89,8 @@ export default {
 .footer {
 padding: 1em;
 margin: 2rem auto 0;
-background-color: #f8f8f8;
+background: linear-gradient(120DEG, #dbe9eeff,#95aac2);
+
 }
 
 .footer-nav {

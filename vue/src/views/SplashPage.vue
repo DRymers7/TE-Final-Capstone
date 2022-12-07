@@ -23,7 +23,6 @@ export default {
 }
 body {
     font-family: 'Open Sans', sans-serif;
-background: linear-gradient(120DEG, #dbe9eeff, #35495E)
 }
 </style>
 
