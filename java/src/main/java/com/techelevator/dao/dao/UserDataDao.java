@@ -1,5 +1,4 @@
 package com.techelevator.dao.dao;
-
 import com.techelevator.model.ModelClasses.UserData;
 
 import java.sql.SQLException;
@@ -9,4 +8,6 @@ import java.util.List;
 public interface UserDataDao {
 
     UserData getUserData(int userId) throws SQLException;
+
+
 }

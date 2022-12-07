@@ -34,6 +34,7 @@ public class JdbcUserDataDao implements UserDataDao {
 
     }
 
+
     private UserData mapRowToUserData(SqlRowSet rowSet) {
         UserData userData = new UserData();
         userData.setUserId(rowSet.getInt("user_id"));
@@ -50,3 +51,6 @@ public class JdbcUserDataDao implements UserDataDao {
     }
 
 }
+
+
+

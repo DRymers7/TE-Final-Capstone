@@ -236,6 +236,7 @@ html {
   box-sizing: border-box;
   box-shadow: 0 15px 25px rgba(0,0,0,.6);
   border-radius: 10px;
+  margin-top: 30px;
 }
 
 .login-box h2 {
@@ -381,6 +382,10 @@ html {
   50%,100% {
     bottom: 100%;
   }
+}
+
+header {
+  margin-bottom: 0px;
 }
 
 </style>

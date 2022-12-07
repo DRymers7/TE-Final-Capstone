@@ -8,6 +8,7 @@ import store from '../store/index'
 import Profile from '../components/Profile'
 import NotFound from '../views/NotFound'
 import SplashPage from '../views/SplashPage'
+import Dashboard from '../views/Dashboard'
 
 Vue.use(Router)
 
@@ -69,6 +70,11 @@ const router = new Router({
       path: "/about",
       name: "splash",
       component: SplashPage
+    },
+    {
+      path: "/dashboard",
+      name: "dashboard",
+      component: Dashboard
     },
     {
       path: '*',

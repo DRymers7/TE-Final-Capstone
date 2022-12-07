@@ -80,9 +80,9 @@ public class JdbcInsulinDao implements InsulinDao {
     }
 
     @Override
-    public boolean deleteInsulin(BaseInsulin baseInsulin) throws SQLException {
+    public boolean deleteInsulin(BaseInsulin baseInsulin, int userId) throws SQLException {
 
-        deleteFromJoinTable(baseInsulin.getInsulinId());
+        deleteFromJoinTable(baseInsulin.getInsulinId(), userId);
         String sql = "DELETE FROM insulin WHERE insulin_id = ?;";
 
         try {
@@ -94,21 +94,16 @@ public class JdbcInsulinDao implements InsulinDao {
     }
 
     @Override
-    public BaseInsulin getSingleInsulin(int userId, int insulinId, BaseInsulin insulin) throws SQLException {
+    public List<String> insulinBrandNames() {
+        List<String> brandNames = new ArrayList<>();
 
-        String sql = "SELECT i.insulin_id, base_level, avg_level, time_last_dose, insulin_brand_name, insulin_strength, insulin_ratio " +
-                "FROM insulin i " +
-                "JOIN insulin_user_data_join ij ON i.insulin_id = ij.insulin_id " +
-                "JOIN user_data ud ON ud.user_id = ij.user_id " +
-                "WHERE ud.user_id = ? AND i.insulin_id = ?;";
+        String sql = "SELECT insulin_brand_name FROM insulin_information;";
 
-        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId, insulin);
-
-        if (rowSet.next()) {
-            return mapToRowSetBaseInsulin(rowSet);
-        } else {
-            throw new SQLException("Cannot find single Insulin object");
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql);
+        while (rowSet.next()) {
+            brandNames.add(mapRowToInsulinBrandName(rowSet));
         }
+        return brandNames;
 
     }
 
@@ -125,9 +120,9 @@ public class JdbcInsulinDao implements InsulinDao {
 
     }
 
-    private void deleteFromJoinTable(int insulinId) throws SQLException {
+    private void deleteFromJoinTable(int insulinId, int userId) throws SQLException {
         String sql = "DELETE FROM insulin_user_data_join WHERE insulin_id = ? AND user_id = ?;";
-        int rowsAffected = jdbcTemplate.update(sql, insulinId);
+        int rowsAffected = jdbcTemplate.update(sql, insulinId, userId);
         if (rowsAffected != 1) {
             throw new SQLException("Delete failed.");
         }
@@ -159,6 +154,10 @@ public class JdbcInsulinDao implements InsulinDao {
         insulin.setInsulinBrandName(rowSet.getString("insulin_brand_name"));
         insulin.setInsulinStrength(rowSet.getString("insulin_strength"));
         insulin.setInsulinRatio(rowSet.getDouble("insulin_ratio"));
+    }
+
+    private String mapRowToInsulinBrandName(SqlRowSet rowSet) {
+        return rowSet.getString("insulin_brand_name");
     }
 
 }

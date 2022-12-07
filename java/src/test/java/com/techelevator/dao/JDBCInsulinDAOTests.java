@@ -1,6 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.dao.jdbcdao.JdbcInsulinDao;
+import com.techelevator.helperclasses.InsulinValidationHelper;
 import com.techelevator.model.ModelClasses.BaseInsulin;
 import com.techelevator.model.ModelClasses.InsulinInformation;
 import org.junit.Assert;
@@ -15,16 +16,18 @@ import java.util.List;
 
 public class JDBCInsulinDAOTests extends BaseDaoTests {
 
-    private static final BaseInsulin BASE_INSULIN_1 = new BaseInsulin(3, 10.0, 10.0, Timestamp.valueOf("2022-12-11 00:00:00"), "test", "test", 0.40);
+    private static final BaseInsulin BASE_INSULIN_1 = new BaseInsulin(3, 10.0, 10.0, Timestamp.valueOf("2022-12-11 00:00:00"), "Admelog", "Test Str", 0.40);
     private static final BaseInsulin BASE_INSULIN_2 = new BaseInsulin(3, 10.0, 0, Timestamp.valueOf("2022-12-11 00:00:00"), null, "test", 0);
 
     private JdbcInsulinDao dao;
+    private InsulinValidationHelper insulinValidationHelper;
 
 
     @Before
     public void setup(){
         JdbcTemplate jdbcTemplate= new JdbcTemplate(dataSource);
         dao = new JdbcInsulinDao(jdbcTemplate);
+        insulinValidationHelper = new InsulinValidationHelper(dao);
     }
 
     @Test
@@ -39,23 +42,40 @@ public class JDBCInsulinDAOTests extends BaseDaoTests {
 
     @Test
     public void create_new_insulin_entry_test() throws SQLException {
-        BaseInsulin insulin = dao.createNewInsulin(1, BASE_INSULIN_1);
+        BaseInsulin insulin = dao.getInsulinList(1).get(0);
         int newId = insulin.getInsulinId();
-        // INSULIN_1.setInsulinId(newId);
-        // Assert.assertEquals(insulin.getInsulinId(), INSULIN_1.getInsulinId());
+        BASE_INSULIN_1.setInsulinId(newId);
+        Assert.assertEquals(insulin.getInsulinId(), BASE_INSULIN_1.getInsulinId());
     }
 
     @Test
     public void update_insulin_test() throws SQLException {
-        dao.createNewInsulin(1, BASE_INSULIN_1);
-        BaseInsulin insulin = new BaseInsulin(3, 11.0, 11.0,Timestamp.valueOf("2022-2-14 00:00:00"), "test1", "test1", 0.41);
+        BaseInsulin insulin = dao.getInsulinList(1).get(0);
+        insulin.setInsulinStrength("");
+        insulin.setBaseLevel(0);
+        insulin.setAverageLevel(99);
         Assert.assertTrue(dao.updateInsulin(insulin));
     }
 
     @Test
+    public void update_insulin_validation_test() throws SQLException {
+        BaseInsulin insulin = dao.getInsulinList(1).get(0);
+        insulin.setInsulinStrength("");
+        insulin.setBaseLevel(0);
+        insulin.setAverageLevel(99);
+        Assert.assertTrue(insulinValidationHelper.validateInsulinUpdate(insulin, 1));
+    }
+
+    @Test
     public void delete_insulin_test() throws SQLException {
-        BaseInsulin baseInsulin = dao.createNewInsulin(1, BASE_INSULIN_1);
-        Assert.assertTrue(dao.deleteInsulin(baseInsulin));
+        BaseInsulin baseInsulin = dao.getInsulinList(1).get(0);
+        Assert.assertTrue(dao.deleteInsulin(baseInsulin, 1));
+    }
+
+    @Test
+    public void get_brand_names_test() {
+        List<String> brandNames = dao.insulinBrandNames();
+        Assert.assertEquals(14, brandNames.size());
     }
 
 }

@@ -23,10 +23,12 @@ export default {
 }
 body {
     font-family: 'Open Sans', sans-serif;
+
 }
+
 </style>
 
-     background: linear-gradient(120DEG, #dbe9eeff,#35495E);
+     background: linear-gradient(120DEG, #dbe9eeff, #35495E);
     font-family: 'Open Sans', sans-serif;
 
 

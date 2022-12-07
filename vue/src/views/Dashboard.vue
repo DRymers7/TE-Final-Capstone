@@ -1,11 +1,19 @@
 <template>
-  <div></div>
+  <div class = 'dashboard'>
+    <h1>Dashboard</h1>
+     <Dashboard />
+  </div>
 </template>
 
 <script>
-export default {
+import Dashboard from '../components/DashboardInput'
 
+export default {
+  components: {
+    Dashboard
+  }
 }
+
 </script>
 
 <style>

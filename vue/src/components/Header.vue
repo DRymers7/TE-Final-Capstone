@@ -1,7 +1,7 @@
 <template>
   <div>
     <header id="header" class="header">
-    <img src="../assets/insulin-hero-logo__1_-removebg-preview.png" class="logo" alt="Insulin Hero" id="header-img" />
+    <img src="../assets/insulin_hero-removebg-preview.png" class="logo" alt="Insulin Hero" id="header-img" />
     <nav id="nav-bar" class="nav">
       <ul class="nav-list">
         <li class="nav-item">
@@ -84,5 +84,6 @@ export default {
 .header > img {
   max-width: 100px;
   scale: 150%;
+  margin-left: 20px;
 }
 </style>
