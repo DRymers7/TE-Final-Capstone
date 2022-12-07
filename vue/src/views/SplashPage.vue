@@ -26,7 +26,7 @@ body {
 
     background: linear-gradient(120DEG, #dbe9eeff, #35495E);
 
-
+}
 </style>
 
     font-family: 'Open Sans', sans-serif;
