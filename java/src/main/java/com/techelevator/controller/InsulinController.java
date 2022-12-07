@@ -3,6 +3,7 @@ package com.techelevator.controller;
 import com.techelevator.dao.dao.InsulinDao;
 import com.techelevator.dao.dao.UserDao;
 import com.techelevator.exceptions.ServersideOpException;
+import com.techelevator.helperclasses.InsulinCalculator;
 import com.techelevator.helperclasses.InsulinValidationHelper;
 import com.techelevator.model.ModelClasses.BaseInsulin;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,6 @@ public class InsulinController {
     private InsulinDao insulinDao;
     private UserDao userDao;
     private InsulinValidationHelper insulinValidationHelper;
-
 
     public InsulinController(InsulinDao insulinDao, UserDao userDao)  {
         this.insulinDao = insulinDao;

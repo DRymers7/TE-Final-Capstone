@@ -12,5 +12,5 @@ public interface MealDao {
     Meal createUserMeal(int userId, Meal meal) throws SQLException ;
     boolean updateUserMealData(int mealId, Meal meal) throws SQLException;
     boolean deleteMealData(int userId, Meal meal) throws SQLException;
-
+    Meal getMostRecentMeal(int userId) throws SQLException;
 }

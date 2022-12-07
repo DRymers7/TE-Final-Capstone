@@ -21,6 +21,8 @@ public class InsulinValidationHelper {
         return populateResultingObject(cleanAndPrepareForPopulation(insulinList), insulin);
     }
 
+    // add method to check double entries
+
     private BaseInsulin cleanAndPrepareForPopulation(List<BaseInsulin> list) throws SQLException {
         if (list.size() == 1) {
             return list.get(0);

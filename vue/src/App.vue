@@ -28,7 +28,7 @@ body {
   margin:0;
   padding:0;
   font-family: open sans, Arial, Helvetica, sans-serif;
-
+  color: whitesmoke
 
 }
 

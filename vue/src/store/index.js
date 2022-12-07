@@ -23,20 +23,39 @@ export default new Vuex.Store({
 
     data(){
       return {
-        Insulin: {
-          
-        },
+        
         Reading: {
 
-        }
+        },
 
+        insulinBrands: 
+        [],
+        
+        Insulin: {
+            insulinId: "",
+            baseLevel: "",
+            averageLevel: "",
+            timeSinceLastDose: "",
+            insulinBrandName: "",
+            insulinStrength: "",
+            insulinRatio: ""
+        },
       }
       
 
     },
 
     created(){
+
+
     
+    },
+
+    Methods: {
+
+
+
+
     }
 
 

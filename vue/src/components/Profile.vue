@@ -3,35 +3,42 @@
     <div>
      <h1>Health Setup</h1>
     <div class="profile">
-    <form id=baseInsulin v-on:submit.prevent="setBaseInsulin">
+    <form id=health v-on:submit.prevent="setHealth">
     <div class="profile-baseline-form-element">
-      <label for="baseInsulin">Base Insulin</label>
-      <input placeholder="Enter Base Insulin Level" name="base_insulin" type="text" v-model="BaseInsulin.baseInsulin" />
+      <label for=""></label>
+      <input placeholder="Enter Age" type=text/>
     </div>
     <div class="actions">
-      <button type="submit" v-on:click="setBaseInsulin()">Update Profile</button>
+      <button type="submit" v-on:click="setHealth()">Update Profile</button>
     </div>
   </form>
   </div>
 
 
 
-
+<!-- Form is submitting twice, used required to block but second submission error still shows -->
   <div>
       <h2>My Insulin Details</h2>
   </div>
  
      <form id=insulin class="profile">
         <div class="profile-insulin-form-element">
+             <form id=baseInsulin v-on:submit.prevent="setBaseInsulin">
+             <div class="profile-baseline-form-element">
+         <label for="baseInsulin">Base Insulin</label>
+         <input placeholder="Enter Base Insulin Level" name="base_insulin" type="text" v-model="Insulin.baseLevel" />
+        </div>
+
+  </form>
         <h2>Insulin Name</h2>
-        <select class="profile" v-model="Insulin.name">
-            <option value=""></option>
+        <select class="profile" v-model="Insulin.insulinBrandName" required>
+        <option v-for="name in brandNames" v-bind:key="name" >{{name}}</option>
         </select>
         <h2>Insulin Ratio</h2>
                 <label for="baseInsulin">Insulin Ratio: </label>
                 <input placeholder="Enter Insulin to Carb Ratio" name="base_insulin" type="text" v-model="Insulin.insulinRation" />
            <h2>Insulin Type</h2>
-            <select class="profile" v-model="Insulin.insulinType">
+            <select class="profile" v-model="Insulin.insulinType" required>
                 <option disabled value="">Select</option>
                 <option>Rapid-Acting</option>
                 <option>Short-Acting</option>
@@ -41,7 +48,7 @@
                 
             </select>
           <h2>Insulin Strength</h2>
-            <select class="profile" v-model="Insulin.insulinStrength">
+            <select class="profile" v-model="Insulin.insulinStrength" required>
                 <option disabled value="">Select</option>
                 <option>U-100</option>
                 <option>U-200</option>
@@ -78,6 +85,7 @@
 
 <script>
 import ProfileService from '../services/ProfileService';
+import InsulinService from '../services/InsulinService';
 export default {
 
     name:"profile",
@@ -89,9 +97,9 @@ export default {
              baseLevel: "",
              averageLevel: "",
              timeSinceLastDose: "",
-             insulinType: "",
+             insulinBrandName: "",
              insulinStrength: "",
-             insulinRation: ""
+             insulinRatio: "",
             },
 
 
@@ -107,7 +115,8 @@ export default {
                 averageLevel: "",
                 insulinType: "",
                 insulinStrength: "",
-                insulinRation: ""
+                insulinRatio: "",
+                insulinBrandName: ""
             },
 
             Blood_Sugar: {
@@ -139,14 +148,13 @@ export default {
             },
         postNewInsulin(){
 
-            ProfileService.postNewInsulin(this.Insulin, this.insulinId)
+            ProfileService.postNewInsulin(this.Insulin, this.Insulin.insulinId)
             .then(response => {
                 if (response.status==200){
                    this.resetForm();
-                } else {
-                    alert("unexpected response returned: ");
                 }
-            })
+            })  .catch (error => console.error(error))
+
 
         },
         postNewReading() {
@@ -164,7 +172,16 @@ export default {
         resetForm(){
             this.Insulin = {};
         }
-    }
+    },
+
+        created(){
+            InsulinService.getInsulinBrands()
+            .then(response => {
+                this.brandNames =response.data;
+            })
+            .catch (error => console.error(error))
+    
+        }
 
  
         }
