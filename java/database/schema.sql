@@ -51,21 +51,9 @@ CREATE TABLE user_data (
 	activity_level varchar(16),
 	emergency_contact_1 varchar(32),
 	emergency_contact_2 varchar(32),
-	emergency_contact_1 varchar(32),
-	emergency_contact_2 varchar(32),
 	-- bmi (weight/height)**2 calc on server
 	
 	CONSTRAINT FK_user_data_user FOREIGN KEY (user_id) REFERENCES users(user_id)
-);
-
-CREATE TABLE insulin_information (
-	insulin_brand_name varchar(32) NOT NULL PRIMARY KEY,
-	insulin_type varchar(32) NOT NULL,
-	half_life int, --minutes
-	onset_low int, --display information for when to check blood sugar
-	onset_high int,
-	peak int,
-	duration int
 );
 
 CREATE TABLE insulin_information (
@@ -84,11 +72,7 @@ CREATE TABLE insulin (
 	avg_level decimal(10,3),
 	time_last_dose TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	insulin_brand_name varchar(32),
-	insulin_brand_name varchar(32),
 	insulin_strength varchar(32),
-	insulin_ratio decimal(3,2) NOT NULL,
-	
-	CONSTRAINT FK_insulin_insulin_information FOREIGN KEY (insulin_brand_name) REFERENCES insulin_information(insulin_brand_name)
 	insulin_ratio decimal(3,2) NOT NULL,
 	
 	CONSTRAINT FK_insulin_insulin_information FOREIGN KEY (insulin_brand_name) REFERENCES insulin_information(insulin_brand_name)
