@@ -50,9 +50,10 @@ export default {
     name:"dashboard",
     data(){
       return {
-        Reading: {
-          bloodSugar: "",
-          carbs: ""
+        Meal: {
+          Carbs: "",
+          Food: "",
+          Meal_Time: "",
         }
 
       }

@@ -57,13 +57,6 @@
                 <option>U-500</option>
             </select>
                <div class="actions">
-        <div>
-          <h2>Target Blood Sugar Range</h2>
-                <label for="target_low">Target Low: </label>
-                <input placeholder="Enter Target Low" name="target_low" type="text" v-model="Blood_Sugar.targetLow" /> 
-                <label for="target_high">Target High: </label>
-                <input placeholder="Enter Target High" name="target_high" type="text" v-model="Blood_Sugar.targetHigh" />
-        </div>
       <button type="submit" v-on:click="postNewInsulin(),resetForm()">Update Profile</button>
         </div>
     </div>
@@ -76,7 +69,14 @@
     
      <form id=blood_sugar class="profile">
         <div>
-            </div>
+            <h2>Target Blood Sugar Range</h2>
+                <label for="target_low">Target Low: </label>
+                <input placeholder="Enter Target Low" name="target_low" type="text" v-model="Blood_Sugar.targetLow" /> 
+                <label for="target_high">Target High: </label>
+                <input placeholder="Enter Target High" name="target_high" type="text" v-model="Blood_Sugar.targetHigh" />
+                <button type="submit" v-on:click="postNewBloodSugar(),resetBloodSugarForm()">Update Blood Sugar</button>
+        </div>
+         
     </form>
 
   </div>
@@ -120,11 +120,13 @@ export default {
             },
 
             Blood_Sugar: {
+                bloodSugarId: "",
                 targetLow: "",
                 targetHigh: ""
             },
 
-            insulinId: 0
+            insulinId: 0,
+            brandNames: ""
         }
 
     },
@@ -157,9 +159,9 @@ export default {
 
 
         },
-        postNewReading() {
+        postNewBloodSugar() {
 
-         ProfileService.postNewReading(this.Blood_Sugar)
+         ProfileService.postNewBloodSugar(this.Blood_Sugar)
                   .then(response => {
                 if (response.status==200){
                    this.resetForm();
@@ -171,6 +173,10 @@ export default {
 
         resetForm(){
             this.Insulin = {};
+            this.Blood_Sugar = {}
+        },
+        resetBloodSugarForm(){
+            this.Blood_Sugar = {}
         }
     },
 
