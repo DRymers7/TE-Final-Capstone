@@ -2,8 +2,15 @@ import axios from 'axios';
   
 
 export default {
-    postNewReading() {
-        return axios.post('/') 
+    postNewReading(reading) {
+        return axios.post('/blood-sugars',reading) 
       },
+
+    postNewMeal(meal) {
+      return axios.post('/meals', meal)
+    },
     
+    getDose() {
+      return axios.get('/dose')
+    }
 }

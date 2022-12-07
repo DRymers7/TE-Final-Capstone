@@ -5,19 +5,38 @@
     <h2>How Much Insulin Do I Need?</h2>
     </div>
    <div>
-     <form id=insulin-reader class="readings-form" v-on:submit.prevent="">
+     <form id=blood-sugar-reading-form class="readings-form" v-on:submit.prevent="">
         <div class="dashboard-reader-form-element">
                 <label for="blood_sugar">Insert Current Blood Sugar: </label>
-                <input placeholder="Insert Current Blood Sugar" name="blood_sugar_input" type="text" v-model="Reading.bloodSugar" />
-        <h2></h2>
-                <label for="carb_count">Insert Amount of Carbs: </label>
-                <input placeholder="Enter Insulin to Carb Ratio" name="carb_input" type="text" v-model="Reading.carbs" />
+                <input placeholder="Insert Current Blood Sugar" name="blood_sugar_input" type="number" v-model="Reading.inputLevel" />
            <div class="actions">
       <button type="submit" v-on:click="postNewReading(), resetForm()" >Submit</button>
         </div>
     </div>
     </form>
   </div>
+
+   <div>
+     <form id=meal-form class="readings-form" v-on:submit.prevent="">
+        <div class="dashboard-reader-form-element">
+                <label for="carb_count">Insert Amount of Carbs: </label>
+                <input placeholder="Input Carbs Eaten" name="carb_input" type="number" v-model="Meal.carbs" />
+                <h2></h2>
+                <label for="food_eaten">Describe Meal Eaten: </label>
+                <input placeholder="What did you eat?" name="food_input" type="text" v-model="Meal.food" />
+                <h2></h2>
+                <label for="glycemic_index">GlycemicIndex: </label>
+                <input placeholder="" name="glycemic_index_input" type="number" v-model="Meal.glycemicIndex" />
+           <div class="actions">
+      <button type="submit" v-on:click="postNewMeal()" >Submit</button>
+        </div>
+        <div>
+          <button type="submit">Get Dose</button>
+        </div>
+    </div>
+    </form>
+  </div>
+
   </div>
 
   <div class = "table">
@@ -51,17 +70,28 @@ export default {
     data(){
       return {
         Meal: {
-          Carbs: "",
-          Food: "",
-          Meal_Time: "",
+          carbs: "",
+          food: "",
+          glycemicIndex: "",
+          mealTime: "",
         },
 
         Reading: {
-          
+                     
+                targetLow: "",
+                targetHigh: "",
+                inputLevel: "",
+                lastMeasurement: "",
+            },
+
+        Dose: {
+
         }
 
-      }
-  },
+        }
+
+      },
+
   methods: {
 
     postNewReading() {
@@ -76,12 +106,36 @@ export default {
     })
   },
 
+      postNewMeal() {
+
+      DashboardService.postNewReading(this.Meal)
+                  .then(response => {
+                if (response.status==200){
+                   this.resetForm();
+                } else {
+                    alert("unexpected response returned: ");
+      }
+    })
+  },
+
    resetForm(){
             this.Reading = {};
         }
+},
+
+  created(){
+    DashboardService.getDose()
+    .then(response => {
+      this.Dose=response.data;
+    })
+
+  }
 }
 
-}
+
+ 
+
+
 </script>
 
 <style>
