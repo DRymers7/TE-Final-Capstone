@@ -26,6 +26,12 @@ public class JDBCMealDaoTests extends BaseDaoTests {
         Assert.assertEquals(3, mealList.size());
     }
 
+    @Test
+    public void get_recent_meal_test() throws SQLException {
+        Meal returnValue = dao.getMostRecentMeal(1);
+        Assert.assertEquals(52, returnValue.getCarbs());
+    }
+
 
 
 }

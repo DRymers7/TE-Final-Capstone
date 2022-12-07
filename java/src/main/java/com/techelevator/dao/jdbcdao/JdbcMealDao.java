@@ -75,6 +75,23 @@ public class JdbcMealDao implements MealDao {
         }
     }
 
+    @Override
+    public Meal getMostRecentMeal(int userId) throws SQLException {
+
+        String sql = "SELECT m.meal_id, carbs, food, glycemic_index, meal_time FROM meals m " +
+                "JOIN meals_user_join mj ON mj.meal_id = m.meal_id " +
+                "JOIN user_data ud ON ud.user_id = mj.user_id " +
+                "WHERE ud.user_id = ? " +
+                "ORDER BY meal_time DESC " +
+                "LIMIT 1;";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId);
+        if (rowSet.next()) {
+            return mapRowToObject(rowSet);
+        } else {
+            throw new SQLException("Could not find meal");
+        }
+
+    }
 
     private boolean createMealJoinEntry(Integer mealId, int userId) {
 

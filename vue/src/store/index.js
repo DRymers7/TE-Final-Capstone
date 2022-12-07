@@ -23,6 +23,10 @@ export default new Vuex.Store({
 
     data(){
       return {
+        
+        Reading: {
+
+        },
 
         insulinBrands: 
         [],
@@ -37,6 +41,7 @@ export default new Vuex.Store({
             insulinRatio: ""
         },
       }
+      
 
     },
 
