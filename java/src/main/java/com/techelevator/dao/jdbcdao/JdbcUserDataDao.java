@@ -1,44 +1,3 @@
-<<<<<<< HEAD
-package com.techelevator.dao.jdbcdao;
-
-import com.techelevator.dao.dao.UserDataDao;
-import com.techelevator.model.ModelClasses.UserData;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.support.rowset.SqlRowSet;
-
-import java.util.ArrayList;
-import java.util.List;
-
-public class JdbcUserDataDao implements UserDataDao {
-
-    private final JdbcTemplate jdbcTemplate;
-
-    public JdbcUserDataDao(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-
-    @Override
-    public List<UserData> getUserData(int userId) {
-
-        List<UserData> returnList = new ArrayList<>();
-
-        String sql = "";
-
-        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId);
-        while (rowSet.next()) {
-            returnList.add(mapRowToObject(rowSet));
-        }
-        return returnList;
-    }
-
-    private UserData mapRowToObject(SqlRowSet rowSet) {
-        UserData user = new UserData();
-
-        return user;
-    }
-
-}
-=======
 package com.techelevator.dao.jdbcdao;
 
 import com.techelevator.dao.dao.UserDataDao;
@@ -75,6 +34,7 @@ public class JdbcUserDataDao implements UserDataDao {
 
     }
 
+
     private UserData mapRowToUserData(SqlRowSet rowSet) {
         UserData userData = new UserData();
         userData.setUserId(rowSet.getInt("user_id"));
@@ -91,4 +51,6 @@ public class JdbcUserDataDao implements UserDataDao {
     }
 
 }
->>>>>>> 9fea58df152620235fea24ea0405fa6d8ccb0276
+
+
+
