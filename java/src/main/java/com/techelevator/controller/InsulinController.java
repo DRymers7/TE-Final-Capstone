@@ -76,5 +76,10 @@ public class InsulinController {
         }
     }
 
+    @RequestMapping(path = "/insulin-info", method = RequestMethod.GET)
+    public List<String> insulinBrandNames() {
+        return insulinDao.insulinBrandNames();
+    }
+
 }
 

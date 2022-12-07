@@ -10,5 +10,5 @@ public interface InsulinDao {
     BaseInsulin createNewInsulin(int userId, BaseInsulin baseInsulin) throws SQLException;
     boolean updateInsulin(BaseInsulin baseInsulin) throws SQLException;
     boolean deleteInsulin(BaseInsulin baseInsulin, int userId) throws SQLException;
-
+    List<String> insulinBrandNames();
 }

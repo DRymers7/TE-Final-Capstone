@@ -72,4 +72,10 @@ public class JDBCInsulinDAOTests extends BaseDaoTests {
         Assert.assertTrue(dao.deleteInsulin(baseInsulin, 1));
     }
 
+    @Test
+    public void get_brand_names_test() {
+        List<String> brandNames = dao.insulinBrandNames();
+        Assert.assertEquals(14, brandNames.size());
+    }
+
 }

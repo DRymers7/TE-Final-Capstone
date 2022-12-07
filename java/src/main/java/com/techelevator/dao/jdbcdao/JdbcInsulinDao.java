@@ -93,6 +93,20 @@ public class JdbcInsulinDao implements InsulinDao {
         }
     }
 
+    @Override
+    public List<String> insulinBrandNames() {
+        List<String> brandNames = new ArrayList<>();
+
+        String sql = "SELECT insulin_brand_name FROM insulin_information;";
+
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql);
+        while (rowSet.next()) {
+            brandNames.add(mapRowToInsulinBrandName(rowSet));
+        }
+        return brandNames;
+
+    }
+
     private boolean createNewJoinInsulinEntry(int userId, Integer insulinId) {
 
         String sql = "INSERT INTO insulin_user_data_join (user_id, insulin_id) VALUES (?, ?) RETURNING insulin_id;";
@@ -140,6 +154,10 @@ public class JdbcInsulinDao implements InsulinDao {
         insulin.setInsulinBrandName(rowSet.getString("insulin_brand_name"));
         insulin.setInsulinStrength(rowSet.getString("insulin_strength"));
         insulin.setInsulinRatio(rowSet.getDouble("insulin_ratio"));
+    }
+
+    private String mapRowToInsulinBrandName(SqlRowSet rowSet) {
+        return rowSet.getString("insulin_brand_name");
     }
 
 }
