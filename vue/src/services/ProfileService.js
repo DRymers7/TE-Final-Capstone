@@ -21,8 +21,10 @@ export default {
 
   getInsulinStrength (user) {
     return axios.get('/insulin', user)
+  },
+
+  postNewBloodSugar() {
+    return axios.post('/blood_sugar')
   }
-
-
 
 }

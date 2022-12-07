@@ -21,14 +21,14 @@
       <h2>My Insulin Details</h2>
   </div>
  
-     <form id=insulin class="profile" v-on:submit.prevent="postNewInsulin">
+     <form id=insulin class="profile">
         <div class="profile-insulin-form-element">
         <h2>Insulin Name</h2>
         <select class="profile" v-model="Insulin.name">
             <option value=""></option>
         </select>
         <h2>Insulin Ratio</h2>
-                <label for="baseInsulin">Insulin Ratio</label>
+                <label for="baseInsulin">Insulin Ratio: </label>
                 <input placeholder="Enter Insulin to Carb Ratio" name="base_insulin" type="text" v-model="Insulin.insulinRation" />
            <h2>Insulin Type</h2>
             <select class="profile" v-model="Insulin.insulinType">
@@ -50,11 +50,28 @@
                 <option>U-500</option>
             </select>
                <div class="actions">
+        <div>
+          <h2>Target Blood Sugar Range</h2>
+                <label for="target_low">Target Low: </label>
+                <input placeholder="Enter Target Low" name="target_low" type="text" v-model="Blood_Sugar.targetLow" /> 
+                <label for="target_high">Target High: </label>
+                <input placeholder="Enter Target High" name="target_high" type="text" v-model="Blood_Sugar.targetHigh" />
+        </div>
       <button type="submit" v-on:click="postNewInsulin(),resetForm()">Update Profile</button>
         </div>
-      
     </div>
     </form>
+
+    <div>
+        <h2>My Blood Sugar Range</h2>
+    </div>
+
+    
+     <form id=blood_sugar class="profile">
+        <div>
+            </div>
+    </form>
+
   </div>
     
 </template>
@@ -92,6 +109,12 @@ export default {
                 insulinStrength: "",
                 insulinRation: ""
             },
+
+            Blood_Sugar: {
+                targetLow: "",
+                targetHigh: ""
+            },
+
             insulinId: 0
         }
 
@@ -115,7 +138,6 @@ export default {
             ProfileService.setInsulinStrength(insulinStrength);
             },
         postNewInsulin(){
-            this.Insulin.insulinId = this.insulinId;
 
             ProfileService.postNewInsulin(this.Insulin, this.insulinId)
             .then(response => {
@@ -127,6 +149,17 @@ export default {
             })
 
         },
+        postNewReading() {
+
+         ProfileService.postNewReading(this.Blood_Sugar)
+                  .then(response => {
+                if (response.status==200){
+                   this.resetForm();
+                } else {
+                    alert("unexpected response returned: ");
+      }
+    })
+  },
 
         resetForm(){
             this.Insulin = {};
