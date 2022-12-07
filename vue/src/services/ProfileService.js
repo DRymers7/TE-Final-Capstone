@@ -24,7 +24,7 @@ export default {
   },
 
   postNewBloodSugar() {
-    return axios.post('/blood_sugar')
+    return axios.post('/blood-sugars')
   }
 
 }
