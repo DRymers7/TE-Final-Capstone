@@ -1,16 +1,12 @@
 package com.techelevator.controller;
 
-import com.techelevator.dao.dao.BloodSugarDao;
 import com.techelevator.dao.dao.InsulinDao;
 import com.techelevator.dao.dao.UserDao;
 import com.techelevator.exceptions.ServersideOpException;
 import com.techelevator.helperclasses.InsulinValidationHelper;
 import com.techelevator.model.ModelClasses.BaseInsulin;
-import com.techelevator.model.ModelClasses.BloodSugar;
-import com.techelevator.model.ModelClasses.Insulin;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;

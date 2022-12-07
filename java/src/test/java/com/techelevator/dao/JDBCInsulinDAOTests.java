@@ -1,9 +1,8 @@
 package com.techelevator.dao;
 
 import com.techelevator.dao.jdbcdao.JdbcInsulinDao;
-import com.techelevator.exceptions.ServersideOpException;
 import com.techelevator.model.ModelClasses.BaseInsulin;
-import com.techelevator.model.ModelClasses.Insulin;
+import com.techelevator.model.ModelClasses.InsulinInformation;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,16 +10,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class JDBCInsulinDAOTests extends BaseDaoTests {
 
 
-    private static final Insulin INSULIN_1 = new Insulin(4, 10.5, 10.5, Timestamp.valueOf("2022-12-12 00:00:00"), "Test type", "Test strength", 10, 10, 10, 0.50, 100);
-    private static final Insulin INSULIN_2 = new Insulin(5, 10.5, 10.5, Timestamp.valueOf("2023-10-10 00:00:00"), "Test type2", "Test strength2", 10, 10, 10, 0.50, 100);
-    private static final Insulin INSULIN_3 = new Insulin(6, 10.5, 10.5, Timestamp.valueOf("2321-12-31 00:00:00"), "Test type3", "Test strength3", 10, 10, 10, 0.50, 100);
+    private static final InsulinInformation INSULIN_1 = new InsulinInformation(4, 10.5, 10.5, Timestamp.valueOf("2022-12-12 00:00:00"), "Test type", "Test strength", 10, 10, 10, 0.50, 100);
+    private static final InsulinInformation INSULIN_2 = new InsulinInformation(5, 10.5, 10.5, Timestamp.valueOf("2023-10-10 00:00:00"), "Test type2", "Test strength2", 10, 10, 10, 0.50, 100);
+    private static final InsulinInformation INSULIN_3 = new InsulinInformation(6, 10.5, 10.5, Timestamp.valueOf("2321-12-31 00:00:00"), "Test type3", "Test strength3", 10, 10, 10, 0.50, 100);
     private static final BaseInsulin BASE_INSULIN_1 = new BaseInsulin(3, 10.0, 10.0, Timestamp.valueOf("2022-12-11 00:00:00"), "test", "test", 0.40);
     private static final BaseInsulin BASE_INSULIN_2 = new BaseInsulin(3, 10.0, 0, Timestamp.valueOf("2022-12-11 00:00:00"), null, "test", 0);
 

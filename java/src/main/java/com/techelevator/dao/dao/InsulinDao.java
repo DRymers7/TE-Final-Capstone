@@ -1,8 +1,6 @@
 package com.techelevator.dao.dao;
 
-import com.techelevator.exceptions.ServersideOpException;
 import com.techelevator.model.ModelClasses.BaseInsulin;
-import com.techelevator.model.ModelClasses.Insulin;
 
 import java.sql.SQLException;
 import java.util.List;

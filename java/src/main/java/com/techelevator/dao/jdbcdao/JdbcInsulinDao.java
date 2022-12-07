@@ -1,10 +1,8 @@
 package com.techelevator.dao.jdbcdao;
 
 import com.techelevator.dao.dao.InsulinDao;
-import com.techelevator.exceptions.ServersideOpException;
 import com.techelevator.model.ModelClasses.BaseInsulin;
-import com.techelevator.model.ModelClasses.Insulin;
-import org.springframework.dao.DataAccessException;
+import com.techelevator.model.ModelClasses.InsulinInformation;
 import org.springframework.jdbc.InvalidResultSetAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -30,7 +28,7 @@ public class JdbcInsulinDao implements InsulinDao {
     // delete insulin objects - done
 
     @Override
-    public List<BaseInsulin> getInsulinList(int userId) throws SQLException {
+    public List<BaseInsulin> getInsulinList(int userId) {
 
         List<BaseInsulin> insulinList = new ArrayList<>();
 
@@ -43,12 +41,7 @@ public class JdbcInsulinDao implements InsulinDao {
         while (rowSet.next()) {
             insulinList.add(mapToRowSet(rowSet));
         }
-        if (insulinList.size() != 0) {
-            return insulinList;
-        } else {
-            throw new SQLException("No insulin available.");
-        }
-
+        return insulinList;
     }
 
     @Override
@@ -136,8 +129,8 @@ public class JdbcInsulinDao implements InsulinDao {
         jdbcTemplate.update(sql, insulinId);
     }
 
-    private Insulin mapToRowSet(SqlRowSet row) {
-        Insulin insulin = new Insulin();
+    private InsulinInformation mapToRowSet(SqlRowSet row) {
+        InsulinInformation insulin = new InsulinInformation();
         insulin.setInsulinId(row.getInt("insulin_id"));
         insulin.setBaseLevel(row.getDouble("base_level"));
         insulin.setAverageLevel(row.getDouble("avg_level"));

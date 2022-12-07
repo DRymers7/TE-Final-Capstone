@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class BaseInsulin {
@@ -15,18 +13,18 @@ public class BaseInsulin {
     private double averageLevel;
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", shape = JsonFormat.Shape.STRING)
     private Timestamp timeSinceLastDose;
-    private String insulinType;
+    private String insulinBrandName;
     private String insulinStrength;
     private double insulinRation;
 
     public BaseInsulin() {};
 
-    public BaseInsulin(int insulinId, double baseLevel, double averageLevel, Timestamp timeSinceLastDose, String insulinType, String insulinStrength, double insulinRation) {
+    public BaseInsulin(int insulinId, double baseLevel, double averageLevel, Timestamp timeSinceLastDose, String insulinBrandName, String insulinStrength, double insulinRation) {
         this.insulinId = insulinId;
         this.baseLevel = baseLevel;
         this.averageLevel = averageLevel;
         this.timeSinceLastDose = timeSinceLastDose;
-        this.insulinType = insulinType;
+        this.insulinBrandName = insulinBrandName;
         this.insulinStrength = insulinStrength;
         this.insulinRation = insulinRation;
     }
@@ -63,12 +61,12 @@ public class BaseInsulin {
         this.timeSinceLastDose = timeSinceLastDose;
     }
 
-    public String getInsulinType() {
-        return insulinType;
+    public String getInsulinBrandName() {
+        return insulinBrandName;
     }
 
-    public void setInsulinType(String insulinType) {
-        this.insulinType = insulinType;
+    public void setInsulinBrandName(String insulinBrandName) {
+        this.insulinBrandName = insulinBrandName;
     }
 
     public String getInsulinStrength() {
@@ -92,12 +90,12 @@ public class BaseInsulin {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BaseInsulin that = (BaseInsulin) o;
-        return insulinId == that.insulinId && Double.compare(that.baseLevel, baseLevel) == 0 && Double.compare(that.averageLevel, averageLevel) == 0 && Double.compare(that.insulinRation, insulinRation) == 0 && Objects.equals(timeSinceLastDose, that.timeSinceLastDose) && Objects.equals(insulinType, that.insulinType) && Objects.equals(insulinStrength, that.insulinStrength);
+        return insulinId == that.insulinId && Double.compare(that.baseLevel, baseLevel) == 0 && Double.compare(that.averageLevel, averageLevel) == 0 && Double.compare(that.insulinRation, insulinRation) == 0 && Objects.equals(timeSinceLastDose, that.timeSinceLastDose) && Objects.equals(insulinBrandName, that.insulinBrandName) && Objects.equals(insulinStrength, that.insulinStrength);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(insulinId, baseLevel, averageLevel, timeSinceLastDose, insulinType, insulinStrength, insulinRation);
+        return Objects.hash(insulinId, baseLevel, averageLevel, timeSinceLastDose, insulinBrandName, insulinStrength, insulinRation);
     }
 
     @Override
@@ -107,7 +105,7 @@ public class BaseInsulin {
                 ", baseLevel=" + baseLevel +
                 ", averageLevel=" + averageLevel +
                 ", timeSinceLastDose=" + timeSinceLastDose +
-                ", insulinType='" + insulinType + '\'' +
+                ", insulinBrandName='" + insulinBrandName + '\'' +
                 ", insulinStrength='" + insulinStrength + '\'' +
                 ", insulinRation=" + insulinRation +
                 '}';
