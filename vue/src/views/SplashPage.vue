@@ -1,34 +1,27 @@
 <template>
-<div>
+  <div>
     <Header />
     <AboutUs />
     <Footer />
-</div>
+  </div>
 </template>
 <script>
-import Header from '../components/Header.vue'
-import AboutUs from '../components/AboutUs.vue'
-import Footer from '../components/Footer.vue'
+import Header from "../components/Header.vue";
+import AboutUs from "../components/AboutUs.vue";
+import Footer from "../components/Footer.vue";
 export default {
-    components: {
-        Header,
-        AboutUs,
-        Footer
-    }
-}
+  components: {
+    Header,
+    AboutUs,
+    Footer,
+  },
+};
 </script>
 <style>
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 body {
-    font-family: 'Open Sans', sans-serif;
-
-
+  font-family: "Open Sans", sans-serif;
 }
 </style>
-
-  
-
-
-

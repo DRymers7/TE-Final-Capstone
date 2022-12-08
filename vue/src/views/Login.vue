@@ -134,42 +134,46 @@ export default {
   -->
   <div class="login-box">
     <h2 id="form-top-text">Sign In</h2>
-    <div
-      class="alert alert-danger"
-      role="alert"
-      v-if="invalidCredentials"
-    >Invalid username or password!</div>
+    <div class="alert alert-danger" role="alert" v-if="invalidCredentials">
+      Invalid username or password!
+    </div>
     <div
       class="alert alert-success"
       role="alert"
       v-if="this.$route.query.registration"
-    >Thank you for registering, please sign in.</div>
+    >
+      Thank you for registering, please sign in.
+    </div>
     <form if="form-id" class="form-signin" @submit.prevent="login">
       <div class="user-box">
-        <input type="text"
-            id="username"
-            class="form-control"
-            placeholder=""
-            v-model="user.username"
-            required
-            autofocus />
+        <input
+          type="email"
+          id="username"
+          class="form-control"
+          placeholder="username (email)"
+          v-model="user.username"
+          required
+          autofocus
+        />
         <label for="username" class="sr-only">Username</label>
       </div>
       <div class="user-box">
         <input
-            type="password"
-            id="password"
-            class="form-control"
-            placeholder=""
-            v-model="user.password"
-            required
-          />
+          type="password"
+          id="password"
+          class="form-control"
+          placeholder="password"
+          v-model="user.password"
+          required
+        />
         <label for="password" class="sr-only">Password</label>
       </div>
       <router-link :to="{ name: 'register' }">Create Account</router-link>
-     
-     <a v-on:click.prevent="login($event)" href="http://localhost:8081/profile">
 
+      <a
+        v-on:click.prevent="login($event)"
+        href="http://localhost:8081/profile"
+      >
         <span></span>
         <span></span>
         <span></span>
@@ -190,16 +194,16 @@ export default {
     return {
       user: {
         username: "",
-        password: ""
+        password: "",
       },
-      invalidCredentials: false
+      invalidCredentials: false,
     };
   },
   methods: {
     login() {
       authService
         .login(this.user)
-        .then(response => {
+        .then((response) => {
           if (response.status == 200) {
             this.$store.commit("SET_AUTH_TOKEN", response.data.token);
             this.$store.commit("SET_USER", response.data.user);
@@ -207,23 +211,21 @@ export default {
             this.$router.push("/profile");
           }
         })
-        .catch(error => {
+        .catch((error) => {
           const response = error.response;
 
           if (response.status === 401) {
             this.invalidCredentials = true;
           }
         });
-    }
-  }
+    },
+  },
 };
 </script>
 <style>
-
 html {
   height: 100%;
 }
-
 
 .login-box {
   position: absolute;
@@ -232,11 +234,12 @@ html {
   width: 400px;
   padding: 40px;
   transform: translate(-50%, -50%);
-  background: rgba(0,0,0,.5);
+  background: rgba(0, 0, 0, 0.5);
   box-sizing: border-box;
-  box-shadow: 0 15px 25px rgba(0,0,0,.6);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
   border-radius: 10px;
   margin-top: 30px;
+  background-image: linear-gradient(#063053, #395873, #5c7c99);
 }
 
 .login-box h2 {
@@ -254,22 +257,22 @@ html {
   width: 100%;
   padding: 10px 0;
   font-size: 16px;
-  color: #fff;
   margin-bottom: 30px;
+  color: #fff;
+  background: transparent;
   border: none;
   border-bottom: 1px solid #fff;
   outline: none;
-  background: transparent;
 }
 .login-box .user-box label {
   position: absolute;
-  top:0;
+  top: 0;
   left: 0;
   padding: 10px 0;
   font-size: 16px;
   color: #fff;
   pointer-events: none;
-  transition: .5s;
+  transition: 0.5s;
 }
 
 .login-box .user-box input:focus ~ label,
@@ -289,19 +292,17 @@ html {
   text-decoration: none;
   text-transform: uppercase;
   overflow: hidden;
-  transition: .5s;
+  transition: 0.5s;
   margin-top: 40px;
-  letter-spacing: 4px
+  letter-spacing: 4px;
 }
 
 .login-box a:hover {
   background: #03e9f4;
   color: #fff;
   border-radius: 5px;
-  box-shadow: 0 0 5px #03e9f4,
-              0 0 25px #03e9f4,
-              0 0 50px #03e9f4,
-              0 0 100px #03e9f4;
+  box-shadow: 0 0 5px #03e9f4, 0 0 25px #03e9f4, 0 0 50px #03e9f4,
+    0 0 100px #03e9f4;
 }
 
 .login-box a span {
@@ -322,7 +323,8 @@ html {
   0% {
     left: -100%;
   }
-  50%,100% {
+  50%,
+  100% {
     left: 100%;
   }
 }
@@ -334,14 +336,15 @@ html {
   height: 100%;
   background: linear-gradient(180deg, transparent, #03e9f4);
   animation: btn-anim2 1s linear infinite;
-  animation-delay: .25s
+  animation-delay: 0.25s;
 }
 
 @keyframes btn-anim2 {
   0% {
     top: -100%;
   }
-  50%,100% {
+  50%,
+  100% {
     top: 100%;
   }
 }
@@ -353,14 +356,15 @@ html {
   height: 2px;
   background: linear-gradient(270deg, transparent, #03e9f4);
   animation: btn-anim3 1s linear infinite;
-  animation-delay: .5s
+  animation-delay: 0.5s;
 }
 
 @keyframes btn-anim3 {
   0% {
     right: -100%;
   }
-  50%,100% {
+  50%,
+  100% {
     right: 100%;
   }
 }
@@ -372,14 +376,15 @@ html {
   height: 100%;
   background: linear-gradient(360deg, transparent, #03e9f4);
   animation: btn-anim4 1s linear infinite;
-  animation-delay: .75s
+  animation-delay: 0.75s;
 }
 
 @keyframes btn-anim4 {
   0% {
     bottom: -100%;
   }
-  50%,100% {
+  50%,
+  100% {
     bottom: 100%;
   }
 }
@@ -387,5 +392,4 @@ html {
 header {
   margin-bottom: 0px;
 }
-
 </style>
