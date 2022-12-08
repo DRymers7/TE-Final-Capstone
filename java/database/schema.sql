@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS blood_sugar, blood_sugar_user_data_join, insulin, insulin_data, insulin_information, insulin_data_join, insulin_user_data_join, meals, meals_user_join, user_data, users CASCADE;
-DROP SEQUENCE IF EXISTS seq_user_id, seq_insulin_id, seq_meal_id, seq_blood_sugar_id CASCADE;
+DROP TABLE IF EXISTS dose, blood_sugar, blood_sugar_user_data_join, insulin, insulin_data, insulin_information, insulin_data_join, insulin_user_data_join, meals, meals_user_join, user_data, users, CASCADE;
+DROP SEQUENCE IF EXISTS seq_user_id, seq_insulin_id, seq_meal_id, seq_blood_sugar_id seq_dose_id CASCADE;
 
 CREATE SEQUENCE seq_user_id
   INCREMENT BY 1
@@ -22,6 +22,12 @@ CREATE SEQUENCE seq_meal_id
   CACHE 1;
   
 CREATE SEQUENCE seq_blood_sugar_id
+  INCREMENT BY 1
+  NO MAXVALUE
+  NO MINVALUE
+  CACHE 1;
+
+CREATE SEQUENCE seq_dose_id
   INCREMENT BY 1
   NO MAXVALUE
   NO MINVALUE
@@ -121,6 +127,14 @@ CREATE TABLE blood_sugar_user_data_join (
 	CONSTRAINT FK_blood_sugar_user_data_join_blood_sugar FOREIGN KEY (blood_sugar_id) REFERENCES blood_sugar(blood_sugar_id)
 );
 
+CREATE TABLE dose (
+input_level int,
+type_of_dose varchar (64),
+dose_units int,
+dose_id int DEFAULT nextval('seq_dose_id'::regclass) NOT NULL unique,
+time_of_dose TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 INSERT INTO users (username,password_hash,role) VALUES ('user','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
 INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
 INSERT INTO user_data (user_id, a1c, fasting_glucose, diabetes_type, user_age, last_updated, weight, height, activity_level)
@@ -137,11 +151,11 @@ INSERT INTO meals_user_join (meal_id, user_id) VALUES (1, 1);
 INSERT INTO meals_user_join (meal_id, user_id) VALUES (2, 1);
 INSERT INTO meals_user_join (meal_id, user_id) VALUES (3, 1);
 INSERT INTO blood_sugar (target_low, target_high, input_level, last_measurement)
-VALUES (50, 200, 130, '2022/12/12 13:12:11');
+VALUES (50, 200, 130, '2022/12/06 13:12:11');
 INSERT INTO blood_sugar (target_low, target_high, input_level, last_measurement)
-VALUES (51, 200, 130, '2022/12/12 13:11:11');
+VALUES (51, 200, 130, '2022/11/04 13:11:11');
 INSERT INTO blood_sugar (target_low, target_high, input_level, last_measurement)
-VALUES (52, 200, 130, '2022/12/12 13:13:11');
+VALUES (52, 200, 130, '2022/12/18 13:13:11');
 INSERT INTO blood_sugar_user_data_join (blood_sugar_id, user_id) VALUES (1, 1);
 INSERT INTO blood_sugar_user_data_join (blood_sugar_id, user_id) VALUES (2, 1);
 INSERT INTO blood_sugar_user_data_join (blood_sugar_id, user_id) VALUES (3, 1);
