@@ -1,6 +1,6 @@
 <template>
 
-    <div>
+ <div>
      <h1>Health Setup</h1>
     <div class="profile">
     <form id=health v-on:submit.prevent="setHealth">
@@ -20,16 +20,14 @@
   <div>
       <h2>My Insulin Details</h2>
   </div>
- 
+    
+    <div>
      <form id=insulin class="profile">
         <div class="profile-insulin-form-element">
-             <form id=baseInsulin v-on:submit.prevent="setBaseInsulin">
-             <div class="profile-baseline-form-element">
-         <label for="baseInsulin">Base Insulin</label>
+         <h2>Base Insulin</h2>
+         <label for="baseInsulin">Base Insulin: </label>
          <input placeholder="Enter Base Insulin Level" name="base_insulin" type="text" v-model="Insulin.baseLevel" />
-        </div>
-
-  </form>
+    
         <h2>Insulin Name</h2>
         <select class="profile" v-model="Insulin.insulinBrandName" required>
         <option v-for="name in brandNames" v-bind:key="name" >{{name}}</option>
@@ -57,27 +55,31 @@
                 <option>U-500</option>
             </select>
                <div class="actions">
-      <button type="submit" v-on:click="postNewInsulin(),resetForm()">Update Profile</button>
+      <button type="submit" v-on:click.prevent="postNewInsulin(),resetForm()">Update Profile</button>
         </div>
-    </div>
+     </div>
     </form>
+    </div>
 
     <div>
         <h2>My Blood Sugar Range</h2>
     </div>
 
     
-     <form id=blood_sugar class="profile">
+    <form id=blood_sugar class="profile">
         <div>
             <h2>Target Blood Sugar Range</h2>
                 <label for="target_low">Target Low: </label>
-                <input placeholder="Enter Target Low" name="target_low" type="text" v-model="Blood_Sugar.targetLow" /> 
+                <input placeholder="Enter Target Low" name="target_low" type="number" v-model.number="Blood_Sugar.targetLow" /> 
+                <h2></h2>
                 <label for="target_high">Target High: </label>
-                <input placeholder="Enter Target High" name="target_high" type="text" v-model="Blood_Sugar.targetHigh" />
-                <button type="submit" v-on:click="postNewBloodSugar(),resetBloodSugarForm()">Update Blood Sugar</button>
+                <input placeholder="Enter Target High" name="target_high" type="number" v-model.number="Blood_Sugar.targetHigh" />
+                <button type="submit" v-on:click.prevent="postNewBloodSugar(),resetBloodSugarForm()">Update Blood Sugar</button>
         </div>
+     </form>
+    
          
-    </form>
+   
 
   </div>
     
@@ -120,7 +122,6 @@ export default {
             },
 
             Blood_Sugar: {
-                bloodSugarId: "",
                 targetLow: "",
                 targetHigh: ""
             },
