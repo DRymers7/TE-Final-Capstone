@@ -3,6 +3,7 @@ package com.techelevator.dao.jdbcdao;
 import com.techelevator.dao.dao.BloodSugarDao;
 import com.techelevator.exceptions.ServersideOpException;
 import com.techelevator.model.ModelClasses.BloodSugar;
+import org.springframework.jdbc.InvalidResultSetAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -71,21 +72,28 @@ public class JdbcBloodSugarDao implements BloodSugarDao {
         String sql = "UPDATE blood_sugar SET target_low = ?, target_high = ?, input_level = ?, last_measurement = ? " +
                 "WHERE blood_sugar_id = ?;";
 
-        jdbcTemplate.update(sql, bloodSugar.getTargetLow(), bloodSugar.getTargetHigh(), bloodSugar.getInputLevel(), bloodSugar.getLastMeasurement(),
+        int success = jdbcTemplate.update(sql, bloodSugar.getTargetLow(), bloodSugar.getTargetHigh(), bloodSugar.getInputLevel(), bloodSugar.getLastMeasurement(),
                 bloodSugarId);
-        return true;
+        if (success == 1) {
+            return true;
+        } else {
+            throw new SQLException("Update Blood sugar failed.");
+        }
     }
 
     @Override
     public boolean deleteBloodSugar(int userId, BloodSugar bloodSugar) throws SQLException {
 
-        if (deleteFromJoinTable(bloodSugar.getBloodSugarId(), userId)) {
-            String sql = "DELETE FROM blood_sugar WHERE blood_sugar_id = ?;";
+        deleteFromJoinTable(bloodSugar.getBloodSugarId(), userId);
+        String sql = "DELETE FROM blood_sugar WHERE blood_sugar_id = ?;";
+        try {
             jdbcTemplate.update(sql, bloodSugar.getBloodSugarId());
             return true;
-        } else {
-            return false;
+        } catch (InvalidResultSetAccessException e) {
+            throw new SQLException("Cannot delete blood sugar. Violation of join table constraint.");
         }
+
+
     }
 
     @Override
@@ -117,10 +125,12 @@ public class JdbcBloodSugarDao implements BloodSugarDao {
 
     }
 
-    private boolean deleteFromJoinTable(int bloodSugarId, int userId) {
+    private void deleteFromJoinTable(int bloodSugarId, int userId) throws SQLException {
         String sql = "DELETE FROM blood_sugar_user_data_join WHERE blood_sugar_id = ? AND user_id = ?;";
-        jdbcTemplate.update(sql, bloodSugarId, userId);
-        return true;
+        int rowsAffected = jdbcTemplate.update(sql, bloodSugarId, userId);
+        if (rowsAffected != 1) {
+            throw new SQLException("Delete Failed.");
+        }
     }
 
     private BloodSugar mapRowToObject(SqlRowSet row) {

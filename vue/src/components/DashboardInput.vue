@@ -71,15 +71,21 @@ export default {
           mealTime: "",
         },
         Reading: {
+                     
                 targetLow: "",
                 targetHigh: "",
                 inputLevel: "",
                 lastMeasurement: "",
             },
+
         Dose: {
+
         }
+
         }
+
       },
+
   methods: {
     postNewReading() {
       DashboardService.postNewReading(this.Reading)
@@ -91,7 +97,9 @@ export default {
       }
     })
   },
+
       postNewMeal() {
+
       DashboardService.postNewReading(this.Meal)
                   .then(response => {
                 if (response.status==200){
@@ -103,6 +111,7 @@ export default {
   },
    resetForm(){
             this.Reading = {};
+            this.Meal = {};
         }
 },
   created(){
@@ -112,6 +121,11 @@ export default {
     })
   }
 }
+
+
+ 
+
+
 </script>
 <style>
   table, th, td {
