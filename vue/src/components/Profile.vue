@@ -55,7 +55,7 @@
                 <option>U-500</option>
             </select>
                <div class="actions">
-      <button type="submit" v-on:click="postNewInsulin(),resetForm()">Update Profile</button>
+      <button type="submit" v-on:click.prevent="postNewInsulin(),resetForm()">Update Profile</button>
         </div>
      </div>
     </form>
@@ -70,10 +70,11 @@
         <div>
             <h2>Target Blood Sugar Range</h2>
                 <label for="target_low">Target Low: </label>
-                <input placeholder="Enter Target Low" name="target_low" type="text" v-model="Blood_Sugar.targetLow" /> 
+                <input placeholder="Enter Target Low" name="target_low" type="number" v-model.number="Blood_Sugar.targetLow" /> 
+                <h2></h2>
                 <label for="target_high">Target High: </label>
-                <input placeholder="Enter Target High" name="target_high" type="text" v-model="Blood_Sugar.targetHigh" />
-                <button type="submit" v-on:click="postNewBloodSugar(),resetBloodSugarForm()">Update Blood Sugar</button>
+                <input placeholder="Enter Target High" name="target_high" type="number" v-model.number="Blood_Sugar.targetHigh" />
+                <button type="submit" v-on:click.prevent="postNewBloodSugar(),resetBloodSugarForm()">Update Blood Sugar</button>
         </div>
      </form>
     
@@ -121,7 +122,6 @@ export default {
             },
 
             Blood_Sugar: {
-                bloodSugarId: "",
                 targetLow: "",
                 targetHigh: ""
             },
