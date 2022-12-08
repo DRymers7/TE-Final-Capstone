@@ -21,7 +21,9 @@
             <div class="actions">
               <button
                 type="submit"
-                v-on:click="postNewReading(), resetForm(), checkForAlert()"
+                v-on:click="
+                  postNewReading(), resetForm(), checkForAlert(), sendEmail()
+                "
               >
                 Submit
               </button>
@@ -108,10 +110,13 @@ export default {
       },
 
       Dose: {},
+      Readings: [],
     };
   },
 
   methods: {
+    sendEmail() {},
+
     postNewReading() {
       DashboardService.postNewReading(this.Reading).then((response) => {
         if (response.status == 200) {
@@ -135,8 +140,6 @@ export default {
       this.Reading = {};
       this.Meal = {};
     },
-
-    sendEmail() {},
 
     //order by clause in server need
     checkForAlert() {

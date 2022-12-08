@@ -1,8 +1,7 @@
-import axios from 'axios';
-  
+import axios from "axios";
 
 export default {
-    postNewReading(Reading) {
-        return axios.post('/', Reading) 
-      },
-}
+  postNewReading(Reading) {
+    return axios.post("/", Reading);
+  },
+};
