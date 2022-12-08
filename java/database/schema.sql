@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS dose, blood_sugar, blood_sugar_user_data_join, insulin, insulin_data, insulin_information, insulin_data_join, insulin_user_data_join, meals, meals_user_join, user_data, users, CASCADE;
-DROP SEQUENCE IF EXISTS seq_user_id, seq_insulin_id, seq_meal_id, seq_blood_sugar_id seq_dose_id CASCADE;
+DROP TABLE IF EXISTS dose, dose_user_data_join, blood_sugar, blood_sugar_user_data_join, insulin, insulin_data, insulin_information, insulin_data_join, insulin_user_data_join, meals, meals_user_join, user_data, users CASCADE;
+DROP SEQUENCE IF EXISTS seq_user_id, seq_insulin_id, seq_meal_id, seq_blood_sugar_id, seq_dose_id CASCADE;
 
 CREATE SEQUENCE seq_user_id
   INCREMENT BY 1
@@ -35,7 +35,7 @@ CREATE SEQUENCE seq_dose_id
   
 CREATE TABLE users (
 	user_id int DEFAULT nextval('seq_user_id'::regclass) NOT NULL,
-	username varchar(50) NOT NULL UNIQUE,
+	username varchar(255) NOT NULL UNIQUE,
 	password_hash varchar(200) NOT NULL,
 	role varchar(50) NOT NULL,
 	
@@ -135,6 +135,15 @@ dose_id int DEFAULT nextval('seq_dose_id'::regclass) NOT NULL unique,
 time_of_dose TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE dose_user_data_join (
+	dose_id int NOT NULL,
+	user_id int NOT NULL,
+	
+	CONSTRAINT PK_dose_user_data_join PRIMARY KEY (dose_id, user_id),
+	CONSTRAINT FK_dose_user_data_join_user_data FOREIGN KEY (user_id) REFERENCES user_data(user_id),
+	CONSTRAINT FK_dose_user_data_join_dose FOREIGN KEY (dose_id) REFERENCES dose(dose_id)
+);
+
 INSERT INTO users (username,password_hash,role) VALUES ('user','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
 INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
 INSERT INTO user_data (user_id, a1c, fasting_glucose, diabetes_type, user_age, last_updated, weight, height, activity_level)
@@ -196,5 +205,14 @@ VALUES (10.0, 10.0, '2022/12/12 00:00:00', 'Fiasp', 'Strong', 0.14);
 INSERT INTO insulin_user_data_join (user_id, insulin_id) VALUES (1, 1);
 INSERT INTO insulin_user_data_join (user_id, insulin_id) VALUES (1, 2);
 INSERT INTO insulin_user_data_join (user_id, insulin_id) VALUES (2, 3);
+INSERT INTO dose (dose_units, time_of_dose, type_of_dose, input_level)
+VALUES (10, '2022/12/06 13:12:11', 'Rapid-Acting', 160);
+INSERT INTO dose (dose_units, time_of_dose, type_of_dose, input_level)
+VALUES (15, '2022/11/06 13:12:11', 'Slow-Acting', 160);
+INSERT INTO dose (dose_units, time_of_dose, type_of_dose, input_level)
+VALUES (20, '2022/11/26 13:12:11', 'Fast-Acting', 160);
+INSERT INTO dose_user_data_join (dose_id, user_id) VALUES (1, 1);
+INSERT INTO dose_user_data_join (dose_id, user_id) VALUES (2, 1);
+INSERT INTO dose_user_data_join (dose_id, user_id) VALUES (3, 1);
 
 COMMIT TRANSACTION;

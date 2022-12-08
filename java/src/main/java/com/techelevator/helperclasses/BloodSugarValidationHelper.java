@@ -5,6 +5,7 @@ import com.techelevator.model.ModelClasses.BaseInsulin;
 import com.techelevator.model.ModelClasses.BloodSugar;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 public class BloodSugarValidationHelper {
@@ -42,9 +43,9 @@ public class BloodSugarValidationHelper {
             if (bloodSugarToUpdate.getInputLevel() == 0) {
                 bloodSugarToUpdate.setInputLevel(bloodSugarFromRecords.getInputLevel());
             }
-            if (bloodSugarToUpdate.getLastMeasurement().equals(null) || bloodSugarToUpdate.getLastMeasurement().equals("")) {
+            if (bloodSugarToUpdate.getLastMeasurement()==null || bloodSugarToUpdate.getLastMeasurement().equals("")) {
                 System.out.println("AAAA");
-                bloodSugarToUpdate.setLastMeasurement(bloodSugarFromRecords.getLastMeasurement());
+                bloodSugarToUpdate.setLastMeasurement(new Timestamp(System.currentTimeMillis()));
             }
             bloodSugarDao.updateBloodSugarReading(bloodSugarToUpdate.getBloodSugarId(), bloodSugarToUpdate);
             return true;

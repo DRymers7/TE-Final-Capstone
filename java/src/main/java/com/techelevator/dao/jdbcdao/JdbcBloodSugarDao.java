@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.security.Principal;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,7 @@ public class JdbcBloodSugarDao implements BloodSugarDao {
 
         String sql = "INSERT INTO blood_sugar (target_low, target_high, input_level, last_measurement) " +
                 "VALUES (?, ? ,?, ?) RETURNING blood_sugar_id;";
+        validateTimeInPost(bloodSugar);
 
 
         Integer id = jdbcTemplate.queryForObject(sql, Integer.class, bloodSugar.getTargetLow(), bloodSugar.getTargetHigh(),
@@ -132,6 +134,14 @@ public class JdbcBloodSugarDao implements BloodSugarDao {
             throw new SQLException("Delete Failed.");
         }
     }
+
+    private BloodSugar validateTimeInPost(BloodSugar bloodSugar){
+        if (bloodSugar.getLastMeasurement()==null){
+            bloodSugar.setLastMeasurement(new Timestamp(System.currentTimeMillis()));
+        }
+        return bloodSugar;
+    }
+
 
     private BloodSugar mapRowToObject(SqlRowSet row) {
         BloodSugar bloodSugar = new BloodSugar();

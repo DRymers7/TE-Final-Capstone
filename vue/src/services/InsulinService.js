@@ -1,18 +1,11 @@
 import axios from "axios";
 
+export default {
+  getInsulinBrands() {
+    return axios.get("/insulin-info");
+  },
 
-
-export default{
-getInsulinBrands(){
-    return axios.get('/insulin-info')
-},
-
-
-getAllUserInsulin(){
-    return axios.get('filler')
-}
-
-}
-
-
-axios
+  getAllUserInsulin() {
+    return axios.get("filler");
+  },
+};
