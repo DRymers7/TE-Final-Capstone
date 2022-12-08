@@ -3,6 +3,7 @@ package com.techelevator.controller;
 import com.techelevator.dao.dao.BloodSugarDao;
 import com.techelevator.dao.dao.UserDao;
 import com.techelevator.exceptions.ServersideOpException;
+import com.techelevator.helperclasses.BloodSugarValidationHelper;
 import com.techelevator.model.ModelClasses.BloodSugar;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +19,12 @@ public class BloodSugarController {
 
     private BloodSugarDao bloodSugarDao;
     private UserDao userDao;
+    private BloodSugarValidationHelper bloodSugarValidationHelper;
 
     public BloodSugarController(BloodSugarDao bloodSugarDao, UserDao userDao) {
         this.bloodSugarDao = bloodSugarDao;
         this.userDao = userDao;
+        this.bloodSugarValidationHelper = new BloodSugarValidationHelper(bloodSugarDao);
     }
 
     @RequestMapping(path = "/blood-sugars", method = RequestMethod.GET)
@@ -52,10 +55,10 @@ public class BloodSugarController {
     }
 
     @RequestMapping(path = "/blood-sugars", method = RequestMethod.PUT)
-    public boolean updateBloodSugar(@RequestBody BloodSugar bloodSugar) {
+    public boolean updateBloodSugar(@RequestBody BloodSugar bloodSugar, Principal principal) {
 
         try {
-            bloodSugarDao.updateBloodSugarReading(bloodSugar.getBloodSugarId(), bloodSugar);
+            bloodSugarValidationHelper.validateBloodSugarUpdate(bloodSugar, userDao.findIdByUsername(principal.getName()));
             return true;
         } catch (SQLException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);

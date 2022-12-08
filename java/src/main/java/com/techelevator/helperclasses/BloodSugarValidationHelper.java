@@ -15,8 +15,8 @@ public class BloodSugarValidationHelper {
         this.bloodSugarDao = bloodSugarDao;
     }
 
-    public boolean validateBloodSugarUpdate(BloodSugar bloodSugar, int blood_sugar_Id) throws SQLException {
-        List<BloodSugar> bloodSugarList = bloodSugarDao.getBloodSugarReadings(blood_sugar_Id);
+    public boolean validateBloodSugarUpdate(BloodSugar bloodSugar, int userId) throws SQLException {
+        List<BloodSugar> bloodSugarList = bloodSugarDao.getBloodSugarReadings(userId);
         bloodSugarList.removeIf(item -> (item.getBloodSugarId() != bloodSugar.getBloodSugarId()));
         return populateResultingObject(cleanAndPrepareForPopulation(bloodSugarList), bloodSugar);
     }
@@ -42,15 +42,17 @@ public class BloodSugarValidationHelper {
             if (bloodSugarToUpdate.getInputLevel() == 0) {
                 bloodSugarToUpdate.setInputLevel(bloodSugarFromRecords.getInputLevel());
             }
+            if (bloodSugarToUpdate.getLastMeasurement().equals(null) || bloodSugarToUpdate.getLastMeasurement().equals("")) {
+                System.out.println("AAAA");
+                bloodSugarToUpdate.setLastMeasurement(bloodSugarFromRecords.getLastMeasurement());
+            }
+            bloodSugarDao.updateBloodSugarReading(bloodSugarToUpdate.getBloodSugarId(), bloodSugarToUpdate);
+            return true;
         }
-        if (bloodSugarToUpdate.getLastMeasurement().equals(null) || bloodSugarToUpdate.getLastMeasurement().equals("")) {
-            System.out.println("AAAA");
-            bloodSugarToUpdate.setLastMeasurement(bloodSugarFromRecords.getLastMeasurement());
-        }
+
 //            cleanPotentiallyNullStringValues(bloodSugarFromRecords, bloodSugarToUpdate);
 //            bloodSugarDao.updateBloodSugarReading(bloodSugarToUpdate.getBloodSugarId(), bloodSugarToUpdate);
 //            return true;
-        return true;
     }
 
 
