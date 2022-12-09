@@ -17,13 +17,13 @@ public class HistoryController {
     private InsulinCalculator insulinCalculator;
     private DoseDao doseDao;
 
-    public HistoryController(MealDao mealDao, UserDataDao userDataDao, InsulinDao insulinDao, BloodSugarDao bloodSugarDao, UserDao userDao, InsulinCalculator insulinCalculator, DoseDao doseDao) {
+    public HistoryController(MealDao mealDao, UserDataDao userDataDao, InsulinDao insulinDao, BloodSugarDao bloodSugarDao, UserDao userDao, DoseDao doseDao) {
         this.mealDao = mealDao;
         this.userDataDao = userDataDao;
         this.insulinDao = insulinDao;
         this.bloodSugarDao = bloodSugarDao;
         this.userDao = userDao;
-        this.insulinCalculator = insulinCalculator;
+        this.insulinCalculator = new InsulinCalculator(insulinDao, mealDao, bloodSugarDao, userDataDao);
         this.doseDao = doseDao;
     }
 
