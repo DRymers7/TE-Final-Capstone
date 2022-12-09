@@ -1,12 +1,13 @@
 package com.techelevator.dao.jdbcdao;
 
 import com.techelevator.dao.dao.DoseDao;
-import com.techelevator.model.ModelClasses.BloodSugar;
 import com.techelevator.model.ModelClasses.Dose;
+import org.springframework.jdbc.InvalidResultSetAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +35,28 @@ public class JdbcDoseDao implements DoseDao {
             dose.add(mapRowToObject(rowSet));
         }
         return dose;
+    }
+
+    @Override
+    public boolean deleteDose(Dose dose, int userId) throws SQLException {
+
+        deleteFromJoinTable(dose.getDoseId(), userId);
+        String sql = "DELETE FROM dose WHERE dose_id = ?;";
+
+        try {
+            jdbcTemplate.update(sql, dose.getDoseId());
+            return true;
+        } catch (InvalidResultSetAccessException e) {
+            throw new SQLException("Operation failed.");
+        }
+    }
+
+    private void deleteFromJoinTable(int doseId, int userId) throws SQLException {
+        String sql = "DELETE FROM dose_user_data_join WHERE dose_id = ? AND user_id = ?;";
+        int rowsAffected = jdbcTemplate.update(sql, doseId, userId);
+        if (rowsAffected != 1) {
+            throw new SQLException("Delete failed.");
+        }
     }
 
     private Dose mapRowToObject(SqlRowSet row) {

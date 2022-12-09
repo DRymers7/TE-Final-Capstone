@@ -4,6 +4,7 @@ import com.techelevator.dao.dao.*;
 import com.techelevator.helperclasses.InsulinCalculator;
 import com.techelevator.model.ModelClasses.UserData;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,7 @@ import java.sql.SQLException;
 import java.util.Map;
 
 @RestController
+@CrossOrigin
 public class DosageController {
 
     private MealDao mealDao;
