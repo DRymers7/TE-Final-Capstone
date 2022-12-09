@@ -41,6 +41,8 @@
 </template>
 
 <script>
+import { init } from "emailjs-com";
+init("3-S-tgXz9uG4MjTWz");
 import authService from "../services/AuthService";
 
 
@@ -59,20 +61,13 @@ export default {
     };
   },
   methods: {
-    sendEmail() {
-      // // call target range checker checkForAlert()
-      
-        
-      // const templateId = "template_43Id84I"
-      // // const templateParams = []
-      // const publicKey= "3-S-tgXz9uG4MjTWz"
-      // const serviceId = "default_service"
-      // emailjs.send(serviceId, templateId, publicKey);
-       
-        
-      
-      },
-
+    // sendEmail() {
+    //   const templateId = "template_43Id84I";
+    //   // const templateParams = []
+    //   const publicKey = "3-S-tgXz9uG4MjTWz";
+    //   const serviceId = "default_service";
+    //   emailjs.send(serviceId, templateId, publicKey);
+    // },
     register() {
       if (this.user.password != this.user.confirmPassword) {
         this.registrationErrors = true;
@@ -109,5 +104,6 @@ export default {
 #register {
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 </style>

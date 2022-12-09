@@ -22,6 +22,7 @@
               <button type="submit" v-on:click="postNewReading()">
                 Submit
               </button>
+              <h2>{{ Dose }}</h2>
             </div>
           </div>
         </form>
@@ -85,6 +86,8 @@
   </div>
 </template>
 <script>
+import { init } from "emailjs-com";
+init("");
 import DashboardService from "../services/DashboardService";
 import BloodSugarService from "../services/BloodSugarService";
 export default {
@@ -111,28 +114,24 @@ export default {
 
   methods: {
     sendEmail() {
-      // call target range checker checkForAlert()
-      // 
-        /*
-        const templateId = template_43Id84I
-        const templateParams = []
-        const publicKey 3-S-tgXz9uG4MjTWz
-        const serviceId = "default_service"
-        emailjs.send(serviceId, templateId, publicKey)
-          .then( -- something -- )
-            console.log("WOOHOOO")
-            } 
+      //
+    },
 
-        */
-      // })
+    getDose() {
+      DashboardService.getDose().then((response) => {
+        if (response.status == 200) {
+          this.Dose = response.data;
+        }
+      });
     },
 
     postNewReading() {
-      this.findUsersTargetHighAndLow();
+      // this.findUsersTargetHighAndLow();
 
       DashboardService.postNewReading(this.Reading).then((response) => {
         if (response.status == 200) {
           this.resetForm();
+          this.getDose();
           this.checkForAlert();
         } else {
           alert("unexpected response returned: ");
