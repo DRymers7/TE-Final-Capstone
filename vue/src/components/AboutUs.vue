@@ -839,7 +839,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="css">
 *,
 *:before,
 *:after {

@@ -45,6 +45,7 @@ import { init } from "emailjs-com";
 init("3-S-tgXz9uG4MjTWz");
 import authService from "../services/AuthService";
 
+
 export default {
   name: "register",
   data() {
