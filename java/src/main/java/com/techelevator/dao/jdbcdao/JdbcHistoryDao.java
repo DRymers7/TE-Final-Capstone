@@ -36,6 +36,7 @@ public class JdbcHistoryDao implements HistoryDao {
         while (rowSet.next()) {
             history.add(mapRowToObject(rowSet));
         }
+        filterHistoryList(history);
         return history;
     };
 
@@ -56,6 +57,7 @@ public class JdbcHistoryDao implements HistoryDao {
         while (rowSet.next()) {
             history.add(mapRowToObject(rowSet));
         }
+        filterHistoryList(history);
         return history;
     };
 
@@ -76,6 +78,7 @@ public class JdbcHistoryDao implements HistoryDao {
         while (rowSet.next()) {
             history.add(mapRowToObject(rowSet));
         }
+        filterHistoryList(history);
         return history;
     };
 
@@ -96,6 +99,7 @@ public class JdbcHistoryDao implements HistoryDao {
         while (rowSet.next()) {
             history.add(mapRowToObject(rowSet));
         }
+        filterHistoryList(history);
         return history;
     };
 
@@ -116,8 +120,19 @@ public class JdbcHistoryDao implements HistoryDao {
         while (rowSet.next()) {
             history.add(mapRowToObject(rowSet));
         }
+        filterHistoryList(history);
         return history;
     };
+
+    private void filterHistoryList(List<History> historyList) {
+        for (History history : historyList) {
+            for (History historyB : historyList) {
+                if (history.getDoseId() == historyB.getDoseId()) {
+                    historyList.remove(historyB);
+                }
+            }
+        }
+    }
 
     private History mapRowToObject(SqlRowSet row) {
         History history = new History();

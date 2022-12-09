@@ -60,10 +60,7 @@
             <option>U-500</option>
           </select>
           <div class="actions">
-            <button
-              type="submit"
-              v-on:click.prevent="postNewInsulin(), resetForm()"
-            >
+            <button type="submit" v-on:click.prevent="postNewInsulin()">
               Update Profile
             </button>
           </div>
@@ -93,10 +90,7 @@
           v-model.number="Blood_Sugar.targetHigh"
         />
         <br />
-        <button
-          type="submit"
-          v-on:click.prevent="postNewBloodSugar(), resetBloodSugarForm()"
-        >
+        <button type="submit" v-on:click.prevent="postNewBloodSugar()">
           Update Blood Sugar
         </button>
       </div>
@@ -142,24 +136,6 @@ export default {
     };
   },
   methods: {
-    setBaseInsulin() {
-      ProfileService.setBaseInsulin(this.BaseInsulin.baseLevel)
-        .then((response) => {
-          if (response.status < 300) {
-            this.$router.push({
-              name: "home",
-            });
-          }
-        })
-        .catch((error) => console.error(error));
-    },
-    setInsulinStrength() {
-      const insulinStrength = {
-        user: this.userId,
-        insulinStrength: this.BaseInsulin.insulinStrength,
-      };
-      ProfileService.setInsulinStrength(insulinStrength);
-    },
     postNewInsulin() {
       ProfileService.postNewInsulin(this.Insulin, this.Insulin.insulinId)
         .then((response) => {
@@ -169,10 +145,21 @@ export default {
         })
         .catch((error) => console.error(error));
     },
+
+    updateNewBloodSugar() {
+      ProfileService.updateBloodSugar(this.Blood_Sugar)
+        .then((response) => {
+          if (response.status == 200) {
+            this.resetForm();
+          }
+        })
+        .catch((error) => console.error(error));
+    },
+
     postNewBloodSugar() {
       ProfileService.postNewBloodSugar(this.Blood_Sugar).then((response) => {
         if (response.status == 200) {
-          this.resetForm();
+          this.resetBloodSugarForm();
         } else {
           alert("unexpected response returned: ");
         }
@@ -180,7 +167,6 @@ export default {
     },
     resetForm() {
       this.Insulin = {};
-      this.Blood_Sugar = {};
     },
     resetBloodSugarForm() {
       this.Blood_Sugar = {};
