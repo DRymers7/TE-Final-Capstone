@@ -29,7 +29,8 @@ public class JdbcMealDao implements MealDao {
         String sql = "SELECT m.meal_id, carbs, food, glycemic_index, meal_time FROM meals m " +
                 "JOIN meals_user_join mj ON mj.meal_id = m.meal_id " +
                 "JOIN user_data ud ON ud.user_id = mj.user_id " +
-                "WHERE ud.user_id = ?;";
+                "WHERE ud.user_id = ? " +
+                "ORDER BY meal_time DESC";
 
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId);
         while (rowSet.next()) {
