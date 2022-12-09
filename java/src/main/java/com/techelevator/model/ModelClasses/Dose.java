@@ -6,7 +6,7 @@ import java.util.Objects;
 public class Dose {
 
     private int inputLevel;
-    private String typeOfDose;
+    private int typeOfDose;
     private int doseUnits;
     private int doseId;
     private Timestamp timeOfDose;
@@ -15,7 +15,7 @@ public class Dose {
 
     };
 
-    public Dose(int inputLevel, String typeOfDose, int doseUnits, int doseId, Timestamp timeOfDose) {
+    public Dose(int inputLevel, int typeOfDose, int doseUnits, int doseId, Timestamp timeOfDose) {
         this.inputLevel = inputLevel;
         this.typeOfDose = typeOfDose;
         this.doseUnits = doseUnits;
@@ -31,11 +31,11 @@ public class Dose {
         this.inputLevel = inputLevel;
     }
 
-    public String getTypeOfDose() {
+    public int getTypeOfDose() {
         return typeOfDose;
     }
 
-    public void setTypeOfDose(String typeOfDose) {
+    public void setTypeOfDose(int typeOfDose) {
         this.typeOfDose = typeOfDose;
     }
 

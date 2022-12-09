@@ -65,7 +65,7 @@ public class JdbcDoseDao implements DoseDao {
         dose.setDoseId(row.getInt("dose_id"));
         dose.setDoseUnits(row.getInt("dose_units"));
         dose.setTimeOfDose(row.getTimestamp("time_of_dose"));
-        dose.setTypeOfDose(row.getString("type_of_dose"));
+        dose.setTypeOfDose(row.getInt("type_of_dose"));
         dose.setInputLevel(row.getInt("input_level"));
         return dose;
     }
