@@ -22,6 +22,7 @@
               <button type="submit" v-on:click="postNewReading()">
                 Submit
               </button>
+              <h2>{{ Dose }}</h2>
             </div>
           </div>
         </form>
@@ -85,6 +86,8 @@
   </div>
 </template>
 <script>
+import { init } from "emailjs-com";
+init("");
 import DashboardService from "../services/DashboardService";
 import BloodSugarService from "../services/BloodSugarService";
 export default {
@@ -110,14 +113,25 @@ export default {
   },
 
   methods: {
-    sendEmail() {},
+    sendEmail() {
+      //
+    },
+
+    getDose() {
+      DashboardService.getDose().then((response) => {
+        if (response.status == 200) {
+          this.Dose = response.data;
+        }
+      });
+    },
 
     postNewReading() {
-      this.findUsersTargetHighAndLow();
+      // this.findUsersTargetHighAndLow();
 
       DashboardService.postNewReading(this.Reading).then((response) => {
         if (response.status == 200) {
           this.resetForm();
+          this.getDose();
           this.checkForAlert();
         } else {
           alert("unexpected response returned: ");
