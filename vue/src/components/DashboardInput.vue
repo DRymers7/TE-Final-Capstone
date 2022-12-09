@@ -110,7 +110,22 @@ export default {
   },
 
   methods: {
-    sendEmail() {},
+    sendEmail() {
+      // call target range checker checkForAlert()
+      // 
+        /*
+        const templateId = template_43Id84I
+        const templateParams = []
+        const publicKey 3-S-tgXz9uG4MjTWz
+        const serviceId = "default_service"
+        emailjs.send(serviceId, templateId, publicKey)
+          .then( -- something -- )
+            console.log("WOOHOOO")
+            } 
+
+        */
+      // })
+    },
 
     postNewReading() {
       this.findUsersTargetHighAndLow();

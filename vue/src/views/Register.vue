@@ -43,6 +43,7 @@
 <script>
 import authService from "../services/AuthService";
 
+
 export default {
   name: "register",
   data() {
@@ -58,6 +59,20 @@ export default {
     };
   },
   methods: {
+    sendEmail() {
+      // // call target range checker checkForAlert()
+      
+        
+      // const templateId = "template_43Id84I"
+      // // const templateParams = []
+      // const publicKey= "3-S-tgXz9uG4MjTWz"
+      // const serviceId = "default_service"
+      // emailjs.send(serviceId, templateId, publicKey);
+       
+        
+      
+      },
+
     register() {
       if (this.user.password != this.user.confirmPassword) {
         this.registrationErrors = true;
