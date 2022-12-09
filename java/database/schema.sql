@@ -115,7 +115,7 @@ CREATE TABLE blood_sugar (
 	target_low int NOT NULL,
 	target_high int NOT NULL,
 	input_level int NOT NULL,
-	last_measurement TIMESTAMP WITH time zone CURRENT_TIMESTAMP 
+	last_measurement TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
 );
 
 CREATE TABLE blood_sugar_user_data_join (
@@ -132,7 +132,7 @@ input_level int,
 type_of_dose int,
 dose_units int,
 dose_id int DEFAULT nextval('seq_dose_id'::regclass) NOT NULL unique,
-time_of_dose TIMESTAMP WITH time zone CURRENT_TIMESTAMP 
+time_of_dose TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
 );
 
 CREATE TABLE dose_user_data_join (
