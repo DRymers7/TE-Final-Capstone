@@ -16,31 +16,10 @@ if (currentToken != null) {
   axios.defaults.headers.common["Authorization"] = `Bearer ${currentToken}`;
 }
 
-import BloodSugarService from "../services/BloodSugarService";
 export default new Vuex.Store({
   state: {
     token: currentToken || "",
     user: currentUser || {},
-
-    data() {
-      return {
-        Reading: {},
-
-        insulinBrands: [],
-
-        Insulin: {
-          insulinId: "",
-          baseLevel: "",
-          averageLevel: "",
-          timeSinceLastDose: "",
-          insulinBrandName: "",
-          insulinStrength: "",
-          insulinRatio: "",
-        },
-
-        Readings: [],
-      };
-    },
 
     Methods: {},
   },
@@ -62,13 +41,5 @@ export default new Vuex.Store({
       state.user = {};
       axios.defaults.headers.common = {};
     },
-  },
-
-  created() {
-    BloodSugarService.getUserBloodSugarReadings()
-      .then((response) => {
-        this.Readings = response.data;
-      })
-      .catch((error) => console.error(error));
   },
 });

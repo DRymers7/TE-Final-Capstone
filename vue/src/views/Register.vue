@@ -90,4 +90,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+#register {
+  display: flex;
+  align-items: center;
+}
+</style>
