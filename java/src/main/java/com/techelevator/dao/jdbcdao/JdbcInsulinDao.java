@@ -36,7 +36,8 @@ public class JdbcInsulinDao implements InsulinDao {
                 "FROM insulin i " +
                 "JOIN insulin_user_data_join ij ON i.insulin_id = ij.insulin_id " +
                 "JOIN user_data ud ON ud.user_id = ij.user_id " +
-                "WHERE ud.user_id = ?;";
+                "WHERE ud.user_id = ? " +
+                "ORDER BY time_last_dose DESC";
 
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId);
         while (rowSet.next()) {

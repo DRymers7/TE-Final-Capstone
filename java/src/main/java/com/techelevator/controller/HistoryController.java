@@ -28,12 +28,12 @@ public class HistoryController {
     private DoseDao doseDao;
     private HistoryDao historyDao;
 
-    public HistoryController(MealDao mealDao, UserDataDao userDataDao, BloodSugarDao bloodSugarDao, UserDao userDao, InsulinCalculator insulinCalculator, DoseDao doseDao, InsulinDao insulinDao, HistoryDao historyDao) {
+    public HistoryController(MealDao mealDao, UserDataDao userDataDao, InsulinDao insulinDao, BloodSugarDao bloodSugarDao, UserDao userDao, DoseDao doseDao) {
         this.mealDao = mealDao;
         this.userDataDao = userDataDao;
         this.bloodSugarDao = bloodSugarDao;
         this.userDao = userDao;
-        this.insulinCalculator = insulinCalculator;
+        this.insulinCalculator = new InsulinCalculator(insulinDao, mealDao, bloodSugarDao, userDataDao);
         this.doseDao = doseDao;
         this.historyDao = historyDao;
         this.insulinDao = insulinDao;
@@ -50,6 +50,49 @@ public class HistoryController {
         }
     }
 
+    @RequestMapping(path = "/average/two-weeks", method = RequestMethod.GET)
+    public List<History> getHistoryForTwoWeeks(Principal principal) {
+
+        try {
+            List<History> histories = historyDao.getHistoryForTwoWeeks(userDao.findIdByUsername(principal.getName()));
+            return histories;
+        } catch (SQLException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(path = "/average/one-week", method = RequestMethod.GET)
+    public List<History> getHistoryForOneWeek(Principal principal) {
+
+        try {
+            List<History> histories = historyDao.getHistoryForOneWeek(userDao.findIdByUsername(principal.getName()));
+            return histories;
+        } catch (SQLException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(path = "/average/three-days", method = RequestMethod.GET)
+    public List<History> getHistoryForThreeDays(Principal principal) {
+
+        try {
+            List<History> histories = historyDao.getHistoryForThreeDays(userDao.findIdByUsername(principal.getName()));
+            return histories;
+        } catch (SQLException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(path = "/average/one-day", method = RequestMethod.GET)
+    public List<History> getHistoryForOneDay(Principal principal) {
+
+        try {
+            List<History> histories = historyDao.getHistoryForOneDay(userDao.findIdByUsername(principal.getName()));
+            return histories;
+        } catch (SQLException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
 
 
 

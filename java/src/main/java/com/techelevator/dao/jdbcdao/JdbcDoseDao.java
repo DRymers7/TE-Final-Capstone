@@ -27,7 +27,8 @@ public class JdbcDoseDao implements DoseDao {
         String sql = "SELECT dose.dose_id, dose_units, time_of_dose, type_of_dose, input_level FROM dose " +
                 "JOIN dose_user_data_join dud ON dose.dose_id = dud.dose_id " +
                 "JOIN user_data ud ON ud.user_id = dud.user_id " +
-                "WHERE ud.user_id = ?";
+                "WHERE ud.user_id = ? " +
+                "ORDER BY time_of_dose DESC;";
 
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId);
 

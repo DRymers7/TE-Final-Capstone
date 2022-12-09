@@ -27,8 +27,9 @@ public class JdbcHistoryDao implements HistoryDao {
                 "blood_sugar.input_level, target_low, target_high, last_measurement, blood_sugar.blood_sugar_id, ud.user_id FROM dose " +
         "JOIN dose_user_data_join dud ON dose.dose_id = dud.dose_id " +
         "JOIN user_data ud ON ud.user_id = dud.user_id " +
-        "FULL OUTER JOIN blood_sugar ON dose.input_level = blood_sugar.input_level" +
-        "WHERE ud.user_id = ? AND time_of_dose > (select CURRENT_DATE - interval '1 month' as month_w_31_days);";
+        "FULL OUTER JOIN blood_sugar ON dose.input_level = blood_sugar.input_level " +
+        "WHERE ud.user_id = ? AND time_of_dose > (select CURRENT_DATE - interval '1 month' as month_w_31_days) "
+                + "ORDER BY time_of_dose DESC;";
 
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId);
 
@@ -46,8 +47,9 @@ public class JdbcHistoryDao implements HistoryDao {
                 "blood_sugar.input_level, target_low, target_high, last_measurement, blood_sugar.blood_sugar_id, ud.user_id FROM dose " +
                 "JOIN dose_user_data_join dud ON dose.dose_id = dud.dose_id " +
                 "JOIN user_data ud ON ud.user_id = dud.user_id " +
-                "FULL OUTER JOIN blood_sugar ON dose.input_level = blood_sugar.input_level" +
-                "WHERE ud.user_id = ? AND time_of_dose > (select CURRENT_DATE - interval '2 week' as month_w_31_days);";
+                "FULL OUTER JOIN blood_sugar ON dose.input_level = blood_sugar.input_level " +
+                "WHERE ud.user_id = ? AND time_of_dose > (select CURRENT_DATE - interval '2 week' as month_w_31_days) " +
+                "ORDER BY time_of_dose DESC;";
 
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId);
 
@@ -65,8 +67,9 @@ public class JdbcHistoryDao implements HistoryDao {
                 "blood_sugar.input_level, target_low, target_high, last_measurement, blood_sugar.blood_sugar_id, ud.user_id FROM dose " +
                 "JOIN dose_user_data_join dud ON dose.dose_id = dud.dose_id " +
                 "JOIN user_data ud ON ud.user_id = dud.user_id " +
-                "FULL OUTER JOIN blood_sugar ON dose.input_level = blood_sugar.input_level" +
-                "WHERE ud.user_id = ? AND time_of_dose > (select CURRENT_DATE - interval '1 week' as month_w_31_days);";
+                "FULL OUTER JOIN blood_sugar ON dose.input_level = blood_sugar.input_level " +
+                "WHERE ud.user_id = ? AND time_of_dose > (select CURRENT_DATE - interval '1 week' as month_w_31_days) " +
+                "ORDER BY time_of_dose DESC;";
 
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId);
 
@@ -84,8 +87,9 @@ public class JdbcHistoryDao implements HistoryDao {
                 "blood_sugar.input_level, target_low, target_high, last_measurement, blood_sugar.blood_sugar_id, ud.user_id FROM dose " +
                 "JOIN dose_user_data_join dud ON dose.dose_id = dud.dose_id " +
                 "JOIN user_data ud ON ud.user_id = dud.user_id " +
-                "FULL OUTER JOIN blood_sugar ON dose.input_level = blood_sugar.input_level" +
-                "WHERE ud.user_id = ? AND time_of_dose > (select CURRENT_DATE - interval '3 day' as month_w_31_days);";
+                "FULL OUTER JOIN blood_sugar ON dose.input_level = blood_sugar.input_level " +
+                "WHERE ud.user_id = ? AND time_of_dose > (select CURRENT_DATE - interval '3 day' as month_w_31_days) " +
+                "ORDER BY time_of_dose DESC;";
 
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId);
 
@@ -103,8 +107,9 @@ public class JdbcHistoryDao implements HistoryDao {
                 "blood_sugar.input_level, target_low, target_high, last_measurement, blood_sugar.blood_sugar_id, ud.user_id FROM dose " +
                 "JOIN dose_user_data_join dud ON dose.dose_id = dud.dose_id " +
                 "JOIN user_data ud ON ud.user_id = dud.user_id " +
-                "FULL OUTER JOIN blood_sugar ON dose.input_level = blood_sugar.input_level" +
-                "WHERE ud.user_id = ? AND time_of_dose > (select CURRENT_DATE - interval '1 day' as month_w_31_days);";
+                "JOIN blood_sugar ON dose.input_level = blood_sugar.input_level " +
+                "WHERE ud.user_id = ? AND time_of_dose > (select CURRENT_DATE - interval '1 day' as month_w_31_days) " +
+                "ORDER BY time_of_dose DESC;";
 
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId);
 
