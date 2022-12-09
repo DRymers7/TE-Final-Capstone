@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,13 +20,96 @@ public class JdbcHistoryDao implements HistoryDao {
     }
 
     @Override
-    public List<History> getHistoryForOneDay(int userId) {
+    public List<History> getHistoryForOneMonth(int userId) throws SQLException {
         List<History> history = new ArrayList<>();
 
-        String sql = "SELECT dose.dose_id, dose_units, time_of_dose, type_of_dose, input_level FROM dose " +
+        String sql = "SELECT dose.dose_id, dose_units, time_of_dose, type_of_dose, dose.input_level, " +
+                "blood_sugar.input_level, target_low, target_high, last_measurement, blood_sugar.blood_sugar_id, ud.user_id FROM dose " +
+        "JOIN dose_user_data_join dud ON dose.dose_id = dud.dose_id " +
+        "JOIN user_data ud ON ud.user_id = dud.user_id " +
+        "FULL OUTER JOIN blood_sugar ON dose.input_level = blood_sugar.input_level " +
+        "WHERE ud.user_id = ? AND time_of_dose > (select CURRENT_DATE - interval '1 month' as month_w_31_days) "
+                + "ORDER BY time_of_dose DESC;";
+
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId);
+
+        while (rowSet.next()) {
+            history.add(mapRowToObject(rowSet));
+        }
+        return history;
+    };
+
+    @Override
+    public List<History> getHistoryForTwoWeeks(int userId) throws SQLException{
+        List<History> history = new ArrayList<>();
+
+        String sql = "SELECT dose.dose_id, dose_units, time_of_dose, type_of_dose, dose.input_level, " +
+                "blood_sugar.input_level, target_low, target_high, last_measurement, blood_sugar.blood_sugar_id, ud.user_id FROM dose " +
                 "JOIN dose_user_data_join dud ON dose.dose_id = dud.dose_id " +
                 "JOIN user_data ud ON ud.user_id = dud.user_id " +
-                "WHERE ud.user_id = ?";
+                "FULL OUTER JOIN blood_sugar ON dose.input_level = blood_sugar.input_level " +
+                "WHERE ud.user_id = ? AND time_of_dose > (select CURRENT_DATE - interval '2 week' as month_w_31_days) " +
+                "ORDER BY time_of_dose DESC;";
+
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId);
+
+        while (rowSet.next()) {
+            history.add(mapRowToObject(rowSet));
+        }
+        return history;
+    };
+
+    @Override
+    public List<History> getHistoryForOneWeek(int userId) throws SQLException{
+        List<History> history = new ArrayList<>();
+
+        String sql = "SELECT dose.dose_id, dose_units, time_of_dose, type_of_dose, dose.input_level, " +
+                "blood_sugar.input_level, target_low, target_high, last_measurement, blood_sugar.blood_sugar_id, ud.user_id FROM dose " +
+                "JOIN dose_user_data_join dud ON dose.dose_id = dud.dose_id " +
+                "JOIN user_data ud ON ud.user_id = dud.user_id " +
+                "FULL OUTER JOIN blood_sugar ON dose.input_level = blood_sugar.input_level " +
+                "WHERE ud.user_id = ? AND time_of_dose > (select CURRENT_DATE - interval '1 week' as month_w_31_days) " +
+                "ORDER BY time_of_dose DESC;";
+
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId);
+
+        while (rowSet.next()) {
+            history.add(mapRowToObject(rowSet));
+        }
+        return history;
+    };
+
+    @Override
+    public List<History> getHistoryForThreeDays(int userId) throws SQLException{
+        List<History> history = new ArrayList<>();
+
+        String sql = "SELECT dose.dose_id, dose_units, time_of_dose, type_of_dose, dose.input_level, " +
+                "blood_sugar.input_level, target_low, target_high, last_measurement, blood_sugar.blood_sugar_id, ud.user_id FROM dose " +
+                "JOIN dose_user_data_join dud ON dose.dose_id = dud.dose_id " +
+                "JOIN user_data ud ON ud.user_id = dud.user_id " +
+                "FULL OUTER JOIN blood_sugar ON dose.input_level = blood_sugar.input_level " +
+                "WHERE ud.user_id = ? AND time_of_dose > (select CURRENT_DATE - interval '3 day' as month_w_31_days) " +
+                "ORDER BY time_of_dose DESC;";
+
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId);
+
+        while (rowSet.next()) {
+            history.add(mapRowToObject(rowSet));
+        }
+        return history;
+    };
+
+    @Override
+    public List<History> getHistoryForOneDay(int userId) throws SQLException{
+        List<History> history = new ArrayList<>();
+
+        String sql = "SELECT dose.dose_id, dose_units, time_of_dose, type_of_dose, dose.input_level, " +
+                "blood_sugar.input_level, target_low, target_high, last_measurement, blood_sugar.blood_sugar_id, ud.user_id FROM dose " +
+                "JOIN dose_user_data_join dud ON dose.dose_id = dud.dose_id " +
+                "JOIN user_data ud ON ud.user_id = dud.user_id " +
+                "JOIN blood_sugar ON dose.input_level = blood_sugar.input_level " +
+                "WHERE ud.user_id = ? AND time_of_dose > (select CURRENT_DATE - interval '1 day' as month_w_31_days) " +
+                "ORDER BY time_of_dose DESC;";
 
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId);
 

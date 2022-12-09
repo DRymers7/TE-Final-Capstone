@@ -35,9 +35,10 @@ public class JdbcBloodSugarDao implements BloodSugarDao {
         List<BloodSugar> bloodSugars = new ArrayList<>();
 
         String sql = "SELECT bs.blood_sugar_id, target_low, target_high, input_level, last_measurement FROM blood_sugar bs " +
-                "JOIN blood_sugar_user_data_join bj ON bs.blood_sugar_id = bj.blood_sugar_id " +
-                "JOIN user_data ud ON ud.user_id = bj.user_id " +
-                "WHERE ud.user_id = ?;";
+        "JOIN blood_sugar_user_data_join bj ON bs.blood_sugar_id = bj.blood_sugar_id " +
+        "JOIN user_data ud ON ud.user_id = bj.user_id " +
+        "WHERE ud.user_id = ? " +
+        "ORDER BY last_measurement DESC;";
 
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId);
 

@@ -115,7 +115,7 @@ CREATE TABLE blood_sugar (
 	target_low int NOT NULL,
 	target_high int NOT NULL,
 	input_level int NOT NULL,
-	last_measurement TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+	last_measurement TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
 );
 
 CREATE TABLE blood_sugar_user_data_join (
@@ -129,10 +129,10 @@ CREATE TABLE blood_sugar_user_data_join (
 
 CREATE TABLE dose (
 input_level int,
-type_of_dose varchar (64),
+type_of_dose int,
 dose_units int,
 dose_id int DEFAULT nextval('seq_dose_id'::regclass) NOT NULL unique,
-time_of_dose TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+time_of_dose TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
 );
 
 CREATE TABLE dose_user_data_join (
@@ -206,11 +206,11 @@ INSERT INTO insulin_user_data_join (user_id, insulin_id) VALUES (1, 1);
 INSERT INTO insulin_user_data_join (user_id, insulin_id) VALUES (1, 2);
 INSERT INTO insulin_user_data_join (user_id, insulin_id) VALUES (2, 3);
 INSERT INTO dose (dose_units, time_of_dose, type_of_dose, input_level)
-VALUES (10, '2022/12/06 13:12:11', 'Rapid-Acting', 160);
+VALUES (10, '2022/12/06 13:12:11', 0, 160);
 INSERT INTO dose (dose_units, time_of_dose, type_of_dose, input_level)
-VALUES (15, '2022/11/06 13:12:11', 'Slow-Acting', 160);
+VALUES (15, '2022/11/06 13:12:11', 0, 160);
 INSERT INTO dose (dose_units, time_of_dose, type_of_dose, input_level)
-VALUES (20, '2022/11/26 13:12:11', 'Fast-Acting', 160);
+VALUES (20, '2022/11/26 13:12:11', 1, 160);
 INSERT INTO dose_user_data_join (dose_id, user_id) VALUES (1, 1);
 INSERT INTO dose_user_data_join (dose_id, user_id) VALUES (2, 1);
 INSERT INTO dose_user_data_join (dose_id, user_id) VALUES (3, 1);
