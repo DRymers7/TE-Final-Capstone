@@ -19,14 +19,10 @@
               v-model="Reading.inputLevel"
             />
             <div class="actions">
-              <button
-                type="submit"
-                v-on:click="
-                  postNewReading(), resetForm(), checkForAlert(), sendEmail()
-                "
-              >
+              <button type="submit" v-on:click="postNewReading()">
                 Submit
               </button>
+              <h2>{{ Dose }}</h2>
             </div>
           </div>
         </form>
@@ -90,8 +86,10 @@
   </div>
 </template>
 <script>
+import { init } from "emailjs-com";
+init("");
 import DashboardService from "../services/DashboardService";
-
+import BloodSugarService from "../services/BloodSugarService";
 export default {
   name: "dashboard",
   data() {
@@ -108,25 +106,33 @@ export default {
         inputLevel: "",
         lastMeasurement: "",
       },
-
       Dose: {},
       Readings: [],
     };
   },
-
   methods: {
-    sendEmail() {},
-
+    sendEmail() {
+      //
+    },
+    getDose() {
+      DashboardService.getDose().then((response) => {
+        if (response.status == 200) {
+          this.Dose = response.data;
+        }
+      });
+    },
     postNewReading() {
+      // this.findUsersTargetHighAndLow();
       DashboardService.postNewReading(this.Reading).then((response) => {
         if (response.status == 200) {
           this.resetForm();
+          this.getDose();
+          this.checkForAlert();
         } else {
           alert("unexpected response returned: ");
         }
       });
     },
-
     postNewMeal() {
       DashboardService.postNewReading(this.Meal).then((response) => {
         if (response.status == 200) {
@@ -140,11 +146,10 @@ export default {
       this.Reading = {};
       this.Meal = {};
     },
-
-    //order by clause in server need
+    //order by clause in server needed
     checkForAlert() {
-      const mostRecentReading = this.$store.Readings.lastMeasurement;
-
+      const mostRecentReading = this.Readings.pop;
+      console.log(mostRecentReading);
       if (
         mostRecentReading.inputLevel > mostRecentReading.targetHigh * 0.8 ||
         mostRecentReading.inputLevel < mostRecentReading.targetLow * 1.2
@@ -156,10 +161,19 @@ export default {
       console.log("you need help");
     },
   },
-
   created() {
-    DashboardService.getDose().then((response) => {
-      this.Dose = response.data;
+    BloodSugarService.getUserBloodSugarReadings()
+      .then((response) => {
+        this.Readings = response.data;
+      })
+      .catch((error) => console.error(error));
+  },
+  beforeMount() {
+    this.Readings.forEach((reading) => {
+      if (reading.targetLow !== 0 || reading.targetHigh !== 0) {
+        this.Reading.targetLow = reading.targetLow;
+        this.Reading.targetHigh = reading.targetHigh;
+      }
     });
   },
 };
@@ -183,3 +197,9 @@ td {
   max-width: 40rem;
 }
 </style>
+
+
+
+
+
+
