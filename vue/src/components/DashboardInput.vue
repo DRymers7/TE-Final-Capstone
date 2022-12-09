@@ -22,7 +22,7 @@
               <button
                 type="submit"
                 v-on:click="
-                  postNewReading(), resetForm(), checkForAlert(), sendEmail()
+                    postNewReading(), resetForm(), checkForAlert(), sendEmail()
                 "
               >
                 Submit

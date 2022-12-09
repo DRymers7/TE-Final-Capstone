@@ -135,13 +135,11 @@ public class JdbcBloodSugarDao implements BloodSugarDao {
         }
     }
 
-    private BloodSugar validateTimeInPost(BloodSugar bloodSugar){
+    private void validateTimeInPost(BloodSugar bloodSugar){
         if (bloodSugar.getLastMeasurement()==null){
             bloodSugar.setLastMeasurement(new Timestamp(System.currentTimeMillis()));
         }
-        return bloodSugar;
     }
-
 
     private BloodSugar mapRowToObject(SqlRowSet row) {
         BloodSugar bloodSugar = new BloodSugar();
