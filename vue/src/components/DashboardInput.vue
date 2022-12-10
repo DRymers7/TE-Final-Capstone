@@ -114,12 +114,26 @@ export default {
   },
   methods: {
     sendEmail() {
-      emailjs.sendForm('default_service', 'YOUR_TEMPLATE_ID', this.$refs.form, 'YOUR_PUBLIC_KEY')
-        .then((result) => {
-            console.log('SUCCESS!', result.text);
-        }, (error) => {
-            console.log('FAILED...', error.text);
-        });
+      //will need to substitute values before we post to github, but the values are (service id, template, id, template params and public key)
+      emailjs
+        .send(
+          "service_nwrb0fr",
+          "template_c6kunah",
+          {
+            from_name: "test",
+            to_name: "test",
+            message: "test",
+          },
+          "7njRAw8N8MgG_lqIQ"
+        )
+        .then(
+          function (response) {
+            console.log("SUCCESS!", response.status, response.text);
+          },
+          function (error) {
+            console.log("FAILED...", error);
+          }
+        );
     },
     getDose() {
       DashboardService.getDose().then((response) => {
@@ -161,12 +175,11 @@ export default {
         mostRecentReading.inputLevel > mostRecentReading.targetHigh * 0.8 ||
         mostRecentReading.inputLevel < mostRecentReading.targetLow * 1.2
       ) {
-        return this.basicPrintAlert;
+        alert("Your blood sugar is within 20% of your target range. Please plan on a correctional dose or snack.");
+        // this.sendEmail(); Uncomment when we want to present
       }
     },
-    basicPrintAlert() {
-      console.log("you need help");
-    },
+  
   },
   created() {
     BloodSugarService.getUserBloodSugarReadings()
