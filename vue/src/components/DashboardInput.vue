@@ -90,10 +90,12 @@ import { init } from "emailjs-com";
 init("");
 import DashboardService from "../services/DashboardService";
 import BloodSugarService from "../services/BloodSugarService";
+import emailjs from "emailjs-com";
 export default {
   name: "dashboard",
   data() {
     return {
+      
       Meal: {
         carbs: "",
         food: "",
@@ -112,7 +114,12 @@ export default {
   },
   methods: {
     sendEmail() {
-      //
+      emailjs.sendForm('default_service', 'YOUR_TEMPLATE_ID', this.$refs.form, 'YOUR_PUBLIC_KEY')
+        .then((result) => {
+            console.log('SUCCESS!', result.text);
+        }, (error) => {
+            console.log('FAILED...', error.text);
+        });
     },
     getDose() {
       DashboardService.getDose().then((response) => {
@@ -148,7 +155,7 @@ export default {
     },
     //order by clause in server needed
     checkForAlert() {
-      const mostRecentReading = this.Readings.pop;
+      const mostRecentReading = this.Readings[0];
       console.log(mostRecentReading);
       if (
         mostRecentReading.inputLevel > mostRecentReading.targetHigh * 0.8 ||

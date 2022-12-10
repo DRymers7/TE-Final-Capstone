@@ -40,7 +40,7 @@ public class JdbcHistoryDaoTests extends BaseDaoTests {
     @Test
     public void get_three_day_averages() throws SQLException {
         List<History> histories = dao.getHistoryForThreeDays(1);
-        Assert.assertEquals(6, histories.size());
+        Assert.assertEquals(3, histories.size());
     }
 
     @Test
