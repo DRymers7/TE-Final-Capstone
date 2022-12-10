@@ -125,14 +125,12 @@ public class JdbcHistoryDao implements HistoryDao {
     };
 
     private void filterHistoryList(List<History> historyList) {
+         List<History> filterList = new ArrayList<History>();
         for (History history : historyList) {
-            for (History historyB : historyList) {
-                if (history.getDoseId() == historyB.getDoseId()) {
-                    historyList.remove(historyB);
-                }
+                filterList.add(history);
             }
-        }
     }
+
 
     private History mapRowToObject(SqlRowSet row) {
         History history = new History();
