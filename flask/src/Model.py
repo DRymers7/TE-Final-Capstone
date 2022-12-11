@@ -46,9 +46,9 @@ class Model:
     #get model from pickle and predict
     def predict(self, x):
         #load model
-        log_model = pickle.load(open('src\lin_model.pkl', 'rb'))
+        lin_model = pickle.load(open('src\lin_model.pkl', 'rb'))
         #predict
-        y_pred = log_model.predict(x)
+        y_pred = lin_model.predict(x)
         return y_pred
 
    
