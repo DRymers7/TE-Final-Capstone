@@ -23,10 +23,14 @@ def test():
 @app.route('/predict', methods=['POST'])
 def predict():
     if request.method == 'POST':
-        # get the parameters from the request
-        parameters = parser.parse_args()
-        prediction = model.predict(np.array([[parameters]]))
-        return jsonify({'prediction': prediction}), 201
-
+        req_Json = request.json
+        glucose = req_Json['Glucose']
+        insulin = req_Json['Insulin']
+        bmi = req_Json['BMI']
+        age = req_Json['Age']
+        diabetes = req_Json['Diabetes']
+        prediction = model.predict(np.array([[glucose, insulin, bmi, age, diabetes]]))
+        return jsonify({'prediction': prediction.tolist()})
+    
 if __name__ == '__main__':
     app.run(debug=True)
