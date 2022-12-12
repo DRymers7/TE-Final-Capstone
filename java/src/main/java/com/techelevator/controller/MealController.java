@@ -76,11 +76,13 @@ public class MealController {
     }
 
     @RequestMapping(path = "/meals/info/{query}", method = RequestMethod.GET)
-    public NutritionInfo getMealInformation(@PathVariable String searchQuery, Principal principal) {
+    public List<Meal> logNewUserMealAndReturnRunningCarbs(@PathVariable String query, Principal principal) {
         try {
             int userId = userDao.findIdByUsername(principal.getName());
-            NutritionInfo mealInfo = mealDao.getMealData(userId,searchQuery);
-            return mealInfo;
+            Meal userMeal = fdaHelper.returnSearchedMealObject(query);
+            mealDao.createUserMeal(userId, userMeal);
+            return mealDao.getUserMealsToday(userId);
+
         }catch (SQLException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }

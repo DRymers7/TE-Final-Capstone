@@ -101,6 +101,24 @@ public class JdbcMealDao implements MealDao {
 
     }
 
+    @Override
+    public List<Meal> getUserMealsToday(int userId) throws SQLException {
+        List<Meal> mealList = new ArrayList<>();
+
+        String sql = "SELECT meals.meal_id, carbs, food, glycemic_index, meal_time " +
+                "FROM meals " +
+                "JOIN meals_user_join mj ON mj.meal_id = meals.meal_id " +
+                "JOIN user_data ud ON ud.user_id = mj.user_id " +
+                "WHERE ud.user_id = ? AND meal_time > (select CURRENT_DATE - interval '1 day' as month_w_31_days) " +
+                "ORDER BY meal_time DESC;";
+
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId);
+        while(rowSet.next()) {
+            mealList.add(mapRowToObject(rowSet));
+        }
+        return mealList;
+    }
+
     private boolean createMealJoinEntry(Integer mealId, int userId) {
 
         String sql = "INSERT INTO meals_user_join (meal_id, user_id) VALUES (?, ?) RETURNING meal_id;";
