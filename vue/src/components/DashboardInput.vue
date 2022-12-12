@@ -107,8 +107,9 @@ export default {
         inputLevel: "",
         lastMeasurement: "",
       },
-      Dose: {},
+      Dose: "",
       Readings: [],
+      CarbCount: "",
     };
   },
   methods: {
