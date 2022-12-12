@@ -11,12 +11,13 @@
   },
   "dependencies": {
     "@emailjs/browser": "^3.10.0",
+    "apexcharts": "^3.36.3",
     "axios": "^0.21.1",
     "bootstrap-vue": "^2.23.1",
-    "chart.js": "^4.0.1",
     "core-js": "^3.9.1",
     "emailjs-com": "^3.2.0",
     "vue": "^2.6.12",
+    "vue-apexcharts": "^1.6.2",
     "vue-router": "^3.5.1",
     "vuex": "^3.6.2"
   },
