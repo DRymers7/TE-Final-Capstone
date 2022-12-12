@@ -95,7 +95,6 @@ export default {
   name: "dashboard",
   data() {
     return {
-      
       Meal: {
         carbs: "",
         food: "",
@@ -127,10 +126,10 @@ export default {
           "7njRAw8N8MgG_lqIQ"
         )
         .then(
-          function (response) {
+          function(response) {
             console.log("SUCCESS!", response.status, response.text);
           },
-          function (error) {
+          function(error) {
             console.log("FAILED...", error);
           }
         );
@@ -175,11 +174,12 @@ export default {
         mostRecentReading.inputLevel > mostRecentReading.targetHigh * 0.8 ||
         mostRecentReading.inputLevel < mostRecentReading.targetLow * 1.2
       ) {
-        alert("Your blood sugar is within 20% of your target range. Please plan on a correctional dose or snack.");
+        alert(
+          "Your blood sugar is within 20% of your target range. Please plan on a correctional dose or snack."
+        );
         // this.sendEmail(); Uncomment when we want to present
       }
     },
-  
   },
   created() {
     BloodSugarService.getUserBloodSugarReadings()
@@ -217,9 +217,3 @@ td {
   max-width: 40rem;
 }
 </style>
-
-
-
-
-
-

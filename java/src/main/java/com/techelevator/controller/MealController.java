@@ -3,6 +3,8 @@ package com.techelevator.controller;
 import com.techelevator.dao.dao.MealDao;
 import com.techelevator.dao.dao.UserDao;
 import com.techelevator.model.ModelClasses.Meal;
+import com.techelevator.model.ModelClasses.edamam.NutritionInfo;
+import com.techelevator.services.FDAHelper;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -17,6 +19,7 @@ public class MealController {
 
     private MealDao mealDao;
     private UserDao userDao;
+    private FDAHelper fdaHelper = new FDAHelper();
 
     public MealController(MealDao mealDao, UserDao userDao) {
         this.mealDao = mealDao;
@@ -71,4 +74,18 @@ public class MealController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
     }
+
+    @RequestMapping(path = "/meals/info/{query}", method = RequestMethod.GET)
+    public NutritionInfo getMealInformation(@PathVariable String searchQuery, Principal principal) {
+        try {
+            int userId = userDao.findIdByUsername(principal.getName());
+            NutritionInfo mealInfo = mealDao.getMealData(userId,searchQuery);
+            return mealInfo;
+        }catch (SQLException e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+
 }

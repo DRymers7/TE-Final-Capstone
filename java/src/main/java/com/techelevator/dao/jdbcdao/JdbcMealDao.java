@@ -2,6 +2,7 @@ package com.techelevator.dao.jdbcdao;
 
 import com.techelevator.dao.dao.MealDao;
 import com.techelevator.model.ModelClasses.Meal;
+import com.techelevator.model.ModelClasses.edamam.NutritionInfo;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -38,6 +39,12 @@ public class JdbcMealDao implements MealDao {
         }
         return returnList;
     }
+
+//    @Override
+//    public NutritionInfo getMealData(int userId, String searchQuery) throws SQLException{
+//        NutritionInfo returnedInfo = new NutritionInfo();
+//
+//    }
 
     @Override
     public Meal createUserMeal(int userId, Meal meal) throws SQLException {

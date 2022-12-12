@@ -9,8 +9,9 @@ import Profile from "../components/Profile";
 import NotFound from "../views/NotFound";
 import SplashPage from "../views/SplashPage";
 import Dashboard from "../views/Dashboard";
-import DashboardHome from "../components/DashboardHome.vue"
+import DashboardHome from "../components/DashboardHome.vue";
 
+import Webcam from "../components/Webcam";
 
 Vue.use(Router);
 
@@ -80,7 +81,12 @@ const router = new Router({
     {
       path: "/home/dashboard",
       name: "dashboardHome",
-      component: DashboardHome
+      component: DashboardHome,
+    },
+    {
+      path: "/webcam",
+      name: "webcam",
+      component: Webcam,
     },
     {
       path: "*",
