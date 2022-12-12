@@ -9,7 +9,6 @@ import Profile from "../components/Profile";
 import NotFound from "../views/NotFound";
 import SplashPage from "../views/SplashPage";
 import Dashboard from "../views/Dashboard";
-import DashboardTest from "../components/dashboard-test/dashboard-test.vue"
 
 Vue.use(Router);
 
@@ -75,11 +74,6 @@ const router = new Router({
       path: "/dashboard",
       name: "dashboard",
       component: Dashboard,
-    },
-    {
-      path: "/dashboard-test",
-      name: "dashboard-test",
-      component: DashboardTest
     },
     {
       path: "*",
