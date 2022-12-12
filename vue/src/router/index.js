@@ -9,6 +9,7 @@ import Profile from "../components/Profile";
 import NotFound from "../views/NotFound";
 import SplashPage from "../views/SplashPage";
 import Dashboard from "../views/Dashboard";
+import DashboardHome from "../components/DashboardHome.vue";
 
 Vue.use(Router);
 
@@ -74,6 +75,11 @@ const router = new Router({
       path: "/dashboard",
       name: "dashboard",
       component: Dashboard,
+    },
+    {
+      path: "/home/dashboard",
+      name: "dashboardHome",
+      component: DashboardHome,
     },
     {
       path: "*",

@@ -90,6 +90,7 @@ import { init } from "emailjs-com";
 init("");
 import DashboardService from "../services/DashboardService";
 import BloodSugarService from "../services/BloodSugarService";
+import emailjs from "emailjs-com";
 export default {
   name: "dashboard",
   data() {
@@ -106,17 +107,33 @@ export default {
         inputLevel: "",
         lastMeasurement: "",
       },
-
       Dose: {},
       Readings: [],
     };
   },
-
   methods: {
     sendEmail() {
-      //
+      //will need to substitute values before we post to github, but the values are (service id, template, id, template params and public key)
+      emailjs
+        .send(
+          "service_nwrb0fr",
+          "template_c6kunah",
+          {
+            from_name: "test",
+            to_name: "test",
+            message: "test",
+          },
+          "7njRAw8N8MgG_lqIQ"
+        )
+        .then(
+          function(response) {
+            console.log("SUCCESS!", response.status, response.text);
+          },
+          function(error) {
+            console.log("FAILED...", error);
+          }
+        );
     },
-
     getDose() {
       DashboardService.getDose().then((response) => {
         if (response.status == 200) {
@@ -124,10 +141,8 @@ export default {
         }
       });
     },
-
     postNewReading() {
       // this.findUsersTargetHighAndLow();
-
       DashboardService.postNewReading(this.Reading).then((response) => {
         if (response.status == 200) {
           this.resetForm();
@@ -138,7 +153,6 @@ export default {
         }
       });
     },
-
     postNewMeal() {
       DashboardService.postNewReading(this.Meal).then((response) => {
         if (response.status == 200) {
@@ -152,23 +166,21 @@ export default {
       this.Reading = {};
       this.Meal = {};
     },
-
     //order by clause in server needed
     checkForAlert() {
-      const mostRecentReading = this.Readings.pop;
+      const mostRecentReading = this.Readings[0];
       console.log(mostRecentReading);
       if (
         mostRecentReading.inputLevel > mostRecentReading.targetHigh * 0.8 ||
         mostRecentReading.inputLevel < mostRecentReading.targetLow * 1.2
       ) {
-        return this.basicPrintAlert;
+        alert(
+          "Your blood sugar is within 20% of your target range. Please plan on a correctional dose or snack."
+        );
+        // this.sendEmail(); Uncomment when we want to present
       }
     },
-    basicPrintAlert() {
-      console.log("you need help");
-    },
   },
-
   created() {
     BloodSugarService.getUserBloodSugarReadings()
       .then((response) => {

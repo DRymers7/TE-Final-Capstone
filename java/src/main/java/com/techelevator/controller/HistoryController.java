@@ -28,7 +28,7 @@ public class HistoryController {
     private DoseDao doseDao;
     private HistoryDao historyDao;
 
-    public HistoryController(MealDao mealDao, UserDataDao userDataDao, InsulinDao insulinDao, BloodSugarDao bloodSugarDao, UserDao userDao, DoseDao doseDao) {
+    public HistoryController(MealDao mealDao, UserDataDao userDataDao, InsulinDao insulinDao, BloodSugarDao bloodSugarDao, UserDao userDao, DoseDao doseDao, HistoryDao historyDao) {
         this.mealDao = mealDao;
         this.userDataDao = userDataDao;
         this.bloodSugarDao = bloodSugarDao;

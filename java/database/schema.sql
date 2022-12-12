@@ -206,11 +206,11 @@ INSERT INTO insulin_user_data_join (user_id, insulin_id) VALUES (1, 1);
 INSERT INTO insulin_user_data_join (user_id, insulin_id) VALUES (1, 2);
 INSERT INTO insulin_user_data_join (user_id, insulin_id) VALUES (2, 3);
 INSERT INTO dose (dose_units, time_of_dose, type_of_dose, input_level)
-VALUES (10, '2022/12/06 13:12:11', 0, 160);
+VALUES (10, '2022/12/06 13:12:11', 0, 130);
 INSERT INTO dose (dose_units, time_of_dose, type_of_dose, input_level)
-VALUES (15, '2022/11/06 13:12:11', 0, 160);
+VALUES (15, '2022/11/06 13:12:11', 0, 130);
 INSERT INTO dose (dose_units, time_of_dose, type_of_dose, input_level)
-VALUES (20, '2022/11/26 13:12:11', 1, 160);
+VALUES (20, '2022/11/26 13:12:11', 1, 130);
 INSERT INTO dose_user_data_join (dose_id, user_id) VALUES (1, 1);
 INSERT INTO dose_user_data_join (dose_id, user_id) VALUES (2, 1);
 INSERT INTO dose_user_data_join (dose_id, user_id) VALUES (3, 1);
