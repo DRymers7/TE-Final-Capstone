@@ -1,5 +1,6 @@
 package com.techelevator.dao;
 
+import com.techelevator.model.ModelClasses.Meal;
 import com.techelevator.model.ModelClasses.edamam.NutritionInfo;
 import com.techelevator.services.FDAHelper;
 import org.junit.Assert;
@@ -18,7 +19,7 @@ public class FDATest {
 
     @Test
     public void test_get_call() {
-        NutritionInfo test = fdaHelper.returnSearchedMealObject("cheese pizza");
+        Meal test = fdaHelper.returnSearchedMealObject("cheese pizza");
         Assert.assertNotNull(test);
     }
 

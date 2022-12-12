@@ -11,5 +11,5 @@ public class MLModelService {
         this.baseApiUrl = baseApiUrl;
     }
 
-    
+
 }
