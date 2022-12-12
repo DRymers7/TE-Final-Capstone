@@ -22,7 +22,8 @@
               <button type="submit" v-on:click="postNewReading()">
                 Submit
               </button>
-              <h2>{{ Dose }}</h2>
+              <h2>{{ Dose.CorrectionalDoseLow }}</h2>
+              <h2>{{ Dose.CorrectionalDoseHigh }}</h2>
             </div>
           </div>
         </form>
@@ -107,8 +108,9 @@ export default {
         inputLevel: "",
         lastMeasurement: "",
       },
-      Dose: {},
+      Dose: "",
       Readings: [],
+      CarbCount: "",
     };
   },
   methods: {
