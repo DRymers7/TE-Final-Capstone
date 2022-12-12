@@ -77,6 +77,15 @@ public class MealController {
 
     @RequestMapping(path = "/meals/info/{query}", method = RequestMethod.GET)
     public NutritionInfo getMealInformation(@PathVariable String searchQuery, Principal principal) {
-        return null;
+        try {
+            int userId = userDao.findIdByUsername(principal.getName());
+            NutritionInfo mealInfo = mealDao.getMealData(userId,searchQuery);
+            return mealInfo;
+        }catch (SQLException e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
+
+
+
 }
