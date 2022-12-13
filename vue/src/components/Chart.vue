@@ -90,13 +90,23 @@ export default {
       ],
     };
   },
+
+  methods: {
+    updateChart() {
+      const newData = this.series[0].data;
+      this.series[0].data = [{ data: newData }];
+    },
+  },
+
   created() {
     HistoryService.getUserHistoryOneMonth()
       .then((response) => {
         this.options.annotations.yaxis[0].y = response.data[0].targetLow;
         this.options.annotations.yaxis[0].y2 = response.data[0].targetHigh;
         this.series[0].data = response.data[0].inputLevel;
-        console.log(response.data);
+        this.newData = response.data[0].inputLevel;
+        console.log(this.newData);
+        this.updateChart();
       })
       .catch((error) => console.error(error));
   },
