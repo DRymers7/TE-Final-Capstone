@@ -22,6 +22,31 @@ public class BloodSugarValidationHelper {
         return populateResultingObject(cleanAndPrepareForPopulation(bloodSugarList), bloodSugar);
     }
 
+    public BloodSugar patchNewBloodSugar(BloodSugar bloodSugar, int userId) {
+        List<BloodSugar> mostRecentList = bloodSugarDao.getBloodSugarReadings(userId);
+        BloodSugar mostRecent = findBestChoice(mostRecentList);
+        if (bloodSugar.getTargetLow() == 0) {
+            bloodSugar.setTargetLow(mostRecent.getTargetLow());
+        }
+        if (bloodSugar.getTargetHigh() == 0) {
+            bloodSugar.setTargetHigh(mostRecent.getTargetHigh());
+        }
+        if (bloodSugar.getLastMeasurement() == null) {
+            bloodSugar.setLastMeasurement(new Timestamp(System.currentTimeMillis()));
+        }
+        return bloodSugar;
+    }
+
+    private BloodSugar findBestChoice(List<BloodSugar> list) {
+        BloodSugar bestChoice = null;
+        for (BloodSugar bloodSugar : list) {
+            if (bloodSugar.getTargetLow() != 0 && bloodSugar.getTargetHigh() != 0) {
+                bestChoice = bloodSugar;
+            }
+        }
+        return bestChoice;
+    }
+
     private BloodSugar cleanAndPrepareForPopulation(List<BloodSugar> list) throws SQLException {
         if (list.size() == 1) {
             return list.get(0);
