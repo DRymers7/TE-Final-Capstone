@@ -136,7 +136,7 @@ public class UserData {
         this.username = username;
     }
 
-    public String getProfilePic() {
+    public String getProfilePic(int userId) {
         return profilePic;
     }
 

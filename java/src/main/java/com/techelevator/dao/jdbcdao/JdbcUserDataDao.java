@@ -33,9 +33,7 @@ public class JdbcUserDataDao implements UserDataDao {
         } else {
             throw new SQLException("Could not find applicable user.");
         }
-
     }
-
 
     private UserData mapRowToUserData(SqlRowSet rowSet) {
         UserData userData = new UserData();
