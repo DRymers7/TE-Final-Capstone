@@ -42,13 +42,14 @@ public class JdbcUserDataDao implements UserDataDao {
         String sql = "UPDATE user_data SET profile_pic = ? " +
                      "WHERE user_id = ?";
 
-        int success = jdbcTemplate.update(sql, imageData, userId);
-        if (success == 1) {
-            String string = new String(byte[]);
-            return imageData;
-        } else {
-            throw new SQLException("update profile picture failed");
-        }
+//        int success = jdbcTemplate.update(sql, imageData, userId);
+//        if (success == 1) {
+//            String string = new String(byte[]);
+//            return imageData;
+//        } else {
+//            throw new SQLException("update profile picture failed");
+//        }
+        return null;
     }
 
     private UserData mapRowToUserData(SqlRowSet rowSet) {

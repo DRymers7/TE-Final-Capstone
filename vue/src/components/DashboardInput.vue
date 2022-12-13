@@ -201,8 +201,6 @@ export default {
       })
       .catch((error) => console.error(error));
 
-      console.log(this.Readings);
-
       const mostRecentReading = this.Readings[0];
       console.log(mostRecentReading);
       if (
