@@ -1,5 +1,6 @@
 package com.techelevator.model.ModelClasses.edamam;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.techelevator.model.ModelClasses.edamam.nutrientInfo.CHOCDF_KCAL;
 import com.techelevator.model.ModelClasses.edamam.nutrientInfo.ENERC_KCAL;
 import com.techelevator.model.ModelClasses.edamam.nutrientInfo.FAT_KCAL;
@@ -9,9 +10,13 @@ import java.util.Objects;
 
 public class TotalNutrientsKCal {
 
+    @JsonProperty("ENERC_KCAL")
     private ENERC_KCAL enerc_kcal;
+    @JsonProperty("PROCNT_KCAL")
     private PROCNT_KCAL procnt_kcal;
+    @JsonProperty("FAT_KCAL")
     private FAT_KCAL fat_kcal;
+    @JsonProperty("CHOCDF_KCAL")
     private CHOCDF_KCAL chocdf_kcal;
 
     public TotalNutrientsKCal() {};

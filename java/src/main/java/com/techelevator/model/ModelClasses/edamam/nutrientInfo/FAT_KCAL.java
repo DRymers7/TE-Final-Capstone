@@ -1,11 +1,16 @@
 package com.techelevator.model.ModelClasses.edamam.nutrientInfo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Objects;
 
 public class FAT_KCAL {
 
+    @JsonProperty("label")
     private String label;
+    @JsonProperty("quantity")
     private double quantity;
+    @JsonProperty("unit")
     private String unit;
 
     public FAT_KCAL() {};

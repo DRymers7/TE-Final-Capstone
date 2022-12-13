@@ -1,17 +1,21 @@
 package com.techelevator.model.ModelClasses.edamam;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.techelevator.model.ModelClasses.edamam.nutrientInfo.*;
 
 import java.util.Objects;
 
 public class TotalNutrients {
-        private ENERC_KCAL enerc_Kcal;
+    @JsonProperty("ENERC_KCAL")
+    private ENERC_KCAL enerc_Kcal;
 //    private FAT fat;
 //    private FASAT fasat;
 //    private FAMS fams;
 //    private FAPU fapu;
 //    private CHOCDF chocdf;
+    @JsonProperty("CHOCDF")
     private CHOCDFNet chocdfNet;
+    @JsonProperty("FIBTG")
     private FIBTG fibtg;
 //    private SUGAR sugar;
 //    private PROCNT procnt;
