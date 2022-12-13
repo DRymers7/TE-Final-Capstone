@@ -20,6 +20,7 @@ def test():
     if request.method == 'GET':
         return jsonify({"response": "Get request called"})
 
+
 @app.route('/predict', methods=['POST'])
 def predict():
     if request.method == 'POST':
