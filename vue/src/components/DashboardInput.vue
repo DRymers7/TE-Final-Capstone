@@ -91,11 +91,26 @@ import { init } from "emailjs-com";
 init("");
 import DashboardService from "../services/DashboardService";
 import BloodSugarService from "../services/BloodSugarService";
+import ProfileService from "../services/ProfileService";
 import emailjs from "emailjs-com";
 export default {
   name: "dashboard",
   data() {
     return {
+      userData: {
+        userId: "",
+        a1c: "",
+        fastingGlucose: "",
+        diabetesType: "",
+        userAge: "",
+        lastUpdated: "",
+        weight: "",
+        height: "",
+        activityLevel: "",
+        emergencyContact1: "",
+        emergencyContact2: "",
+        username: ""
+      },
       Meal: {
         carbs: "",
         food: "",
@@ -123,6 +138,7 @@ export default {
           {
             from_name: "test",
             to_name: "test",
+            user_email: this.userData.username,
             message: "test",
           },
           "7njRAw8N8MgG_lqIQ"
@@ -135,6 +151,15 @@ export default {
             console.log("FAILED...", error);
           }
         );
+    },
+    getUserData() {
+      ProfileService.getUserData().then((response) => {
+        if (response.status == 200) {
+          this.userData = response.data;
+        } else {
+          console.log("unexpected response")
+        }
+      })
     },
     getDose() {
       DashboardService.getDose().then((response) => {
@@ -179,7 +204,8 @@ export default {
         alert(
           "Your blood sugar is within 20% of your target range. Please plan on a correctional dose or snack."
         );
-        // this.sendEmail(); Uncomment when we want to present
+        this.ProfileService.getUserData();
+        this.sendEmail(); // Uncomment when we want to present
       }
     },
   },
