@@ -20,7 +20,7 @@ public class MLModelService {
         String url = baseApiUrl + "/predict";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<Prediction> requestEntity = new HttpEntity<Prediction>(headers);
+        HttpEntity<UserInfoPrediction> requestEntity = new HttpEntity<UserInfoPrediction>(userInformation, headers);
         ResponseEntity<Prediction> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, Prediction.class);
         return responseEntity.getBody();
     }

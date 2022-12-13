@@ -26,7 +26,8 @@ public class MLModelTest {
         testInfo.setBMI(100);
         testInfo.setAge(100);
         testInfo.setDiabetes(1);
+        System.out.println("placeholder");
 
-        int prediction = mlModelHelper.returnUserDataPrediction(testInfo);
+        double prediction = mlModelHelper.returnUserDataPrediction(testInfo);
     }
 }

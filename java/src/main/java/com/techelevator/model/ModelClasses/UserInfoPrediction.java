@@ -2,11 +2,11 @@ package com.techelevator.model.ModelClasses;
 
 public class UserInfoPrediction {
 
-    private int Glucose;
-    private int Insulin;
-    private int BMI;
-    private int Age;
-    private int Diabetes;
+    private Integer Glucose;
+    private Integer Insulin;
+    private Integer BMI;
+    private Integer Age;
+    private Integer Diabetes;
 
     public UserInfoPrediction() {};
 
