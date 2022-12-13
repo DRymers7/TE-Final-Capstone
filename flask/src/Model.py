@@ -53,7 +53,7 @@ class Model:
 
    
 
-# model = Model()
-# model.linearModel()
-# print(model.predict(np.array([[100, 148, 32, 40, 0]])))
+model = Model()
+model.linearModel()
+print(model.predict(np.array([[100, 148, 32, 40, 0]])))
 

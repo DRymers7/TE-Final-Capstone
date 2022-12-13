@@ -1,5 +1,7 @@
 package com.techelevator.model.ModelClasses.edamam;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.naming.ldap.PagedResultsControl;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,14 +9,19 @@ import java.util.Objects;
 
 public class NutritionInfo {
 
+    @JsonProperty("uri")
     private String uri;
+    @JsonProperty("calories")
     private int calories;
     private double totalWeight;
     private String[] dietLabels;
     private String[] healthLabels;
     private String[] cautions;
+    @JsonProperty("totalNutrients")
     private TotalNutrients totalNutrients;
+    @JsonProperty("totalDaily")
     private TotalDaily totalDaily;
+    @JsonProperty("totalNutrientsKCal")
     private TotalNutrientsKCal totalNutrientsKCal;
 
     public NutritionInfo() {}

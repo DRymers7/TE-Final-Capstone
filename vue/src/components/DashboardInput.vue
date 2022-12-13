@@ -22,7 +22,8 @@
               <button type="submit" v-on:click="postNewReading()">
                 Submit
               </button>
-              <h2>{{ Dose }}</h2>
+              <h2>{{ Dose.CorrectionalDoseLow }}</h2>
+              <h2>{{ Dose.CorrectionalDoseHigh }}</h2>
             </div>
           </div>
         </form>
@@ -90,11 +91,26 @@ import { init } from "emailjs-com";
 init("");
 import DashboardService from "../services/DashboardService";
 import BloodSugarService from "../services/BloodSugarService";
+import ProfileService from "../services/ProfileService";
 import emailjs from "emailjs-com";
 export default {
   name: "dashboard",
   data() {
     return {
+      userData: {
+        userId: "",
+        a1c: "",
+        fastingGlucose: "",
+        diabetesType: "",
+        userAge: "",
+        lastUpdated: "",
+        weight: "",
+        height: "",
+        activityLevel: "",
+        emergencyContact1: "",
+        emergencyContact2: "",
+        username: ""
+      },
       Meal: {
         carbs: "",
         food: "",
@@ -107,8 +123,9 @@ export default {
         inputLevel: "",
         lastMeasurement: "",
       },
-      Dose: {},
+      Dose: "",
       Readings: [],
+      CarbCount: "",
     };
   },
   methods: {
@@ -121,6 +138,7 @@ export default {
           {
             from_name: "test",
             to_name: "test",
+            user_email: this.userData.username,
             message: "test",
           },
           "7njRAw8N8MgG_lqIQ"
@@ -133,6 +151,15 @@ export default {
             console.log("FAILED...", error);
           }
         );
+    },
+    getUserData() {
+      ProfileService.getUserData().then((response) => {
+        if (response.status == 200) {
+          this.userData = response.data;
+        } else {
+          console.log("unexpected response")
+        }
+      })
     },
     getDose() {
       DashboardService.getDose().then((response) => {
@@ -168,6 +195,14 @@ export default {
     },
     //order by clause in server needed
     checkForAlert() {
+      BloodSugarService.getUserBloodSugarReadings()
+      .then((response) => {
+        this.Readings = response.data;
+      })
+      .catch((error) => console.error(error));
+
+      console.log(this.Readings);
+
       const mostRecentReading = this.Readings[0];
       console.log(mostRecentReading);
       if (
@@ -177,9 +212,11 @@ export default {
         alert(
           "Your blood sugar is within 20% of your target range. Please plan on a correctional dose or snack."
         );
-        // this.sendEmail(); Uncomment when we want to present
+        ProfileService.getUserData()
+        this.sendEmail(); // Uncomment when we want to present
       }
-    },
+    }
+    
   },
   created() {
     BloodSugarService.getUserBloodSugarReadings()
