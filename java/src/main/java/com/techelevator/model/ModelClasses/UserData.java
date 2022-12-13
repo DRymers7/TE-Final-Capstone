@@ -18,11 +18,12 @@ public class UserData {
     private String activityLevel;
     private String emergencyContact1;
     private String emergencyContact2;
+    private String username;
 
     public UserData() {};
 
     public UserData(int userId, double a1c, int fastingGlucose, int diabetesType, int userAge, Timestamp lastUpdated, int weight, int height, String activityLevel,
-                    String emergencyContact1, String emergencyContact2) {
+                    String emergencyContact1, String emergencyContact2, String username) {
         this.userId = userId;
         this.a1c = a1c;
         this.fastingGlucose = fastingGlucose;
@@ -34,6 +35,7 @@ public class UserData {
         this.activityLevel = activityLevel;
         this.emergencyContact1 = emergencyContact1;
         this.emergencyContact2 = emergencyContact2;
+        this.username = username;
     }
 
     public int getUserId() {
@@ -124,17 +126,25 @@ public class UserData {
         this.emergencyContact2 = emergencyContact2;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserData userData = (UserData) o;
-        return userId == userData.userId && Double.compare(userData.a1c, a1c) == 0 && fastingGlucose == userData.fastingGlucose && diabetesType == userData.diabetesType && userAge == userData.userAge && weight == userData.weight && height == userData.height && Objects.equals(lastUpdated, userData.lastUpdated) && Objects.equals(activityLevel, userData.activityLevel) && Objects.equals(emergencyContact1, userData.emergencyContact1) && Objects.equals(emergencyContact2, userData.emergencyContact2);
+        return userId == userData.userId && Double.compare(userData.a1c, a1c) == 0 && fastingGlucose == userData.fastingGlucose && diabetesType == userData.diabetesType && userAge == userData.userAge && weight == userData.weight && height == userData.height && Objects.equals(lastUpdated, userData.lastUpdated) && Objects.equals(activityLevel, userData.activityLevel) && Objects.equals(emergencyContact1, userData.emergencyContact1) && Objects.equals(emergencyContact2, userData.emergencyContact2) && Objects.equals(username, userData.username);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, a1c, fastingGlucose, diabetesType, userAge, lastUpdated, weight, height, activityLevel, emergencyContact1, emergencyContact2);
+        return Objects.hash(userId, a1c, fastingGlucose, diabetesType, userAge, lastUpdated, weight, height, activityLevel, emergencyContact1, emergencyContact2, username);
     }
 
     @Override
@@ -151,6 +161,7 @@ public class UserData {
                 ", activityLevel='" + activityLevel + '\'' +
                 ", emergencyContact1='" + emergencyContact1 + '\'' +
                 ", emergencyContact2='" + emergencyContact2 + '\'' +
+                ", username='" + username + '\'' +
                 '}';
     }
 }
