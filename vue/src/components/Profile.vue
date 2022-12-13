@@ -107,6 +107,7 @@ export default {
   name: "profile",
   data() {
     return {
+      userData: {},
       BaseInsulin: {
         insulinId: "",
         baseLevel: "",
@@ -168,6 +169,7 @@ export default {
         }
       });
     },
+    
     resetForm() {
       this.Insulin = {};
     },

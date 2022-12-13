@@ -16,4 +16,8 @@ export default {
   updateBloodSugar(bloodSugar) {
     return axios.put("/blood-sugars", bloodSugar);
   },
+
+  getUserData() {
+    return axios.get("/userdata")
+  }
 };

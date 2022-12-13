@@ -47,7 +47,8 @@ public class BloodSugarController {
 
         try {
             int userId = userDao.findIdByUsername(principal.getName());
-            return bloodSugarDao.createBloodSugarReading(userId, bloodSugar);
+            BloodSugar patched = bloodSugarValidationHelper.patchNewBloodSugar(bloodSugar, userId);
+            return bloodSugarDao.createBloodSugarReading(userId, patched);
 
         } catch (SQLException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);

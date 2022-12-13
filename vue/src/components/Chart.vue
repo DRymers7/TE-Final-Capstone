@@ -33,6 +33,7 @@
           </button>
           
         </div>
+  
    <apexchart
      width="500" type="line" 
      :options="options" :series="series">
@@ -41,34 +42,65 @@
 </template>
 
 <script>
+import HistoryService from "../services/HistoryService";
 export default {
-  name: 'HelloWorld',
-  data: () => ({
+  data() {
+    return {
     options: {
       chart: {
         id: 'vuechart'
       },
       xaxis: {
+        min: "",
+        max: "",
+        tickAmount: 5
       },
       yaxis: {
           min: 30,
           max: 300,
           tickAmount:9,
-          title: {
-            text: "Blood Sugar"
-          },         
-      }
+          title: { text: "Blood Sugar" },
+      },        
+      annotations: {
+          yaxis: [{
+            y: "",
+            y2: "",
+            borderColor: '#000',
+            fillColor: '#FEB019',
+            opacity: 0.2,
+            label: {
+              borderColor: '#333',
+              style: {
+                fontSize: '10px',
+                color: '#333',
+                background: '#FEB019',
+              },
+              text: 'Blood Sugar Range',
+            }
+          }],
+    },
     },
     series: [{
       name: 'series-1',
-      data: [55, 62, 89, 66, 98, 72, 101, 75, 94, 120, 117, 139]
-    },
-    {
-      name: 'series-2',
-      data: [30, 101, 58]
-          },],
-  })
-}
+      data: []
+    }],
+          
+    }
+  },
+  created() {
+    HistoryService.getUserHistoryOneMonth()
+      .then((response) => {
+        this.options.annotations.yaxis[0].y= response.data[0].targetLow;
+        this.options.annotations.yaxis[0].y2 = response.data[0].targetHigh;
+        this.series[0].data = response.data[0].inputLevel;
+        console.log(response.data);
+      })
+      .catch((error) => console.error(error));
+  }
+
+  }
+
+
 </script>
 
 <style>

@@ -22,7 +22,7 @@ public class JdbcUserDataDao implements UserDataDao {
     @Override
     public UserData getUserData(int userId) throws SQLException {
 
-        String sql = "SELECT ud.user_id, a1c, fasting_glucose, diabetes_type, user_age, last_updated, weight, height, activity_level, emergency_contact_1, emergency_contact_2, u.username " +
+        String sql = "SELECT ud.user_id, a1c, fasting_glucose, diabetes_type, user_age, last_updated, weight, height, activity_level, emergency_contact_1, emergency_contact_2, profile_pic, u.username " +
                 "FROM user_data ud " +
                 "JOIN users u ON u.user_id = ud.user_id " +
                 "WHERE ud.user_id = ?";
@@ -50,6 +50,7 @@ public class JdbcUserDataDao implements UserDataDao {
         userData.setEmergencyContact1(rowSet.getString("emergency_contact_1"));
         userData.setEmergencyContact2(rowSet.getString("emergency_contact_2"));
         userData.setUsername(rowSet.getString("username"));
+        userData.setProfilePic(rowSet.getString("profile_pic"));
         return userData;
     }
 
