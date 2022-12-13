@@ -175,10 +175,10 @@ export default {
         if (response.status == 200) {
           this.resetForm();
           this.getDose();
-          this.checkForAlert();
         } else {
           alert("unexpected response returned: ");
         }
+        this.checkForAlert();
       });
     },
     postNewMeal() {
@@ -204,6 +204,8 @@ export default {
 
       const mostRecentReading = this.Readings[0];
       console.log(mostRecentReading);
+
+      console.log('AAAA')
       if (
         mostRecentReading.inputLevel > mostRecentReading.targetHigh * 0.8 ||
         mostRecentReading.inputLevel < mostRecentReading.targetLow * 1.2
@@ -212,7 +214,10 @@ export default {
           "Your blood sugar is within 20% of your target range. Please plan on a correctional dose or snack."
         );
         ProfileService.getUserData()
+
+        console.log('BBBBB')
         this.sendEmail(); // Uncomment when we want to present
+        console.log('CCCC')
       }
     }
     
