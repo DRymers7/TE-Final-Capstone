@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.sql.SQLException;
 
@@ -27,15 +28,25 @@ public class UserDataController {
     public UserData getUserData(Principal principal) {
         try {
             int userId = userDao.findIdByUsername(principal.getName());
-            return userDataDao.getUserData(userId);
+            UserData test = userDataDao.getUserData(userId);
+            System.out.println("Test");
+            return test;
         } catch (SQLException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
     }
 
     @RequestMapping(path = "/userdata", method = RequestMethod.POST)
-    public String postProfileImage(@RequestBody UserData userData, Principal principal) {
-        int userId = userDao.findIdByUsername(principal.getName());
-        return userData.getProfilePic(userId);
+    public String postProfileImage(@RequestBody String imageData, Principal principal) {
+        try {
+            int userId = userDao.findIdByUsername(principal.getName());
+            byte[] picture = imageData.getBytes(StandardCharsets.UTF_8);
+            return userDataDao.postProfilePicture(userId, picture);
+        } catch (SQLException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
     }
+
+
 }

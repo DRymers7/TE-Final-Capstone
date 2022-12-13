@@ -9,5 +9,7 @@ public interface UserDataDao {
 
     UserData getUserData(int userId) throws SQLException;
 
+    String postProfilePicture(int userId, byte[] imageData) throws SQLException;
+
 
 }

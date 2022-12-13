@@ -113,7 +113,6 @@ $main-bg: #0e0e23;
 * {
  outline: none;
  box-sizing: border-box;
- color: whitesmoke;
 }
  
 .hidden {

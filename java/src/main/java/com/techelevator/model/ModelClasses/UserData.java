@@ -19,12 +19,12 @@ public class UserData {
     private String emergencyContact1;
     private String emergencyContact2;
     private String username;
-    private String profilePic;
+    private byte[] profilePic;
 
     public UserData() {};
 
     public UserData(int userId, double a1c, int fastingGlucose, int diabetesType, int userAge, Timestamp lastUpdated, int weight, int height, String activityLevel,
-                    String emergencyContact1, String emergencyContact2, String username, String profilePic) {
+                    String emergencyContact1, String emergencyContact2, String username, byte[] profilePic) {
         this.userId = userId;
         this.a1c = a1c;
         this.fastingGlucose = fastingGlucose;
@@ -136,11 +136,11 @@ public class UserData {
         this.username = username;
     }
 
-    public String getProfilePic(int userId) {
+    public byte[] getProfilePic() {
         return profilePic;
     }
 
-    public void setProfilePic(String profilePic) {
+    public void setProfilePic(byte[] profilePic) {
         this.profilePic = profilePic;
     }
 
