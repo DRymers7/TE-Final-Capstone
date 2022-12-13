@@ -3,6 +3,7 @@ package com.techelevator.services;
 import com.techelevator.model.ModelClasses.Prediction;
 import com.techelevator.model.ModelClasses.UserInfoPrediction;
 
+import java.util.List;
 import java.util.Map;
 
 public class MLModelHelper {
@@ -11,18 +12,17 @@ public class MLModelHelper {
 
     public MLModelHelper() {}
 
-    public int returnUserDataPrediction(UserInfoPrediction userInformation) {
+    public double returnUserDataPrediction(UserInfoPrediction userInformation) {
         Prediction userPrediction = mlModelService.getUserPrediction(userInformation);
         System.out.println("CHECK");
-        extractUserPrediction(userPrediction);
-        return -1;
+        return extractUserPrediction(userPrediction);
 
 
     }
 
-    private int extractUserPrediction(Prediction prediction) {
-        int[] pred = prediction.getPrediction();
-        return pred[0];
+    private double extractUserPrediction(Prediction prediction) {
+        List<Double> pred = prediction.getPrediction();
+        return pred.get(0);
     }
 
     private int scaleUserPrediction(int userPrediction) {

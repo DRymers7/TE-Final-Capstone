@@ -5,7 +5,11 @@ import com.techelevator.model.ModelClasses.BaseInsulin;
 import com.techelevator.model.ModelClasses.BloodSugar;
 
 import java.sql.SQLException;
+import java.sql.Time;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class BloodSugarValidationHelper {
@@ -20,6 +24,34 @@ public class BloodSugarValidationHelper {
         List<BloodSugar> bloodSugarList = bloodSugarDao.getBloodSugarReadings(userId);
         bloodSugarList.removeIf(item -> (item.getBloodSugarId() != bloodSugar.getBloodSugarId()));
         return populateResultingObject(cleanAndPrepareForPopulation(bloodSugarList), bloodSugar);
+    }
+
+    public BloodSugar patchNewBloodSugar(BloodSugar bloodSugar, int userId) {
+        List<BloodSugar> mostRecentList = bloodSugarDao.getBloodSugarReadings(userId);
+        BloodSugar mostRecent = findBestChoice(mostRecentList);
+        if (bloodSugar.getTargetLow() == 0) {
+            bloodSugar.setTargetLow(mostRecent.getTargetLow());
+        }
+        if (bloodSugar.getTargetHigh() == 0) {
+            bloodSugar.setTargetHigh(mostRecent.getTargetHigh());
+        }
+        if (bloodSugar.getLastMeasurement() == null) {
+            Timestamp ts = new Timestamp(System.currentTimeMillis());
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Timestamp toset = Timestamp.valueOf(formatter.format(ts));
+            bloodSugar.setLastMeasurement(toset);
+        }
+        return bloodSugar;
+    }
+
+    private BloodSugar findBestChoice(List<BloodSugar> list) {
+        BloodSugar bestChoice = null;
+        for (BloodSugar bloodSugar : list) {
+            if (bloodSugar.getTargetLow() != 0 && bloodSugar.getTargetHigh() != 0) {
+                bestChoice = bloodSugar;
+            }
+        }
+        return bestChoice;
     }
 
     private BloodSugar cleanAndPrepareForPopulation(List<BloodSugar> list) throws SQLException {

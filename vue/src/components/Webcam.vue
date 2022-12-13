@@ -4,6 +4,7 @@
           <button @click="initCamera">Start Camera</button>
           <button @click="take_snapshot">Take Snapshot</button>
           <button @click="stopCamera">Stop Camera</button>
+          <button @click="postNewImage">Use For Profile</button>
       </div>
       <div class="vid">
           <video id="video" ref="video"
@@ -19,6 +20,8 @@
 </template>
 
 <script>
+import WebcamService from "../services/WebcamService";
+
 export default {
   data() {
       return {
@@ -43,9 +46,17 @@ export default {
           this.imageData = this.$refs.canvas.toDataURL('image/jpeg');
 
           console.log(this.imageData);
+      },
+      postNewImage() {
+      WebcamService.postNewImage(this.imageData)
+        .then((response) => {
+          if (response.status == 200) {
+            this.resetForm();
+          }
+        })
+        .catch((error) => console.error(error));
+    },
   }
-  }
-
 }
 </script>
 
@@ -57,6 +68,7 @@ div#camcapture div.command button {
   font-size: 1.2rem;
   border-radius: 20px;
   border: 2px solid rgb(44, 44, 44);
+  color: gray
 }
 
 div#camcapture div.command button:hover {

@@ -1,5 +1,6 @@
 BEGIN TRANSACTION;
 
+
 DROP TABLE IF EXISTS dose, dose_user_data_join, blood_sugar, blood_sugar_user_data_join, insulin, insulin_data, insulin_information, insulin_data_join, insulin_user_data_join, meals, meals_user_join, user_data, users CASCADE;
 DROP SEQUENCE IF EXISTS seq_user_id, seq_insulin_id, seq_meal_id, seq_blood_sugar_id, seq_dose_id CASCADE;
 
@@ -57,6 +58,7 @@ CREATE TABLE user_data (
 	activity_level varchar(16),
 	emergency_contact_1 varchar(32),
 	emergency_contact_2 varchar(32),
+	profile_pic varchar(255),
 	-- bmi (weight/height)**2 calc on server
 	
 	CONSTRAINT FK_user_data_user FOREIGN KEY (user_id) REFERENCES users(user_id)
@@ -144,30 +146,39 @@ CREATE TABLE dose_user_data_join (
 	CONSTRAINT FK_dose_user_data_join_dose FOREIGN KEY (dose_id) REFERENCES dose(dose_id)
 );
 
-INSERT INTO users (username,password_hash,role) VALUES ('user','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
+INSERT INTO users (username,password_hash,role) VALUES ('user@example.com','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
 INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
+INSERT INTO users (username,password_hash,role) VALUES ('rymersd@gmail.com','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
 INSERT INTO user_data (user_id, a1c, fasting_glucose, diabetes_type, user_age, last_updated, weight, height, activity_level)
 VALUES (1, 7.50, 99, 1, 47, '2022/12/12', 120, 500, 'Active');
 INSERT INTO user_data (user_id, a1c, fasting_glucose, diabetes_type, user_age, last_updated, weight, height, activity_level)
 VALUES (2, 8.50, 100, 2, 48, '2022/12/12', 121, 501, 'Active');
+INSERT INTO user_data (user_id, a1c, fasting_glucose, diabetes_type, user_age, last_updated, weight, height, activity_level, emergency_contact_1, emergency_contact_2)
+VALUES (3, 8.50, 100, 2, 48, '2022/12/12', 121, 501, 'Active', 'rymersd@gmail.com', 'mdelafay497@gmail.com');
 INSERT INTO meals (carbs, food, glycemic_index, meal_time) 
 VALUES (50, 'test food', 300, '2022/12/12 13:10:11');
 INSERT INTO meals (carbs, food, glycemic_index, meal_time)
 VALUES (51, 'test food', 300, '2022/12/12 13:11:11');
 INSERT INTO meals (carbs, food, glycemic_index, meal_time)
 VALUES (52, 'test food', 300, '2022/12/12 13:12:11');
+INSERT INTO meals (carbs, food, glycemic_index, meal_time)
+VALUES (53, 'Salad', 301, '2022/11/11 13:13:11');
 INSERT INTO meals_user_join (meal_id, user_id) VALUES (1, 1);
 INSERT INTO meals_user_join (meal_id, user_id) VALUES (2, 1);
 INSERT INTO meals_user_join (meal_id, user_id) VALUES (3, 1);
+INSERT INTO meals_user_join (meal_id, user_id) VALUES (4, 3);
 INSERT INTO blood_sugar (target_low, target_high, input_level, last_measurement)
 VALUES (50, 200, 130, '2022/12/06 13:12:11');
 INSERT INTO blood_sugar (target_low, target_high, input_level, last_measurement)
 VALUES (51, 200, 130, '2022/11/04 13:11:11');
 INSERT INTO blood_sugar (target_low, target_high, input_level, last_measurement)
 VALUES (52, 200, 130, '2022/12/18 13:13:11');
+INSERT INTO blood_sugar (target_low, target_high, input_level, last_measurement)
+VALUES (53, 201, 131, '2022/11/11 13:14:11');
 INSERT INTO blood_sugar_user_data_join (blood_sugar_id, user_id) VALUES (1, 1);
 INSERT INTO blood_sugar_user_data_join (blood_sugar_id, user_id) VALUES (2, 1);
 INSERT INTO blood_sugar_user_data_join (blood_sugar_id, user_id) VALUES (3, 1);
+INSERT INTO blood_sugar_user_data_join (blood_sugar_id, user_id) VALUES (4, 3);
 INSERT INTO insulin_information (insulin_brand_name, insulin_type, half_life, onset_low, onset_high, peak, duration)
 VALUES ('Admelog', 'Rapid-Acting', 51, 15, 15, 60, 180);
 INSERT INTO insulin_information (insulin_brand_name, insulin_type, half_life, onset_low, onset_high, peak, duration)
@@ -202,17 +213,23 @@ INSERT INTO insulin (base_level, avg_level, time_last_dose, insulin_brand_name, 
 VALUES (10.0, 10.0, '2022/12/12 00:00:00', 'Apidra', 'Strong', 0.14);
 INSERT INTO insulin (base_level, avg_level, time_last_dose, insulin_brand_name, insulin_strength, insulin_ratio) 
 VALUES (10.0, 10.0, '2022/12/12 00:00:00', 'Fiasp', 'Strong', 0.14);
+INSERT INTO insulin (base_level, avg_level, time_last_dose, insulin_brand_name, insulin_strength, insulin_ratio) 
+VALUES (10.0, 10.0, '2022/11/11 00:00:00', 'Fiasp', 'Strong', 0.14);
 INSERT INTO insulin_user_data_join (user_id, insulin_id) VALUES (1, 1);
 INSERT INTO insulin_user_data_join (user_id, insulin_id) VALUES (1, 2);
 INSERT INTO insulin_user_data_join (user_id, insulin_id) VALUES (2, 3);
+INSERT INTO insulin_user_data_join (user_id, insulin_id) VALUES (3, 4);
 INSERT INTO dose (dose_units, time_of_dose, type_of_dose, input_level)
 VALUES (10, '2022/12/06 13:12:11', 0, 130);
 INSERT INTO dose (dose_units, time_of_dose, type_of_dose, input_level)
 VALUES (15, '2022/11/06 13:12:11', 0, 130);
 INSERT INTO dose (dose_units, time_of_dose, type_of_dose, input_level)
 VALUES (20, '2022/11/26 13:12:11', 1, 130);
+INSERT INTO dose (dose_units, time_of_dose, type_of_dose, input_level)
+VALUES (21, '2022/11/11 13:13:11', 1, 130);
 INSERT INTO dose_user_data_join (dose_id, user_id) VALUES (1, 1);
 INSERT INTO dose_user_data_join (dose_id, user_id) VALUES (2, 1);
 INSERT INTO dose_user_data_join (dose_id, user_id) VALUES (3, 1);
+INSERT INTO dose_user_data_join (dose_id, user_id) VALUES (4, 3);
 
 COMMIT TRANSACTION;

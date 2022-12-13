@@ -91,11 +91,27 @@ import { init } from "emailjs-com";
 init("");
 import DashboardService from "../services/DashboardService";
 import BloodSugarService from "../services/BloodSugarService";
+import ProfileService from "../services/ProfileService";
 import emailjs from "emailjs-com";
 export default {
   name: "dashboard",
   data() {
     return {
+      userData: {
+        userId: "",
+        a1c: "",
+        fastingGlucose: "",
+        diabetesType: "",
+        userAge: "",
+        lastUpdated: "",
+        weight: "",
+        height: "",
+        activityLevel: "",
+        emergencyContact1: "",
+        emergencyContact2: "",
+        username: "",
+        profilePic: ""
+      },
       Meal: {
         carbs: "",
         food: "",
@@ -123,6 +139,7 @@ export default {
           {
             from_name: "test",
             to_name: "test",
+            user_email: this.userData.username,
             message: "test",
           },
           "7njRAw8N8MgG_lqIQ"
@@ -135,6 +152,15 @@ export default {
             console.log("FAILED...", error);
           }
         );
+    },
+    getUserData() {
+      ProfileService.getUserData().then((response) => {
+        if (response.status == 200) {
+          this.userData = response.data;
+        } else {
+          console.log("unexpected response")
+        }
+      })
     },
     getDose() {
       DashboardService.getDose().then((response) => {
@@ -149,10 +175,10 @@ export default {
         if (response.status == 200) {
           this.resetForm();
           this.getDose();
-          this.checkForAlert();
         } else {
           alert("unexpected response returned: ");
         }
+        this.checkForAlert();
       });
     },
     postNewMeal() {
@@ -170,8 +196,16 @@ export default {
     },
     //order by clause in server needed
     checkForAlert() {
+      BloodSugarService.getUserBloodSugarReadings()
+      .then((response) => {
+        this.Readings = response.data;
+      })
+      .catch((error) => console.error(error));
+
       const mostRecentReading = this.Readings[0];
       console.log(mostRecentReading);
+
+      console.log('AAAA')
       if (
         mostRecentReading.inputLevel > mostRecentReading.targetHigh * 0.8 ||
         mostRecentReading.inputLevel < mostRecentReading.targetLow * 1.2
@@ -179,9 +213,14 @@ export default {
         alert(
           "Your blood sugar is within 20% of your target range. Please plan on a correctional dose or snack."
         );
-        // this.sendEmail(); Uncomment when we want to present
+        ProfileService.getUserData()
+
+        console.log('BBBBB')
+        this.sendEmail(); // Uncomment when we want to present
+        console.log('CCCC')
       }
-    },
+    }
+    
   },
   created() {
     BloodSugarService.getUserBloodSugarReadings()
