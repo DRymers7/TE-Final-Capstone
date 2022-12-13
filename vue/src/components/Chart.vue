@@ -37,7 +37,13 @@
         1 Month
       </button>
     </div>
-    <apexchart width="500" type="line" :options="options" :series="series">
+    <apexchart
+      ref=""
+      width="500"
+      type="line"
+      :options="options"
+      :series="series"
+    >
     </apexchart>
   </div>
 </template>
@@ -94,7 +100,12 @@ export default {
   methods: {
     updateChart() {
       const newData = this.series[0].data;
-      this.series[0].data = [{ data: newData }];
+      console.log(newData);
+      this.series[0].data = [newData];
+      if (isNaN(this.series[0].data)) {
+        console.log("not a number found");
+        console.log(this.newData);
+      }
     },
   },
 
@@ -104,8 +115,9 @@ export default {
         this.options.annotations.yaxis[0].y = response.data[0].targetLow;
         this.options.annotations.yaxis[0].y2 = response.data[0].targetHigh;
         this.series[0].data = response.data[0].inputLevel;
-        this.newData = response.data[0].inputLevel;
-        console.log(this.newData);
+        this.newData = response.data[0];
+
+        console.log(this.newData.inputLevel);
         this.updateChart();
       })
       .catch((error) => console.error(error));
