@@ -17,12 +17,10 @@ public class UserDataController {
 
     private UserDataDao userDataDao;
     private UserDao userDao;
-    private UserData userData;
 
-    public UserDataController(UserDataDao userDataDao, UserDao userDao, UserData userData) {
+    public UserDataController(UserDataDao userDataDao, UserDao userDao) {
         this.userDataDao = userDataDao;
         this.userDao = userDao;
-        this.userData = userData;
     }
 
     @GetMapping("/userdata")
