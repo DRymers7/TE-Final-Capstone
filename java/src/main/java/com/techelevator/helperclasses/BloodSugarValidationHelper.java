@@ -5,7 +5,11 @@ import com.techelevator.model.ModelClasses.BaseInsulin;
 import com.techelevator.model.ModelClasses.BloodSugar;
 
 import java.sql.SQLException;
+import java.sql.Time;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class BloodSugarValidationHelper {
@@ -32,7 +36,10 @@ public class BloodSugarValidationHelper {
             bloodSugar.setTargetHigh(mostRecent.getTargetHigh());
         }
         if (bloodSugar.getLastMeasurement() == null) {
-            bloodSugar.setLastMeasurement(new Timestamp(System.currentTimeMillis()));
+            Timestamp ts = new Timestamp(System.currentTimeMillis());
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Timestamp toset = Timestamp.valueOf(formatter.format(ts));
+            bloodSugar.setLastMeasurement(toset);
         }
         return bloodSugar;
     }
