@@ -1,11 +1,16 @@
 package com.techelevator.model.ModelClasses.edamam.nutrientInfo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Objects;
 
 public class CHOCDF_KCAL {
 
+    @JsonProperty("label")
     private String label;
+    @JsonProperty("quantity")
     private double quantity;
+    @JsonProperty("unit")
     private String unit;
 
     public CHOCDF_KCAL() {};

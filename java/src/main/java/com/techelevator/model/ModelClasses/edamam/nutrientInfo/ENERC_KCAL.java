@@ -5,7 +5,7 @@ import java.util.Objects;
 public class ENERC_KCAL {
 
     private String label;
-    private double quanitity;
+    private double quantity;
     private String unit;
 
     public ENERC_KCAL() {};
@@ -18,12 +18,12 @@ public class ENERC_KCAL {
         this.label = label;
     }
 
-    public double getQuanitity() {
-        return quanitity;
+    public double getQuantity() {
+        return quantity;
     }
 
-    public void setQuanitity(double quanitity) {
-        this.quanitity = quanitity;
+    public void setQuantity(double quantity) {
+        this.quantity = quantity;
     }
 
     public String getUnit() {
@@ -34,25 +34,5 @@ public class ENERC_KCAL {
         this.unit = unit;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ENERC_KCAL that = (ENERC_KCAL) o;
-        return Double.compare(that.quanitity, quanitity) == 0 && Objects.equals(label, that.label) && Objects.equals(unit, that.unit);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(label, quanitity, unit);
-    }
-
-    @Override
-    public String toString() {
-        return "ENERC_KCAL{" +
-                "label='" + label + '\'' +
-                ", quanitity=" + quanitity +
-                ", unit='" + unit + '\'' +
-                '}';
-    }
 }
