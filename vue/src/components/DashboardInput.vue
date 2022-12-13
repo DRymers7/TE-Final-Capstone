@@ -195,6 +195,14 @@ export default {
     },
     //order by clause in server needed
     checkForAlert() {
+      BloodSugarService.getUserBloodSugarReadings()
+      .then((response) => {
+        this.Readings = response.data;
+      })
+      .catch((error) => console.error(error));
+
+      console.log(this.Readings);
+
       const mostRecentReading = this.Readings[0];
       console.log(mostRecentReading);
       if (
@@ -204,10 +212,11 @@ export default {
         alert(
           "Your blood sugar is within 20% of your target range. Please plan on a correctional dose or snack."
         );
-        this.ProfileService.getUserData();
+        ProfileService.getUserData()
         this.sendEmail(); // Uncomment when we want to present
       }
-    },
+    }
+    
   },
   created() {
     BloodSugarService.getUserBloodSugarReadings()
