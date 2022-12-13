@@ -109,7 +109,8 @@ export default {
         activityLevel: "",
         emergencyContact1: "",
         emergencyContact2: "",
-        username: ""
+        username: "",
+        profilePic: ""
       },
       Meal: {
         carbs: "",
