@@ -1,0 +1,20 @@
+package com.techelevator.model.ModelClasses.Azure;
+
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public class Inputs {
+    @JsonAlias({ "Inputs" })
+
+    private data[] data;
+
+    public Inputs() {}
+
+    public com.techelevator.model.ModelClasses.Azure.data[] getData() {
+        return data;
+    }
+
+    public void setData(com.techelevator.model.ModelClasses.Azure.data[] data) {
+        this.data = data;
+    }
+}
