@@ -107,7 +107,21 @@ export default {
   name: "profile",
   data() {
     return {
-      userData: {},
+      userData: {
+        userId: "",
+        a1c: "",
+        fastingGlucose: "",
+        diabetesType: "",
+        userAge: "",
+        lastUpdated: "",
+        weight: "",
+        height: "",
+        activityLevel: "",
+        emergencyContact1: "",
+        emergencyContact2: "",
+        username: "",
+        profilePic: ""
+      },
       BaseInsulin: {
         insulinId: "",
         baseLevel: "",
@@ -140,6 +154,11 @@ export default {
     };
   },
   methods: {
+
+    getNewUserData() {
+      ProfileService.getUserData() 
+      },
+
     postNewInsulin() {
       ProfileService.postNewInsulin(this.Insulin, this.Insulin.insulinId)
         .then((response) => {

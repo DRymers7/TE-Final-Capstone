@@ -97,7 +97,6 @@ export default {
       ],
     };
   },
-
   methods: {
     updateChart() {
       const newData = this.series[0].data;
@@ -110,7 +109,6 @@ export default {
       }
     },
   },
-
   created() {
     HistoryService.getUserHistoryOneMonth()
       .then((response) => {
@@ -118,7 +116,6 @@ export default {
         this.options.annotations.yaxis[0].y2 = response.data[0].targetHigh;
         this.series[0].data = response.data[0].inputLevel;
         this.newData = response.data[0];
-
         console.log(this.newData.inputLevel);
         this.updateChart();
       })

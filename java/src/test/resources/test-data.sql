@@ -57,6 +57,7 @@ CREATE TABLE user_data (
 	activity_level varchar(16),
 	emergency_contact_1 varchar(32),
 	emergency_contact_2 varchar(32),
+	profilePic BYTEA
 	-- bmi (weight/height)**2 calc on server
 
 	CONSTRAINT FK_user_data_user FOREIGN KEY (user_id) REFERENCES users(user_id)
@@ -148,9 +149,9 @@ INSERT INTO users (username,password_hash,role) VALUES ('user1','user1','ROLE_US
 INSERT INTO users (username,password_hash,role) VALUES ('user2','user2','ROLE_USER');
 INSERT INTO users (username,password_hash,role) VALUES ('user3','user3','ROLE_USER');
 
-INSERT INTO user_data (user_id, a1c, fasting_glucose, diabetes_type, user_age, last_updated, weight, height, activity_level)
-VALUES (1, 7.50, 99, 1, 47, '2022/12/12', 120, 500, 'Active');
-INSERT INTO user_data (user_id, a1c, fasting_glucose, diabetes_type, user_age, last_updated, weight, height, activity_level)
+INSERT INTO user_data (user_id, a1c, fasting_glucose, diabetes_type, user_age, last_updated, weight, height, activity_level, profilePic)
+VALUES (1, 7.50, 99, 1, 47, '2022/12/12', 120, 500, 'Active', );
+INSERT INTO user_data (user_id, a1c, fasting_glucose, diabetes_type, user_age, last_updated, weight, height, activity_level, profilePic)
 VALUES (2, 8.50, 100, 2, 48, '2022/12/12', 121, 501, 'Active');
 INSERT INTO meals (carbs, food, glycemic_index, meal_time)
 VALUES (50, 'test food', 300, '2022/12/12 13:10:11');
