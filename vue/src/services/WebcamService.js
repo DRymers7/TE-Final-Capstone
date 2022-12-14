@@ -5,3 +5,4 @@ export default {
     return axios.post("/userdata", imageData);
   }
 }
+ 
