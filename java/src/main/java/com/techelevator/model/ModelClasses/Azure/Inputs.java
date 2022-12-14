@@ -1,7 +1,10 @@
 package com.techelevator.model.ModelClasses.Azure;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Inputs {
 
+    @JsonProperty("data")
     private data[] data;
 
     public Inputs() {}

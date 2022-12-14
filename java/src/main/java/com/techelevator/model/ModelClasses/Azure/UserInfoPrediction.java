@@ -1,8 +1,15 @@
 package com.techelevator.model.ModelClasses.Azure;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+
+
 public class UserInfoPrediction {
 
+    @JsonProperty("Inputs")
     private Inputs inputs;
+    @JsonProperty("GlobalParameters")
     private double GlobalParameters;
 
 

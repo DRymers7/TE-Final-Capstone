@@ -2,6 +2,7 @@ package com.techelevator.services;
 
 import com.techelevator.model.ModelClasses.Azure.Prediction;
 import com.techelevator.model.ModelClasses.Azure.UserInfoPrediction;
+import com.techelevator.model.ModelClasses.Azure.data;
 
 import java.util.List;
 
@@ -18,8 +19,8 @@ public class MLModelHelper {
             return 0.0;
     }
 
-    public double returnUserBloodSugarPredictionFromAzure(UserInfoPrediction userInfoPrediction) {
-        Prediction prediction = mlModelService.getUserPredictionAzure(userInfoPrediction);
+    public double returnUserBloodSugarPredictionFromAzure(data data) {
+        Prediction prediction = mlModelService.getUserPredictionAzure(data);
         System.out.println("CHECK");
         System.out.println("WHAT IS IN THE VAR");
         return prediction.getPrediction().get(0);

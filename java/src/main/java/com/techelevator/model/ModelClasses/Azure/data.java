@@ -1,10 +1,16 @@
 package com.techelevator.model.ModelClasses.Azure;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class data {
 
+    @JsonProperty("Insulin")
     private int Insulin;
+    @JsonProperty("BMI")
     private double BMI;
+    @JsonProperty("Age")
     private int Age;
+    @JsonProperty("Outcome")
     private int Outcome;
 
     public data() {}
