@@ -1,6 +1,5 @@
 BEGIN TRANSACTION;
 
-
 DROP TABLE IF EXISTS dose, dose_user_data_join, blood_sugar, blood_sugar_user_data_join, insulin, insulin_data, insulin_information, insulin_data_join, insulin_user_data_join, meals, meals_user_join, user_data, users CASCADE;
 DROP SEQUENCE IF EXISTS seq_user_id, seq_insulin_id, seq_meal_id, seq_blood_sugar_id, seq_dose_id CASCADE;
 
@@ -9,31 +8,26 @@ CREATE SEQUENCE seq_user_id
   NO MAXVALUE
   NO MINVALUE
   CACHE 1;
-  
 CREATE SEQUENCE seq_insulin_id
   INCREMENT BY 1
   NO MAXVALUE
   NO MINVALUE
   CACHE 1;
-  
 CREATE SEQUENCE seq_meal_id
   INCREMENT BY 1
   NO MAXVALUE
   NO MINVALUE
   CACHE 1;
-  
 CREATE SEQUENCE seq_blood_sugar_id
   INCREMENT BY 1
   NO MAXVALUE
   NO MINVALUE
   CACHE 1;
-
 CREATE SEQUENCE seq_dose_id
   INCREMENT BY 1
   NO MAXVALUE
   NO MINVALUE
   CACHE 1;
-  
 CREATE TABLE users (
 	user_id int DEFAULT nextval('seq_user_id'::regclass) NOT NULL,
 	username varchar(255) NOT NULL UNIQUE,
@@ -45,7 +39,6 @@ CREATE TABLE users (
 -- insulin type
 -- a1c (measure of how much blood cells coated with sugar (percentage to tenths))
 -- sugar remains on blood cells for three months measure of average blood sugar (user input)
-
 CREATE TABLE user_data (
 	user_id int NOT NULL PRIMARY KEY,
 	a1c decimal(4, 2),
@@ -58,12 +51,11 @@ CREATE TABLE user_data (
 	activity_level varchar(16),
 	emergency_contact_1 varchar(32),
 	emergency_contact_2 varchar(32),
-	profile_pic varchar(255),
+	profile_pic BYTEA,
 	-- bmi (weight/height)**2 calc on server
 	
 	CONSTRAINT FK_user_data_user FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
-
 CREATE TABLE insulin_information (
 	insulin_brand_name varchar(32) NOT NULL PRIMARY KEY,
 	insulin_type varchar(32) NOT NULL,
@@ -73,7 +65,6 @@ CREATE TABLE insulin_information (
 	peak int,
 	duration int
 );
-
 CREATE TABLE insulin (
 	insulin_id int DEFAULT nextval('seq_insulin_id'::regclass) NOT NULL unique,
 	base_level decimal(10,3),
@@ -85,7 +76,6 @@ CREATE TABLE insulin (
 	
 	CONSTRAINT FK_insulin_insulin_information FOREIGN KEY (insulin_brand_name) REFERENCES insulin_information(insulin_brand_name)
 );
-
 CREATE TABLE insulin_user_data_join (
 	user_id int,
 	insulin_id int,
@@ -94,7 +84,6 @@ CREATE TABLE insulin_user_data_join (
 	CONSTRAINT FK_insulin_user_data_join_insulin FOREIGN KEY (insulin_id) REFERENCES insulin(insulin_id),
 	CONSTRAINT FK_insulin_user_data_join_user_data FOREIGN KEY (user_id) REFERENCES user_data(user_id)
 );
-
 CREATE TABLE meals (
 	meal_id int DEFAULT nextval('seq_meal_id'::regclass) NOT NULL unique,
 	carbs int NOT NULL,
@@ -102,7 +91,6 @@ CREATE TABLE meals (
 	glycemic_index int, --FDA API
 	meal_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
 CREATE TABLE meals_user_join (
 	meal_id int NOT NULL,
 	user_id int NOT NULL,
@@ -111,15 +99,13 @@ CREATE TABLE meals_user_join (
 	CONSTRAINT FK_meals_user_join_user_data FOREIGN KEY (user_id) REFERENCES user_data(user_id),
 	CONSTRAINT FK_meals_user_join_meals FOREIGN KEY (meal_id) REFERENCES meals(meal_id)
 );
-
 CREATE TABLE blood_sugar (
 	blood_sugar_id int DEFAULT nextval('seq_blood_sugar_id'::regclass) NOT NULL unique,
 	target_low int NOT NULL,
 	target_high int NOT NULL,
 	input_level int NOT NULL,
-	last_measurement TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
+	last_measurement TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
 CREATE TABLE blood_sugar_user_data_join (
 	blood_sugar_id int NOT NULL,
 	user_id int NOT NULL,
@@ -128,15 +114,13 @@ CREATE TABLE blood_sugar_user_data_join (
 	CONSTRAINT FK_blood_sugar_user_data_join_user_data FOREIGN KEY (user_id) REFERENCES user_data(user_id),
 	CONSTRAINT FK_blood_sugar_user_data_join_blood_sugar FOREIGN KEY (blood_sugar_id) REFERENCES blood_sugar(blood_sugar_id)
 );
-
 CREATE TABLE dose (
 input_level int,
 type_of_dose int,
 dose_units int,
 dose_id int DEFAULT nextval('seq_dose_id'::regclass) NOT NULL unique,
-time_of_dose TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
+time_of_dose TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
 CREATE TABLE dose_user_data_join (
 	dose_id int NOT NULL,
 	user_id int NOT NULL,
@@ -145,17 +129,16 @@ CREATE TABLE dose_user_data_join (
 	CONSTRAINT FK_dose_user_data_join_user_data FOREIGN KEY (user_id) REFERENCES user_data(user_id),
 	CONSTRAINT FK_dose_user_data_join_dose FOREIGN KEY (dose_id) REFERENCES dose(dose_id)
 );
-
 INSERT INTO users (username,password_hash,role) VALUES ('user@example.com','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
 INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
 INSERT INTO users (username,password_hash,role) VALUES ('rymersd@gmail.com','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
-INSERT INTO user_data (user_id, a1c, fasting_glucose, diabetes_type, user_age, last_updated, weight, height, activity_level)
-VALUES (1, 7.50, 99, 1, 47, '2022/12/12', 120, 500, 'Active');
-INSERT INTO user_data (user_id, a1c, fasting_glucose, diabetes_type, user_age, last_updated, weight, height, activity_level)
-VALUES (2, 8.50, 100, 2, 48, '2022/12/12', 121, 501, 'Active');
-INSERT INTO user_data (user_id, a1c, fasting_glucose, diabetes_type, user_age, last_updated, weight, height, activity_level, emergency_contact_1, emergency_contact_2)
-VALUES (3, 8.50, 100, 2, 48, '2022/12/12', 121, 501, 'Active', 'rymersd@gmail.com', 'mdelafay497@gmail.com');
-INSERT INTO meals (carbs, food, glycemic_index, meal_time) 
+INSERT INTO user_data (user_id, a1c, fasting_glucose, diabetes_type, user_age, last_updated, weight, height, activity_level, profile_pic)
+VALUES (1, 7.50, 99, 1, 47, '2022/12/12', 120, 500, 'Active', 'Picture.jpeg');
+INSERT INTO user_data (user_id, a1c, fasting_glucose, diabetes_type, user_age, last_updated, weight, height, activity_level, profile_pic)
+VALUES (2, 8.50, 100, 2, 48, '2022/12/12', 121, 501, 'Active', 'Hi.jpeg');
+INSERT INTO user_data (user_id, a1c, fasting_glucose, diabetes_type, user_age, last_updated, weight, height, activity_level, emergency_contact_1, emergency_contact_2, profile_pic)
+VALUES (3, 8.50, 100, 2, 48, '2022/12/12', 121, 501, 'Active', 'rymersd@gmail.com', 'mdelafay497@gmail.com', 'capstone.jpeg');
+INSERT INTO meals (carbs, food, glycemic_index, meal_time)
 VALUES (50, 'test food', 300, '2022/12/12 13:10:11');
 INSERT INTO meals (carbs, food, glycemic_index, meal_time)
 VALUES (51, 'test food', 300, '2022/12/12 13:11:11');
@@ -207,13 +190,13 @@ INSERT INTO insulin_information (insulin_brand_name, insulin_type, half_life, on
 VALUES ('Toujeo', 'Long-Acting', 1110, 180, 180, 1440);
 INSERT INTO insulin_information (insulin_brand_name, insulin_type, half_life, onset_low, onset_high, duration)
 VALUES ('TresibaFlexTouch', 'Long-Acting', 810, 180, 180, 1440);
-INSERT INTO insulin (base_level, avg_level, time_last_dose, insulin_brand_name, insulin_strength, insulin_ratio) 
+INSERT INTO insulin (base_level, avg_level, time_last_dose, insulin_brand_name, insulin_strength, insulin_ratio)
 VALUES (10.0, 10.0, '2022/12/12 00:00:00', 'Admelog', 'Strong', 0.14);
-INSERT INTO insulin (base_level, avg_level, time_last_dose, insulin_brand_name, insulin_strength, insulin_ratio) 
+INSERT INTO insulin (base_level, avg_level, time_last_dose, insulin_brand_name, insulin_strength, insulin_ratio)
 VALUES (10.0, 10.0, '2022/12/12 00:00:00', 'Apidra', 'Strong', 0.14);
-INSERT INTO insulin (base_level, avg_level, time_last_dose, insulin_brand_name, insulin_strength, insulin_ratio) 
+INSERT INTO insulin (base_level, avg_level, time_last_dose, insulin_brand_name, insulin_strength, insulin_ratio)
 VALUES (10.0, 10.0, '2022/12/12 00:00:00', 'Fiasp', 'Strong', 0.14);
-INSERT INTO insulin (base_level, avg_level, time_last_dose, insulin_brand_name, insulin_strength, insulin_ratio) 
+INSERT INTO insulin (base_level, avg_level, time_last_dose, insulin_brand_name, insulin_strength, insulin_ratio)
 VALUES (10.0, 10.0, '2022/11/11 00:00:00', 'Fiasp', 'Strong', 0.14);
 INSERT INTO insulin_user_data_join (user_id, insulin_id) VALUES (1, 1);
 INSERT INTO insulin_user_data_join (user_id, insulin_id) VALUES (1, 2);
@@ -231,5 +214,4 @@ INSERT INTO dose_user_data_join (dose_id, user_id) VALUES (1, 1);
 INSERT INTO dose_user_data_join (dose_id, user_id) VALUES (2, 1);
 INSERT INTO dose_user_data_join (dose_id, user_id) VALUES (3, 1);
 INSERT INTO dose_user_data_join (dose_id, user_id) VALUES (4, 3);
-
 COMMIT TRANSACTION;
