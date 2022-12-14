@@ -1,6 +1,7 @@
 package com.techelevator.services;
 
 import com.techelevator.model.ModelClasses.Azure.Prediction;
+import com.techelevator.model.ModelClasses.Azure.UserInfoObject;
 import com.techelevator.model.ModelClasses.Azure.UserInfoPrediction;
 import com.techelevator.model.ModelClasses.Azure.data;
 import org.springframework.http.*;
@@ -24,11 +25,11 @@ public class MLModelService {
         return responseEntity.getBody();
     }
 
-    public Prediction getUserPredictionAzure(data data) {
+    public Prediction getUserPredictionAzure(UserInfoObject userInfoObject) {
         String url = "http://b9b9e03c-8cd6-4bd8-b114-80fe8fba5269.eastus2.azurecontainer.io/score";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<data> requestEntity = new HttpEntity<>(data, headers);
+        HttpEntity<UserInfoObject> requestEntity = new HttpEntity<>(userInfoObject, headers);
         ResponseEntity<Prediction> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, Prediction.class);
         return responseEntity.getBody();
     }
