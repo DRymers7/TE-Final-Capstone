@@ -97,6 +97,7 @@ export default {
   name: "dashboard",
   data() {
     return {
+      userInputBloodSugar: "",
       userData: {
         userId: "",
         a1c: "",
@@ -138,7 +139,29 @@ export default {
           "template_c6kunah",
           {
             from_name: "test",
-            to_name: "test",
+            // em1: "test",
+            user_email: this.userData.username,
+            message: "test",
+          },
+          "7njRAw8N8MgG_lqIQ"
+        )
+        .then(
+          function(response) {
+            console.log("SUCCESS!", response.status, response.text);
+          },
+          function(error) {
+            console.log("FAILED...", error);
+          }
+        );
+    },
+    sendEmailEmergency() {
+      emailjs
+        .send(
+          "service_nwrb0fr",
+          "template_c6kunah",
+          {
+            from_name: "test",
+            em1: this.userData.emergencyContact1,
             user_email: this.userData.username,
             message: "test",
           },
@@ -157,6 +180,7 @@ export default {
       ProfileService.getUserData().then((response) => {
         if (response.status == 200) {
           this.userData = response.data;
+          this.sendEmail()
         } else {
           console.log("unexpected response")
         }
@@ -167,24 +191,24 @@ export default {
         if (response.status == 200) {
           this.Dose = response.data;
         }
-      });
+      }).then(this.checkForAlert());
     },
     postNewReading() {
       // this.findUsersTargetHighAndLow();
       DashboardService.postNewReading(this.Reading).then((response) => {
         if (response.status == 200) {
-          this.resetForm();
           this.getDose();
         } else {
           alert("unexpected response returned: ");
         }
-        this.checkForAlert();
+        
       });
     },
     postNewMeal() {
       DashboardService.postNewReading(this.Meal).then((response) => {
         if (response.status == 200) {
           this.resetForm();
+          this.getUserReadings();
         } else {
           alert("unexpected response returned: ");
         }
@@ -196,29 +220,33 @@ export default {
     },
     //order by clause in server needed
     checkForAlert() {
-      BloodSugarService.getUserBloodSugarReadings()
-      .then((response) => {
-        this.Readings = response.data;
-      })
-      .catch((error) => console.error(error));
-
+      this.getUserReadings();
       const mostRecentReading = this.Readings[0];
-      console.log(mostRecentReading);
+      const currentSugar = this.Reading.inputLevel;
+      this.resetForm();
 
-      console.log('AAAA')
       if (
-        mostRecentReading.inputLevel > mostRecentReading.targetHigh * 0.8 ||
-        mostRecentReading.inputLevel < mostRecentReading.targetLow * 1.2
+        currentSugar > mostRecentReading.targetHigh * 0.8 ||
+        currentSugar < mostRecentReading.targetLow * 1.2
       ) {
+        if (currentSugar > mostRecentReading.targetHigh || currentSugar < mostRecentReading.targetLow) {
+          alert("Your blood sugar has exceeded your target thresholds. Your emergency contacts have been notified. Please take a correctional dose immediately or eat a snack.")
+          this.sendEmailEmergency()
+        }
         alert(
           "Your blood sugar is within 20% of your target range. Please plan on a correctional dose or snack."
         );
         ProfileService.getUserData()
-
-        console.log('BBBBB')
         this.sendEmail(); // Uncomment when we want to present
-        console.log('CCCC')
+
       }
+    },
+    getUserReadings() {
+      BloodSugarService.getUserBloodSugarReadings()
+        .then((response) => {
+          this.Readings = response.data;
+        })
+        .catch((error) => console.error(error));
     }
     
   },

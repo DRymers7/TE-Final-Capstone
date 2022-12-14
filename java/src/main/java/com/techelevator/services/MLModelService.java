@@ -1,5 +1,6 @@
 package com.techelevator.services;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.techelevator.model.ModelClasses.Prediction;
 import com.techelevator.model.ModelClasses.UserInfoPrediction;
 import org.springframework.http.*;
@@ -24,4 +25,6 @@ public class MLModelService {
         ResponseEntity<Prediction> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, Prediction.class);
         return responseEntity.getBody();
     }
+
+    
 }
