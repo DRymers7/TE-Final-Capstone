@@ -51,7 +51,8 @@ class Model:
         y_pred = lin_model.predict(x)
         return y_pred
 
-   
+    def neuralNetwork(self):
+        
 
 # model = Model()
 # model.linearModel()
