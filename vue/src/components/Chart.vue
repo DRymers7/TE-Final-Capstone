@@ -100,6 +100,7 @@ export default {
   methods: {
     updateChart() {
       const newData = this.series[0].data;
+
       console.log(newData);
       this.series[0].data = [newData];
       if (isNaN(this.series[0].data)) {
