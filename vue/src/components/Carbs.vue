@@ -85,7 +85,7 @@ export default {
 </script>
     
 <style>
-#table-container-carbs {
+/* #table-container-carbs {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -146,6 +146,6 @@ button {
     border: none;
     cursor: pointer;
     width: 100%;
-}
+} */
 
 </style>

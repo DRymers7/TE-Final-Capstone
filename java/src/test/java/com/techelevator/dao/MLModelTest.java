@@ -1,13 +1,12 @@
 package com.techelevator.dao;
 
-import com.techelevator.model.ModelClasses.UserInfoPrediction;
-import com.techelevator.services.FDAHelper;
+import com.techelevator.model.ModelClasses.Azure.Inputs;
+import com.techelevator.model.ModelClasses.Azure.UserInfoPrediction;
+import com.techelevator.model.ModelClasses.Azure.data;
 import com.techelevator.services.MLModelHelper;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class MLModelTest {
 
@@ -20,14 +19,18 @@ public class MLModelTest {
 
     @Test
     public void testPrediction() {
-        UserInfoPrediction testInfo = new UserInfoPrediction();
-        testInfo.setGlucose(100);
-        testInfo.setInsulin(100);
-        testInfo.setBMI(100);
-        testInfo.setAge(100);
-        testInfo.setDiabetes(1);
-        System.out.println("placeholder");
 
-        double prediction = mlModelHelper.returnUserDataPrediction(testInfo);
+        UserInfoPrediction testInfo = new UserInfoPrediction();
+        Inputs inputs = new Inputs();
+        data data = new data();
+        data.setInsulin(5);
+        data.setBMI(30.0);
+        data.setAge(37);
+        data.setOutcome(1);
+        data[] dataArr = new data[]{data};
+        inputs.setData(dataArr);
+        testInfo.setInputs(inputs);
+
+        mlModelHelper.returnUserBloodSugarPredictionFromAzure(testInfo);
     }
 }
