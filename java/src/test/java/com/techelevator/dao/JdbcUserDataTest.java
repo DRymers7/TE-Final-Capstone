@@ -2,9 +2,12 @@ package com.techelevator.dao;
 
 import com.techelevator.dao.jdbcdao.JdbcUserDataDao;
 import com.techelevator.model.ModelClasses.UserData;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import java.sql.SQLException;
 
 public class JdbcUserDataTest extends BaseDaoTests{
 
@@ -17,8 +20,9 @@ public class JdbcUserDataTest extends BaseDaoTests{
     }
 
     @Test
-    public void get_user_data(){
-        UserData userData = dao.getUserData();
+    public void get_user_data() throws SQLException {
+        UserData userData = dao.getUserData(1);
+        
 
     }
 }
