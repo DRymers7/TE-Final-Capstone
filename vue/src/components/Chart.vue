@@ -57,10 +57,11 @@ export default {
           id: "vuechart",
         },
         xaxis: {
-          min: 1,
-          max: "",
+          type: "datetime",
+          min: new Date("16 nov 2022").getTime(),
+          max: new Date("16 dec 2022").getTime(),
           tickAmount: 5,
-          title: { text: "Reading Number" },
+          title: { text: "" },
         },
         yaxis: {
           min: 30,
@@ -88,6 +89,12 @@ export default {
             },
           ],
         },
+
+        tooltip: {
+          x: {
+            format: "dd MMM yyyy",
+          },
+        },
       },
       series: [
         {
@@ -98,6 +105,16 @@ export default {
     };
   },
   methods: {
+    updateDataOneDay() {},
+
+    updateDataThreeDays() {},
+
+    updateDataOneWeek() {},
+
+    updateDataTwoWeeks() {},
+
+    updateDataOneMonth() {},
+
     updateChart(response) {
       response = this.series[0].data;
       const newData = this.series[0].data;
@@ -115,15 +132,18 @@ export default {
     },
   },
   created() {
-    HistoryService.getUserHistoryOneMonth()
+    HistoryService.getUserBloodSugarOneMonth()
       .then((response) => {
         console.log(response.data);
         console.log(response.data.length);
         this.options.annotations.yaxis[0].y = response.data[0].targetLow;
         this.options.annotations.yaxis[0].y2 = response.data[0].targetHigh;
-        this.options.annotations.xaxis.max = response.data.length;
         for (var i = 0; i < response.data.length; i++) {
-          this.series[0].data.push(response.data[i].inputLevel);
+          this.series[0].data.push(
+            response.data[i].lastMeasurement +
+              ", " +
+              response.data[i].inputLevel
+          );
           this.newData = response.data;
         }
         console.log(response.data + "this is newData");

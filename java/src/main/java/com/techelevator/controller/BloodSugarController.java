@@ -27,6 +27,81 @@ public class BloodSugarController {
         this.bloodSugarValidationHelper = new BloodSugarValidationHelper(bloodSugarDao);
     }
 
+    @RequestMapping(path = "/blood-sugars/one-month", method = RequestMethod.GET)
+    public List<BloodSugar> getBloodSugarReadingsOneMonth(Principal principal) {
+
+        try {
+            List<BloodSugar> bloodSugarReadings = bloodSugarDao.getBloodSugarReadingsOneMonth(userDao.findIdByUsername(principal.getName()));
+            if (bloodSugarReadings.size() == 0) {
+                throw new ServersideOpException("No readings available");
+            } else {
+                return bloodSugarReadings;
+            }
+        } catch (ServersideOpException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(path = "/blood-sugars/two-weeks", method = RequestMethod.GET)
+    public List<BloodSugar> getBloodSugarReadingsTwoWeeks(Principal principal) {
+
+        try {
+            List<BloodSugar> bloodSugarReadings = bloodSugarDao.getBloodSugarReadingsTwoWeeks(userDao.findIdByUsername(principal.getName()));
+            if (bloodSugarReadings.size() == 0) {
+                throw new ServersideOpException("No readings available");
+            } else {
+                return bloodSugarReadings;
+            }
+        } catch (ServersideOpException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(path = "/blood-sugars/one-week", method = RequestMethod.GET)
+    public List<BloodSugar> getBloodSugarReadingsOneWeek(Principal principal) {
+
+        try {
+            List<BloodSugar> bloodSugarReadings = bloodSugarDao.getBloodSugarReadingsOneWeek(userDao.findIdByUsername(principal.getName()));
+            if (bloodSugarReadings.size() == 0) {
+                throw new ServersideOpException("No readings available");
+            } else {
+                return bloodSugarReadings;
+            }
+        } catch (ServersideOpException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(path = "/blood-sugars/three-days", method = RequestMethod.GET)
+    public List<BloodSugar> getBloodSugarReadingsThreeDays(Principal principal) {
+
+        try {
+            List<BloodSugar> bloodSugarReadings = bloodSugarDao.getBloodSugarReadingsThreeDays(userDao.findIdByUsername(principal.getName()));
+            if (bloodSugarReadings.size() == 0) {
+                throw new ServersideOpException("No readings available");
+            } else {
+                return bloodSugarReadings;
+            }
+        } catch (ServersideOpException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(path = "/blood-sugars/one-day", method = RequestMethod.GET)
+    public List<BloodSugar> getBloodSugarReadingsOneDay(Principal principal) {
+
+        try {
+            List<BloodSugar> bloodSugarReadings = bloodSugarDao.getBloodSugarReadingsOneDay(userDao.findIdByUsername(principal.getName()));
+            if (bloodSugarReadings.size() == 0) {
+                throw new ServersideOpException("No readings available");
+            } else {
+                return bloodSugarReadings;
+            }
+        } catch (ServersideOpException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @RequestMapping(path = "/blood-sugars", method = RequestMethod.GET)
     public List<BloodSugar> getBloodSugarReadings(Principal principal) {
 
