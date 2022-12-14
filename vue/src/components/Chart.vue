@@ -58,8 +58,9 @@ export default {
         },
         xaxis: {
           min: 1,
-          max: 200,
+          max: "",
           tickAmount: 5,
+          title: { text: "Reading Number" },
         },
         yaxis: {
           min: 30,
@@ -90,7 +91,7 @@ export default {
       },
       series: [
         {
-          name: "series-1",
+          name: "Blood-Sugar Log",
           data: [],
         },
       ],
@@ -120,6 +121,7 @@ export default {
         console.log(response.data.length);
         this.options.annotations.yaxis[0].y = response.data[0].targetLow;
         this.options.annotations.yaxis[0].y2 = response.data[0].targetHigh;
+        this.options.annotations.xaxis.max = response.data.length;
         for (var i = 0; i < response.data.length; i++) {
           this.series[0].data.push(response.data[i].inputLevel);
           this.newData = response.data;
