@@ -96,7 +96,6 @@ export default {
       ],
     };
   },
-
   methods: {
     updateChart(response) {
       response = this.series[0].data;
@@ -114,7 +113,6 @@ export default {
       }
     },
   },
-
   created() {
     HistoryService.getUserHistoryOneMonth()
       .then((response) => {

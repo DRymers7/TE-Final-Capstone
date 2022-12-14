@@ -11,6 +11,7 @@ import SplashPage from "../views/SplashPage";
 import Dashboard from "../views/Dashboard";
 import DashboardHome from "../components/DashboardHome.vue";
 import Webcam from "../components/Webcam";
+import Carbs from "../components/Carbs";
 
 Vue.use(Router);
 
@@ -86,6 +87,11 @@ const router = new Router({
       path: "/settings",
       name: "settings",
       component: Webcam,
+    },
+    {
+      path: "/carb-tracker",
+      name: "carb-tracker",
+      component: Carbs
     },
     {
       path: "*",
