@@ -63,12 +63,13 @@ export default {
 <style>
 div#camcapture div.command button {
   margin: 10px;
-  width: 25%;
+  width: 22%;
   height: 40px;
   font-size: 1.2rem;
   border-radius: 20px;
   border: 2px solid rgb(44, 44, 44);
-  color: gray
+  color: gray;
+  background-color: aliceblue;
 }
 
 div#camcapture div.command button:hover {

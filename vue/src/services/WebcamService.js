@@ -4,5 +4,6 @@ export default {
   postNewImage(imageData) {
     return axios.post("/userdata", imageData);
   }
+
 }
  
