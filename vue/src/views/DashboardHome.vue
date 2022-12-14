@@ -1,19 +1,19 @@
 <template>
-  
-<div>
+  <div>
     <DashboardHome />
-</div>
+    <Chart />
+  </div>
 </template>
 
 <script>
-import DashboardHome from "../components/DashboardHome.vue"
+import DashboardHome from "../components/DashboardHome";
+import Chart from "../components/Chart";
 export default {
-    components: {
-        DashboardHome
-    }
-}
+  components: {
+    DashboardHome,
+    Chart,
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

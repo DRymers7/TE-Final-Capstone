@@ -1,91 +1,95 @@
 <template>
-<div id="table-container-carbs">
+  <div id="table-container">
     <div class="table-title">
-        <h3>{{tableName}}</h3>
+      <h3>{{ tableName }}</h3>
     </div>
     <table class="styled-table">
-        <thead>
-            <tr>
-                <th>Meal</th>
-                <th>Carbs</th>
-            </tr>
-        </thead>
-        <tbody v-for="meal in meals" :key="meal.mealId">
-            <td>{{meal.food}}</td>
-            <td>{{meal.carbs}}</td>
-        </tbody>
-            <tr>
-                <td>Total Carbs</td>
-                <td>{{getTotalCarbs()}}</td>
-            </tr>
+      <thead>
+        <tr>
+          <th>Meal</th>
+          <th>Carbs</th>
+        </tr>
+      </thead>
+      <tbody v-for="meal in meals" :key="meal.mealId">
+        <td>{{ meal.food }}</td>
+        <td>{{ meal.carbs }}</td>
+      </tbody>
+      <tr>
+        <td>Total Carbs</td>
+        <td>{{ getTotalCarbs() }}</td>
+      </tr>
     </table>
+
     <div id="add_button" tabindex="0">
-        <input type="text" v-model="searchQuery" placeholder="What did you eat?" />
-        <button id="addMeal" type="submit" v-on:click.prevent="getCarbCount()">Add Meal</button>
+      <input
+        type="text"
+        v-model="searchQuery"
+        placeholder="What did you eat?"
+      />
+      <button id="addMeal" type="submit" v-on:click.prevent="getCarbCount()">
+        Add Meal
+      </button>
     </div>
-
-</div>
+  </div>
 </template>
-    
+
 <script>
-import MealService from '../services/MealService.js'
+import MealService from "../services/MealService.js";
 export default {
-    tableName: 'Carbs Tracker',
-    data() {
-        return {
-            meal: {
-                mealId: '',
-                carbs: '',
-                food: '',
-                glycemicIndex: '',
-                mealTime: ''
-
-            },
-            totalCarbs: 0,
-            totalMeals: 0,
-            averageGI: 0,
-            meals: [],
-            searchQuery: ''
-        }
+  tableName: "Carbs Tracker",
+  data() {
+    return {
+      meal: {
+        mealId: "",
+        carbs: "",
+        food: "",
+        glycemicIndex: "",
+        mealTime: "",
+      },
+      totalCarbs: 0,
+      totalMeals: 0,
+      averageGI: 0,
+      meals: [],
+      searchQuery: "",
+    };
+  },
+  methods: {
+    getCarbCount() {
+      MealService.getCarbCount(this.searchQuery)
+        .then((response) => {
+          this.meals = response.data;
+          this.resetQuery();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
-    methods: {
-        getCarbCount() {
-            MealService.getCarbCount(this.searchQuery)
-                .then((response) => {
-                    this.meals = response.data
-                    this.resetQuery();
-                }).catch((error) => {
-                    console.log(error)
-                })
-        },
-        getTotalCarbs() {
-            let totalCarbs = 0
-            this.meals.forEach(meal => {
-                totalCarbs += meal.carbs
-            })
-            return totalCarbs
-        },
-        resetQuery() {
-            this.searchQuery = ''
-        }
-        
+    getTotalCarbs() {
+      let totalCarbs = 0;
+      this.meals.forEach((meal) => {
+        totalCarbs += meal.carbs;
+      });
+      return totalCarbs;
     },
-    created() {
-        MealService.getUserMeals()
-            .then((response) => {
-                this.meals = response.data
-            }).catch((error) => {
-                console.log(error);
-            })
-            console.log(this.meals);
-            
+    resetQuery() {
+      this.searchQuery = "";
     },
-
-}
+  },
+  created() {
+    MealService.getUserMeals()
+      .then((response) => {
+        this.meals = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    console.log(this.meals);
+  },
+};
 </script>
-    
+
 <style>
-/* #table-container-carbs {
+/* #table-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -147,5 +151,4 @@ button {
     cursor: pointer;
     width: 100%;
 } */
-
 </style>
