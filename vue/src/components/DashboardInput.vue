@@ -232,12 +232,11 @@ export default {
         if (currentSugar > mostRecentReading.targetHigh || currentSugar < mostRecentReading.targetLow) {
           alert("Your blood sugar has exceeded your target thresholds. Your emergency contacts have been notified. Please take a correctional dose immediately or eat a snack.")
           this.sendEmailEmergency()
+        } else {
+          alert("Your blood sugar is within 20% of your target range. Please plan on a correctional dose or snack.");
+          ProfileService.getUserData()
+          this.sendEmail(); // Uncomment when we want to present
         }
-        alert(
-          "Your blood sugar is within 20% of your target range. Please plan on a correctional dose or snack."
-        );
-        ProfileService.getUserData()
-        this.sendEmail(); // Uncomment when we want to present
 
       }
     },
