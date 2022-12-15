@@ -5,7 +5,7 @@
 //import com.fasterxml.jackson.databind.SerializerProvider;
 //import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 //import com.techelevator.model.ModelClasses.Azure.Inputs;
-//import com.techelevator.model.ModelClasses.Azure.UserInfoPrediction;
+//import com.techelevator.model.ModelClasses.Azure.trash.UserInfoPrediction;
 //import com.techelevator.model.ModelClasses.Azure.data;
 //
 //import java.io.IOException;

@@ -1,11 +1,6 @@
 package com.techelevator.services;
 
-import com.techelevator.model.ModelClasses.Azure.Prediction;
-import com.techelevator.model.ModelClasses.Azure.UserInfoObject;
-import com.techelevator.model.ModelClasses.Azure.UserInfoPrediction;
-import com.techelevator.model.ModelClasses.Azure.data;
-
-import java.util.List;
+import com.techelevator.model.ModelClasses.Azure.*;
 
 public class MLModelHelper {
 
@@ -13,23 +8,34 @@ public class MLModelHelper {
 
     public MLModelHelper() {}
 
-    public double returnUserDataPrediction(UserInfoPrediction userInformation) {
-//        Prediction userPrediction = mlModelService.getUserPrediction(userInformation);
-//        System.out.println("CHECK");
-//        return extractUserPrediction(userPrediction);
-            return 0.0;
+    public double returnUserBloodSugarPredictionFromAzure(BLOB blob) {
+        UserInfoObject userInfoObject = buildUserInfoObject(blob);
+        Prediction prediction = mlModelService.getUserPredictionAzure(userInfoObject);
+        return prediction.getResults().get(0);
     }
 
-    public double returnUserBloodSugarPredictionFromAzure(UserInfoObject data) {
-        Prediction prediction = mlModelService.getUserPredictionAzure(data);
-        System.out.println("CHECK");
-        System.out.println("WHAT IS IN THE VAR");
-        return prediction.getPrediction().get(0);
+    private UserInfoObject buildUserInfoObject(BLOB blob) {
+        UserInfoObject userInfoObject = new UserInfoObject();
+        userInfoObject.setInputs(buildInputs(blob));
+        userInfoObject.setGlobalParameters(0);
+        return userInfoObject;
     }
 
-
-
-    private int scaleUserPrediction(int userPrediction) {
-        return 0;
+    private Inputs buildInputs(BLOB blob) {
+        Inputs inputs = new Inputs();
+        data data = buildData(blob);
+        data[] dataArr = new data[]{data};
+        inputs.setData(dataArr);
+        return inputs;
     }
+
+    private data buildData(BLOB blob) {
+        data data = new data();
+        data.setInsulin(blob.getDoseUnits());
+        data.setBMI(blob.getBmi());
+        data.setAge(blob.getUserAge());
+        data.setOutcome(blob.getDiabetesType());
+        return data;
+    }
+
 }
