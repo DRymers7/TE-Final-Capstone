@@ -69,6 +69,19 @@
             </div> -->
           </div>
         </form>
+        <form id="prediction-form" class="readings-form" v-on:submit.prevent="">
+          
+            <div class="actions">
+              <button type="submit" v-on:click="getPrediction()">Predict Blood Sugar</button>
+            </div>
+            <div>
+              <h2>{{predictionData}}</h2>
+            </div>
+            <!-- <div>
+              <button type="submit" v-on:click="getPrediction()">Predict Blood Sugar</button>
+            </div> -->
+
+        </form>
       </div>
     </div>
   </div>
