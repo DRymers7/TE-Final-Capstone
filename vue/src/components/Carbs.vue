@@ -90,7 +90,7 @@ export default {
 </script>
 
 <style>
-/* #table-container {
+ #table-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -102,8 +102,8 @@ export default {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-} */
-/* .styled-table {
+} 
+ .styled-table {
     border-collapse: collapse;
     margin: 25px 0;
     font-size: 0.9em;
@@ -150,5 +150,5 @@ button {
     border: none;
     cursor: pointer;
     width: 100%;
-} */
+} 
 </style>
