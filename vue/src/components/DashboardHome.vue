@@ -62,6 +62,7 @@
       <div class="header">
         <div class="logo">Insulin Hero <span class="logo-det">I H</span></div>
         <div class="user-info">
+          <button v-on:click="getPicture()">Get Image</button>
           <div class="user-name">User</div>
           <svg class="profile" viewBox="-42 0 512 512" fill="currentColor">
             <path
@@ -109,7 +110,6 @@
       <div class="user-box fourth-box">
         <div class="activity card" style="--delay: .2s">
           <div class="title">Previous Blood Sugar Readings</div>
-
           <div class="activity-links"></div>
         </div>
       </div>
@@ -178,6 +178,10 @@ body {
   height: 100%;
   overflow: hidden;
   margin: 0 auto;
+}
+
+.chart {
+  margin: 10px;
 }
 
 .left-side {

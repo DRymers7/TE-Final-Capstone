@@ -139,11 +139,11 @@ div input {
     padding: 10px 0;
     font-size: 16px;
     margin-bottom: 30px;
-    color: rgb(0, 0, 0);
-    background: transparent;
+    background: rgb(156, 156, 156);
     border: none;
     border-bottom: 1px solid #fff;
     outline: none;
+    color: rgb(0, 0, 0);
 }
 button {
     background-color: #84bce2;
