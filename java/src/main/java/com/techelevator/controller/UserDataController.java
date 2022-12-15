@@ -3,6 +3,7 @@ package com.techelevator.controller;
 import com.techelevator.dao.dao.UserDao;
 import com.techelevator.dao.dao.UserDataDao;
 import com.techelevator.model.ModelClasses.BloodSugar;
+import com.techelevator.model.ModelClasses.Image;
 import com.techelevator.model.ModelClasses.UserData;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -37,16 +38,19 @@ public class UserDataController {
     }
 
     @RequestMapping(path = "/userdata", method = RequestMethod.POST)
-    public String postProfileImage(@RequestBody String imageData, Principal principal) {
+    public void postProfileImage(@RequestBody Image imageData, Principal principal) {
         try {
             int userId = userDao.findIdByUsername(principal.getName());
-            byte[] picture = imageData.getBytes(StandardCharsets.UTF_8);
-            return userDataDao.postProfilePicture(userId, picture);
+            userDataDao.postProfilePicture(userId, imageData.getImageData());
         } catch (SQLException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-
     }
 
-
+    @RequestMapping(path = "/userdata/profile-picture", method = RequestMethod.GET)
+    public Image getProfileImage(Principal principal) {
+        int userId = userDao.findIdByUsername(principal.getName());
+        return userDataDao.retrieveProfilePicture(userId);
+    }
+    
 }
