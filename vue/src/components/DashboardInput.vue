@@ -242,7 +242,6 @@ export default {
           ProfileService.getUserData()
           this.sendEmail(); // Uncomment when we want to present
         }
-
       }
     },
     getUserReadings() {
@@ -252,7 +251,6 @@ export default {
         })
         .catch((error) => console.error(error));
     }
-    
   },
     getPrediction() {
       BloodSugarService.getPredictions()
