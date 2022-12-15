@@ -1,6 +1,8 @@
 package com.techelevator.dao.jdbcdao;
 
 import com.techelevator.dao.dao.UserDataDao;
+import com.techelevator.model.ModelClasses.Azure.BLOB;
+import com.techelevator.model.ModelClasses.Azure.UserInfoObject;
 import com.techelevator.model.ModelClasses.UserData;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -50,6 +52,23 @@ public class JdbcUserDataDao implements UserDataDao {
        }
     }
 
+    @Override
+    public BLOB getFacilitatorBlob(int userId) throws SQLException {
+        String sql = "SELECT dose_units, user_age, (weight/POWER(height/100, 2)) AS bmi, diabetes_type from user_data ud " +
+                "JOIN dose_user_data_join dj ON ud.user_id = dj.user_id " +
+                "JOIN dose d ON d.dose_id = dj.dose_id " +
+                "WHERE ud.user_id = ? " +
+                "ORDER BY time_of_dose DESC " +
+                "LIMIT 1";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId);
+        if (rowSet.next()) {
+            return mapRowToBLOB(rowSet);
+        } else {
+            throw new SQLException("CANT FUNCTIO SHUTTING DOQWN");
+        }
+
+    }
+
     private UserData mapRowToUserData(SqlRowSet rowSet) {
         UserData userData = new UserData();
         userData.setUserId(rowSet.getInt("user_id"));
@@ -66,6 +85,15 @@ public class JdbcUserDataDao implements UserDataDao {
         userData.setUsername(rowSet.getString("username"));
 
         return userData;
+    }
+
+    private BLOB mapRowToBLOB(SqlRowSet rowSet) {
+        BLOB blob = new BLOB();
+        blob.setDoseUnits(rowSet.getInt("dose_units"));
+        blob.setUserAge(rowSet.getInt("user_age"));
+        blob.setBmi(rowSet.getDouble("bmi"));
+        blob.setDiabetesType(rowSet.getInt("diabetes_type"));
+        return blob;
     }
 
 }

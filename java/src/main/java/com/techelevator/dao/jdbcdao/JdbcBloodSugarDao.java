@@ -1,17 +1,14 @@
 package com.techelevator.dao.jdbcdao;
 
 import com.techelevator.dao.dao.BloodSugarDao;
-import com.techelevator.exceptions.ServersideOpException;
 import com.techelevator.model.ModelClasses.BloodSugar;
 import org.springframework.jdbc.InvalidResultSetAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
-import java.security.Principal;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +26,94 @@ public class JdbcBloodSugarDao implements BloodSugarDao {
     // create a new blood sugar reading
     // update a blood sugar reading
     // delete a blood sugar reading
+
+
+    @Override
+    public List<BloodSugar> getBloodSugarReadingsOneMonth(int userId){
+        List<BloodSugar> bloodSugars = new ArrayList<>();
+
+        String sql = "SELECT b.blood_sugar_id, target_low, target_high, input_level, last_measurement, bj.blood_sugar_id, user_id " +
+        "FROM blood_sugar b " +
+        "JOIN blood_sugar_user_data_join bj ON b.blood_sugar_id = bj.blood_sugar_id " +
+        "WHERE bj.user_id = ? AND last_measurement > (select CURRENT_DATE - interval '1 month' as month_w_31_days) " +
+        "ORDER BY last_measurement DESC; ";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId);
+
+        while (rowSet.next()) {
+            bloodSugars.add(mapRowToObject(rowSet));
+        }
+        return bloodSugars;
+    }
+
+    @Override
+    public List<BloodSugar> getBloodSugarReadingsTwoWeeks(int userId){
+        List<BloodSugar> bloodSugars = new ArrayList<>();
+
+        String sql = "SELECT b.blood_sugar_id, target_low, target_high, input_level, last_measurement, bj.blood_sugar_id, user_id " +
+                "FROM blood_sugar b " +
+                "JOIN blood_sugar_user_data_join bj ON b.blood_sugar_id = bj.blood_sugar_id " +
+                "WHERE bj.user_id = ? AND last_measurement > (select CURRENT_DATE - interval '2 weeks' as month_w_31_days) " +
+                "ORDER BY last_measurement DESC; ";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId);
+
+        while (rowSet.next()) {
+            bloodSugars.add(mapRowToObject(rowSet));
+        }
+        return bloodSugars;
+    }
+
+    @Override
+    public List<BloodSugar> getBloodSugarReadingsOneWeek(int userId){
+        List<BloodSugar> bloodSugars = new ArrayList<>();
+
+        String sql = "SELECT b.blood_sugar_id, target_low, target_high, input_level, last_measurement, bj.blood_sugar_id, user_id " +
+                "FROM blood_sugar b " +
+                "JOIN blood_sugar_user_data_join bj ON b.blood_sugar_id = bj.blood_sugar_id " +
+                "WHERE bj.user_id = ? AND last_measurement > (select CURRENT_DATE - interval '1 week' as month_w_31_days) " +
+                "ORDER BY last_measurement DESC; ";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId);
+
+        while (rowSet.next()) {
+            bloodSugars.add(mapRowToObject(rowSet));
+        }
+        return bloodSugars;
+    }
+
+    @Override
+    public List<BloodSugar> getBloodSugarReadingsThreeDays(int userId){
+        List<BloodSugar> bloodSugars = new ArrayList<>();
+
+        String sql = "SELECT b.blood_sugar_id, target_low, target_high, input_level, last_measurement, bj.blood_sugar_id, user_id " +
+                "FROM blood_sugar b " +
+                "JOIN blood_sugar_user_data_join bj ON b.blood_sugar_id = bj.blood_sugar_id " +
+                "WHERE bj.user_id = ? AND last_measurement > (select CURRENT_DATE - interval '3 day' as month_w_31_days) " +
+                "ORDER BY last_measurement DESC; ";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId);
+
+        while (rowSet.next()) {
+            bloodSugars.add(mapRowToObject(rowSet));
+        }
+        return bloodSugars;
+    }
+
+    @Override
+    public List<BloodSugar> getBloodSugarReadingsOneDay(int userId){
+        List<BloodSugar> bloodSugars = new ArrayList<>();
+
+        String sql = "SELECT b.blood_sugar_id, target_low, target_high, input_level, last_measurement, bj.blood_sugar_id, user_id " +
+                "FROM blood_sugar b " +
+                "JOIN blood_sugar_user_data_join bj ON b.blood_sugar_id = bj.blood_sugar_id " +
+                "WHERE bj.user_id = ? AND last_measurement > (select CURRENT_DATE - interval '1 day' as month_w_31_days) " +
+                "ORDER BY last_measurement DESC; ";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId);
+
+        while (rowSet.next()) {
+            bloodSugars.add(mapRowToObject(rowSet));
+        }
+        return bloodSugars;
+    }
+
+
 
     @Override
     public List<BloodSugar> getBloodSugarReadings(int userId) {
