@@ -61,6 +61,9 @@
             <div>
               <button type="submit">Get Dose</button>
             </div>
+            <!-- <div>
+              <button type="submit" v-on:click="getPrediction()">Predict Blood Sugar</button>
+            </div> -->
           </div>
         </form>
       </div>
@@ -94,7 +97,6 @@ import DashboardService from "../services/DashboardService";
 import BloodSugarService from "../services/BloodSugarService";
 import ProfileService from "../services/ProfileService";
 import emailjs from "emailjs-com";
-
 export default {
   name: "dashboard",
   data() {
@@ -128,12 +130,10 @@ export default {
         lastMeasurement: "",
       },
       predictionData: "",
-
       Dose: "",
       Readings: [],
       CarbCount: "",
     };
-
   },
   methods: {
     sendEmail() {
@@ -202,11 +202,11 @@ export default {
       // this.findUsersTargetHighAndLow();
       DashboardService.postNewReading(this.Reading).then((response) => {
         if (response.status == 200) {
-          this.getDose() 
+          this.getDose()
           this.getPrediction()
         } else {
           alert("unexpected response returned: ");
-        }  
+        }
       });
     },
     postNewMeal() {
@@ -229,7 +229,6 @@ export default {
       const mostRecentReading = this.Readings[0];
       const currentSugar = this.Reading.inputLevel;
       this.resetForm();
-
       if (
         currentSugar > mostRecentReading.targetHigh * 0.8 ||
         currentSugar < mostRecentReading.targetLow * 1.2
@@ -250,16 +249,17 @@ export default {
           this.Readings = response.data;
         })
         .catch((error) => console.error(error));
-    }
-  },
+    },
     getPrediction() {
       BloodSugarService.getPredictions()
         .then((response) => {
           this.predictionData = response.data;
+          console.log(this.predictionData)
+          console.log("Prediction success!")
         })
         .catch((error) => console.error(error));
-    },
-
+    }
+  },
   created() {
     BloodSugarService.getUserBloodSugarReadings()
       .then((response) => {
