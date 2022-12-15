@@ -108,16 +108,6 @@ export default {
     };
   },
   methods: {
-    updateDataOneDay() {},
-
-    updateDataThreeDays() {},
-
-    updateDataOneWeek() {},
-
-    updateDataTwoWeeks() {},
-
-    updateDataOneMonth() {},
-
     updateChart(response) {
       response = this.series[0].data;
       const newData = this.series[0].data;
@@ -127,6 +117,7 @@ export default {
       for (var i = 0; i < newData.length; i++) {
         this.series[0].data = response.data[i];
       }
+        console.log(this.newData);
     },
   },
   created() {

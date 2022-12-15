@@ -12,7 +12,6 @@ export default {
   getUserBloodSugarTwoWeeks() {
     return axios.get("/blood-sugars/two-weeks");
   },
-
   getUserBloodSugarOneMonth() {
     return axios.get("/blood-sugars/one-month");
   },
