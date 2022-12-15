@@ -14,11 +14,12 @@
           <div class="dashboard-reader-form-element">
             <label for="blood_sugar">Insert Current Blood Sugar: </label>
             <input
-              placeholder="Insert Current Blood Sugar"
+              placeholder="Input Current Level"
               name="blood_sugar_input"
               type="number"
               v-model="Reading.inputLevel"
             />
+            <h2></h2>
             <div class="actions">
               <button type="submit" v-on:click="postNewReading()">
                 Submit
@@ -50,14 +51,16 @@
             <h2></h2>
             <label for="glycemic_index">Glycemic Index: </label>
             <input
-              placeholder=""
+              placeholder="Input Glycemic Index"
               name="glycemic_index_input"
               type="number"
               v-model="Meal.glycemicIndex"
             />
+            <h2></h2>
             <div class="actions">
               <button type="submit" v-on:click="postNewMeal()">Submit</button>
             </div>
+            <h2></h2>
             <div>
               <button type="submit">Get Dose</button>
             </div>
@@ -67,26 +70,6 @@
           </div>
         </form>
       </div>
-    </div>
-    <div class="table">
-      <table>
-        <thead>
-          <tr>
-            <th>Meal</th>
-            <th>Blood Sugar Level</th>
-            <th>Insulin Type</th>
-            <th>Insulin Strength</th>
-            <th>Amount of Insulin Used</th>
-          </tr>
-        </thead>
-        <tr>
-          <td>Apple</td>
-          <td>100</td>
-          <td>Slow-Acting</td>
-          <td>100ul</td>
-          <td>5ml</td>
-        </tr>
-      </table>
     </div>
   </div>
 </template>
@@ -281,9 +264,10 @@ export default {
 table,
 th,
 td {
-  border: 1px solid whitesmoke;
+  border: 2px solid whitesmoke;
   color: whitesmoke;
-  margin-left: 350px;
+  margin-left: 680px;
+  background-color: #181d42;
 }
 .readings-form {
   display: flex;
@@ -297,28 +281,19 @@ td {
   width: 50%;
   max-width: 40rem;
   color: whitesmoke;
-  background-color: #46606b;
-}
-
-button {
-  color: whitesmoke;
-  background-color: #304249;
+  background-image: linear-gradient(#063053, #395873, #5c7c99);
 }
 
 h1 {
-  color: whitesmoke;
-}
-
-h2 {
-  color: whitesmoke;
+  color: #181d42;
 }
 
 .body {
-  background-color: #34464e;
+  background-color: white;
 }
 
 input {
-  background-color: #567583;
+  background-color: transparent;
 }
 
 label {
@@ -326,8 +301,9 @@ label {
 }
 
 button {
-  background-color: #46606b;
+  background-color: #0a3356;
   border-color: whitesmoke;
+  color: whitesmoke;
 }
 
 ::placeholder {

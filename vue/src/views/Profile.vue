@@ -1,6 +1,5 @@
 <template>
   <div class="profile">
-    <h1>Profile Set Up</h1>
 
     <ProfileService />
     <Profile />
