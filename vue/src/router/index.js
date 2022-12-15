@@ -9,7 +9,7 @@ import Profile from "../views/Profile.vue";
 import NotFound from "../views/NotFound";
 import SplashPage from "../views/SplashPage";
 import Dashboard from "../views/Dashboard";
-import DashboardHome from "../components/DashboardHome.vue";
+import DashboardHome from "../views/DashboardHome.vue";
 import Webcam from "../components/Webcam";
 import Carbs from "../components/Carbs";
 

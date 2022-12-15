@@ -76,6 +76,7 @@ export default {
     },
   },
   created() {
+    console.log("AHHAHAHAH")
     MealService.getUserMeals()
       .then((response) => {
         this.meals = response.data;
@@ -101,7 +102,7 @@ export default {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-}
+} */
 .styled-table {
     border-collapse: collapse;
     margin: 25px 0;
@@ -150,5 +151,5 @@ button {
     border: none;
     cursor: pointer;
     width: 100%;
-} */
+}
 </style>
