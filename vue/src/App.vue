@@ -5,7 +5,12 @@
       <router-link
         v-bind:to="{ name: 'logout' }"
         v-if="$store.state.token != ''"
-        >Logout</router-link
+        >Logout |</router-link
+      >
+      <router-link
+        v-bind:to="{ name: 'dashboardHome' }"
+        v-if="$store.state.token != ''"
+        >| Dashboard</router-link
       >
       <nav></nav>
     </div>

@@ -144,7 +144,6 @@ div input {
     outline: none;
 }
 button {
-    background-color: #009879;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
