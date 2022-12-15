@@ -1,19 +1,27 @@
 package com.techelevator.model.ModelClasses.Azure;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonSetter;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Prediction {
+    @JsonAlias("Results")
 
-    private List<Double> Results;
+    private ArrayList<Double> Results;
 
     public Prediction() {}
 
-    public List<Double> getPrediction() {
+    @JsonGetter("Results")
+    public ArrayList<Double> getResults() {
         return Results;
     }
 
-    public void setPrediction(List<Double> Results) {
-        this.Results = Results;
+    @JsonSetter("Results")
+    public void setResults(ArrayList<Double> results) {
+        Results = results;
     }
 
 

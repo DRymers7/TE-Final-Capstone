@@ -1,9 +1,6 @@
 package com.techelevator.services;
 
-import com.techelevator.model.ModelClasses.Azure.Prediction;
-import com.techelevator.model.ModelClasses.Azure.UserInfoObject;
-import com.techelevator.model.ModelClasses.Azure.UserInfoPrediction;
-import com.techelevator.model.ModelClasses.Azure.data;
+import com.techelevator.model.ModelClasses.Azure.*;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -16,11 +13,11 @@ public class MLModelService {
         this.baseApiUrl = baseApiUrl;
     }
 
-    public Prediction getUserPrediction(UserInfoPrediction userInformation) {
+    public Prediction getUserPrediction(UserInfoObject userInformation) {
         String url = baseApiUrl + "/predict";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<UserInfoPrediction> requestEntity = new HttpEntity<UserInfoPrediction>(userInformation, headers);
+        HttpEntity<UserInfoObject> requestEntity = new HttpEntity<UserInfoObject>(userInformation, headers);
         ResponseEntity<Prediction> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, Prediction.class);
         return responseEntity.getBody();
     }
@@ -33,5 +30,6 @@ public class MLModelService {
         ResponseEntity<Prediction> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, Prediction.class);
         return responseEntity.getBody();
     }
+
 
 }
