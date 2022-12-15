@@ -62,6 +62,7 @@
       <div class="header">
         <div class="logo">Insulin Hero <span class="logo-det">I H</span></div>
         <div class="user-info">
+          <button v-on:click="getPicture()">Get Image</button>
           <div class="user-name">User</div>
           <svg class="profile" viewBox="-42 0 512 512" fill="currentColor">
             <path
@@ -109,20 +110,19 @@
       <div class="user-box fourth-box">
         <div class="activity card" style="--delay: .2s">
           <div class="title">Previous Blood Sugar Readings</div>
-
           <div class="activity-links"></div>
         </div>
       </div>
     </div>
-    <Chart />
   </div>
 </template>
 
 <script>
 import BloodSugarService from "../services/BloodSugarService";
-import Chart from "./Chart.vue";
+import WebcamService from "../services/WebcamService";
+
 export default {
-  components: { Chart },
+  components: WebcamService,
   data() {
     return {
       BloodSugar: [],

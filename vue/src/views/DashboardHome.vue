@@ -5,7 +5,6 @@
     </div>
     <div class="chart-wrapper"></div>
     <div class="table-container">
-      <Carbs />
     </div>
   </div>
 </template>
@@ -13,12 +12,10 @@
 <script>
 import DashboardHome from "../components/DashboardHome";
 
-import Carbs from "../components/Carbs";
 export default {
   components: {
     DashboardHome,
 
-    Carbs,
   },
 };
 </script>

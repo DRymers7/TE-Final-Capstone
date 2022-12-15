@@ -172,7 +172,7 @@ export default {
 
       <a
         v-on:click.prevent="login($event)"
-        href="http://localhost:8081/profile"
+        href="http://localhost:8081/home/dashboard"
       >
         <span></span>
         <span></span>
@@ -208,7 +208,7 @@ export default {
             this.$store.commit("SET_AUTH_TOKEN", response.data.token);
             this.$store.commit("SET_USER", response.data.user);
             //login will push to dashboard later
-            this.$router.push("/profile");
+            this.$router.push("/home/dashboard");
           }
         })
         .catch((error) => {
