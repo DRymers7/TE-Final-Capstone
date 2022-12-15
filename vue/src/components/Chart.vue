@@ -92,16 +92,15 @@ export default {
           ],
         },
 
-        // tooltip: {
-        //   x: {
-        //     format: "dd MMM yyyy",
-        //   },
-        // },
+        tooltip: {
+          x: {
+            format: "dd MMM yyyy HH mm ss",
+          },
+        },
       },
       series: [
         {
           name: "Blood-Sugar Log",
-          epochData: [],
           data: [],
         },
       ],
@@ -117,7 +116,7 @@ export default {
       for (var i = 0; i < newData.length; i++) {
         this.series[0].data = response.data[i];
       }
-        console.log(this.newData);
+      console.log(this.newData);
     },
   },
   created() {
@@ -133,13 +132,11 @@ export default {
             response.data[i].lastMeasurement
           );
 
-          var epochArray = "";
+          var x = response.data[i].lastMeasurement.getTime();
+          var y = response.data[i].inputLevel;
+          console.log(x);
 
-          var myEpoch = response.data[i].lastMeasurement.getTime() / 1000.0;
-          console.log(myEpoch);
-          epochArray = myEpoch;
-          this.series[0].data.push(response.data[i].inputLevel);
-          this.series[0].epochData.push(epochArray);
+          this.series[0].data.push([x, y]);
           this.newData = response.data;
         }
 
@@ -153,6 +150,4 @@ export default {
   },
 };
 </script>
-<style>
- 
-</style>
+<style></style>
