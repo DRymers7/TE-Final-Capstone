@@ -1,5 +1,6 @@
 package com.techelevator.services;
 
+import com.techelevator.exceptions.ServersideOpException;
 import com.techelevator.model.ModelClasses.Azure.*;
 
 public class MLModelHelper {
@@ -8,7 +9,7 @@ public class MLModelHelper {
 
     public MLModelHelper() {}
 
-    public double returnUserBloodSugarPredictionFromAzure(BLOB blob) {
+    public double returnUserBloodSugarPredictionFromAzure(BLOB blob) throws ServersideOpException {
         UserInfoObject userInfoObject = buildUserInfoObject(blob);
         Prediction prediction = mlModelService.getUserPredictionAzure(userInfoObject);
         return prediction.getResults().get(0);

@@ -3,6 +3,7 @@ package com.techelevator.dao;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.techelevator.exceptions.ServersideOpException;
 import com.techelevator.model.ModelClasses.Azure.*;
 import com.techelevator.services.MLModelHelper;
 import org.junit.Assert;
@@ -19,7 +20,7 @@ public class MLModelTest {
     }
 
     @Test
-    public void testPrediction() throws JsonProcessingException {
+    public void testPrediction() throws JsonProcessingException, ServersideOpException {
 
         UserInfoObject userInfoObject = new UserInfoObject();
         Inputs inputs = new Inputs();

@@ -39,7 +39,7 @@ public class BloodSugarController {
         try {
             BLOB blob = userDataDao.getFacilitatorBlob(userDao.findIdByUsername(principal.getName()));
             return mlModelHelper.returnUserBloodSugarPredictionFromAzure(blob);
-        } catch (SQLException e) {
+        } catch (SQLException | ServersideOpException e) {
             e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
