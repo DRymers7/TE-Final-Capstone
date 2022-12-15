@@ -18,6 +18,8 @@
       ></video>
       <canvas id="canvas" ref="canvas" width="320" height="240"></canvas>
     </div>
+    <button v-on:click="retrieveProfileImage">Get Image</button>
+    <img v-bind:src="apiImage" alt="">
   </div>
 </template>
 
@@ -29,6 +31,7 @@ export default {
     return {
       videoStream: null,
       imageData: null,
+      apiImage: null,
     };
   },
   methods: {
@@ -56,17 +59,27 @@ export default {
         );
       this.imageData = this.$refs.canvas.toDataURL("image/jpeg");
 
-      console.log(this.imageData);
+      //console.log(this.imageData);
     },
     postNewImage() {
-      WebcamService.postNewImage(this.imageData)
+      const codedImage = btoa(this.imageData);
+      const profileImage = {imageData:codedImage}
+      WebcamService.postNewImage(profileImage)
         .then((response) => {
-          if (response.status == 200) {
-            this.resetForm();
+          if (response.status != 200) {
+            console.log(response.status)
           }
         })
         .catch((error) => console.error(error));
     },
+    retrieveProfileImage() {
+      let encodedImage = null;
+      WebcamService.getPicture().then (response => {
+        encodedImage = response.data
+        this.apiImage = Buffer.from(encodedImage.imageData, 'base64').toString('ascii');
+      }
+      )
+    }
   },
 };
 </script>
