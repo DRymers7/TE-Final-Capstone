@@ -1,10 +1,14 @@
 package com.techelevator.controller;
 
 import com.techelevator.dao.dao.BloodSugarDao;
+import com.techelevator.dao.dao.DoseDao;
 import com.techelevator.dao.dao.UserDao;
+import com.techelevator.dao.dao.UserDataDao;
 import com.techelevator.exceptions.ServersideOpException;
 import com.techelevator.helperclasses.BloodSugarValidationHelper;
+import com.techelevator.model.ModelClasses.Azure.BLOB;
 import com.techelevator.model.ModelClasses.BloodSugar;
+import com.techelevator.services.MLModelHelper;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -20,11 +24,25 @@ public class BloodSugarController {
     private BloodSugarDao bloodSugarDao;
     private UserDao userDao;
     private BloodSugarValidationHelper bloodSugarValidationHelper;
+    private MLModelHelper mlModelHelper = new MLModelHelper();
+    private UserDataDao userDataDao;
 
-    public BloodSugarController(BloodSugarDao bloodSugarDao, UserDao userDao) {
+    public BloodSugarController(BloodSugarDao bloodSugarDao, UserDao userDao, UserDataDao userDataDao) {
         this.bloodSugarDao = bloodSugarDao;
         this.userDao = userDao;
         this.bloodSugarValidationHelper = new BloodSugarValidationHelper(bloodSugarDao);
+        this.userDataDao = userDataDao;
+    }
+
+    @RequestMapping(path = "/predictions", method = RequestMethod.GET)
+    public double getBloodSugarPrediction(Principal principal) {
+        try {
+            BLOB blob = userDataDao.getFacilitatorBlob(userDao.findIdByUsername(principal.getName()));
+            return mlModelHelper.returnUserBloodSugarPredictionFromAzure(blob);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @RequestMapping(path = "/blood-sugars/one-month", method = RequestMethod.GET)

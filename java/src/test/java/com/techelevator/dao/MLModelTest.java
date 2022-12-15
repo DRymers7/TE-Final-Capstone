@@ -32,18 +32,16 @@ public class MLModelTest {
         inputs.setData(dataArr);
         userInfoObject.setInputs(inputs);
 
-//        dataTest dataTest = new dataTest();
-//        valuesTest valuesTest = new valuesTest();
-//        valuesTest.setInsulin(5);
-//        valuesTest.setBMI(30.0);
-//        valuesTest.setAge(38);
-//        valuesTest.setOutcome(1);
-//        valuesTest[] valuesTestsArr = new valuesTest[]{valuesTest};
-//        dataTest.setValuesTest(valuesTestsArr);
-//
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        String jsonString = objectMapper.writeValueAsString(dataTest);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonString = objectMapper.writeValueAsString(userInfoObject);
+        Assert.assertNotEquals(null, jsonString);
 
-        mlModelHelper.returnUserBloodSugarPredictionFromAzure(userInfoObject);
+        BLOB blob = new BLOB();
+        blob.setDoseUnits(5);
+        blob.setUserAge(37);
+        blob.setBmi(30.0);
+        blob.setDiabetesType(1);
+
+        Assert.assertNotNull(mlModelHelper.returnUserBloodSugarPredictionFromAzure(blob));
     }
 }

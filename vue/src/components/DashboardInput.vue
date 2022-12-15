@@ -1,8 +1,9 @@
 <template>
-  <div>
+
+  <div class="body">
     <div id="reading_form">
       <div>
-        <h2>How Much Insulin Do I Need?</h2>
+        <h1>How Much Insulin Do I Need?</h1>
       </div>
       <div>
         <form
@@ -47,7 +48,7 @@
               v-model="Meal.food"
             />
             <h2></h2>
-            <label for="glycemic_index">GlycemicIndex: </label>
+            <label for="glycemic_index">Glycemic Index: </label>
             <input
               placeholder=""
               name="glycemic_index_input"
@@ -93,6 +94,7 @@ import DashboardService from "../services/DashboardService";
 import BloodSugarService from "../services/BloodSugarService";
 import ProfileService from "../services/ProfileService";
 import emailjs from "emailjs-com";
+
 export default {
   name: "dashboard",
   data() {
@@ -125,10 +127,13 @@ export default {
         inputLevel: "",
         lastMeasurement: "",
       },
+      predictionData: "",
+
       Dose: "",
       Readings: [],
       CarbCount: "",
     };
+
   },
   methods: {
     sendEmail() {
@@ -197,11 +202,11 @@ export default {
       // this.findUsersTargetHighAndLow();
       DashboardService.postNewReading(this.Reading).then((response) => {
         if (response.status == 200) {
-          this.getDose();
+          this.getDose() 
+          this.getPrediction()
         } else {
           alert("unexpected response returned: ");
-        }
-        
+        }  
       });
     },
     postNewMeal() {
@@ -249,6 +254,14 @@ export default {
     }
     
   },
+    getPrediction() {
+      BloodSugarService.getPredictions()
+        .then((response) => {
+          this.predictionData = response.data;
+        })
+        .catch((error) => console.error(error));
+    },
+
   created() {
     BloodSugarService.getUserBloodSugarReadings()
       .then((response) => {
@@ -270,7 +283,9 @@ export default {
 table,
 th,
 td {
-  border: 1px solid black;
+  border: 1px solid whitesmoke;
+  color: whitesmoke;
+  margin-left: 350px;
 }
 .readings-form {
   display: flex;
@@ -283,5 +298,43 @@ td {
   text-align: center;
   width: 50%;
   max-width: 40rem;
+  color: whitesmoke;
+  background-color: #46606b;
 }
+
+button {
+  color: whitesmoke;
+  background-color: #304249;
+}
+
+h1 {
+  color: whitesmoke;
+}
+
+h2 {
+  color: whitesmoke;
+}
+
+.body {
+  background-color: #34464e;
+}
+
+input {
+  background-color: #567583;
+}
+
+label {
+  margin-right: 10px;
+}
+
+button {
+  background-color: #46606b;
+  border-color: whitesmoke;
+}
+
+::placeholder {
+  color: whitesmoke;
+}
+
+
 </style>

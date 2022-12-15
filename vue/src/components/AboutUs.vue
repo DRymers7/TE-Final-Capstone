@@ -159,8 +159,6 @@
               <use xlink:href="#user"></use>
             </svg>
             <p>
-              <strong class="counter community-members">1.2</strong
-              ><strong>K+</strong>
             </p>
             <p>Community members taking back control of their lives.</p>
           </li>
@@ -176,8 +174,6 @@
               <use xlink:href="#article"></use>
             </svg>
             <p>
-              <strong class="counter number-of-pages">1.9</strong
-              ><strong>K+</strong>
             </p>
             <p>Lives made easier with smart diabetes tracking.</p>
           </li>
@@ -878,6 +874,10 @@ ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
+}
+
+.counter {
+  color: white;
 }
 
 a {
