@@ -61,6 +61,9 @@
             <div>
               <button type="submit">Get Dose</button>
             </div>
+            <!-- <div>
+              <button type="submit" v-on:click="getPrediction()">Predict Blood Sugar</button>
+            </div> -->
           </div>
         </form>
       </div>
@@ -251,16 +254,18 @@ export default {
           this.Readings = response.data;
         })
         .catch((error) => console.error(error));
-    }
-    
-  },
+    },
     getPrediction() {
       BloodSugarService.getPredictions()
         .then((response) => {
           this.predictionData = response.data;
+          console.log(this.predictionData)
+          console.log("Prediction success!")
         })
         .catch((error) => console.error(error));
-    },
+    }
+    
+  },
 
   created() {
     BloodSugarService.getUserBloodSugarReadings()
