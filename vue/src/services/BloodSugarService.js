@@ -5,7 +5,7 @@ export default {
     return axios.get("/blood-sugars");
   },
 
-  getPrediction() {
-    return axios.get("/predictions")
+  getPredictions() {
+    return axios.get("/predictions");
   }
 };

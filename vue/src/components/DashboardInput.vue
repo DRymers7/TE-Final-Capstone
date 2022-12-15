@@ -94,6 +94,7 @@ import DashboardService from "../services/DashboardService";
 import BloodSugarService from "../services/BloodSugarService";
 import ProfileService from "../services/ProfileService";
 import emailjs from "emailjs-com";
+
 export default {
   name: "dashboard",
   data() {
@@ -126,10 +127,13 @@ export default {
         inputLevel: "",
         lastMeasurement: "",
       },
+      predictionData: "",
+
       Dose: "",
       Readings: [],
       CarbCount: "",
     };
+
   },
   methods: {
     sendEmail() {
@@ -198,11 +202,11 @@ export default {
       // this.findUsersTargetHighAndLow();
       DashboardService.postNewReading(this.Reading).then((response) => {
         if (response.status == 200) {
-          this.getDose();
+          this.getDose() 
+          this.getPrediction()
         } else {
           alert("unexpected response returned: ");
-        }
-        
+        }  
       });
     },
     postNewMeal() {
@@ -250,6 +254,14 @@ export default {
     }
     
   },
+    getPrediction() {
+      BloodSugarService.getPredictions()
+        .then((response) => {
+          this.predictionData = response.data;
+        })
+        .catch((error) => console.error(error));
+    },
+
   created() {
     BloodSugarService.getUserBloodSugarReadings()
       .then((response) => {
