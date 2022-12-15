@@ -4,8 +4,12 @@
       <DashboardHome />
     </div>
     <div class="chart-wrapper"></div>
+
     <div class="table-container">
     </div>
+
+    <div class="table-container"></div>
+
   </div>
 </template>
 
@@ -15,7 +19,6 @@ import DashboardHome from "../components/DashboardHome";
 export default {
   components: {
     DashboardHome,
-
   },
 };
 </script>
@@ -32,6 +35,7 @@ export default {
     "left-side main-container chart-wrapper"
     "left-side main-container table-container";
 }
+
 .left-side {
   grid-area: left-side;
   background: white;
@@ -44,6 +48,11 @@ export default {
 .chart-wrapper {
   grid-area: chart-wrapper;
   background: white;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+    "chart"
+    "Meals";
 }
 
 .table-container {
