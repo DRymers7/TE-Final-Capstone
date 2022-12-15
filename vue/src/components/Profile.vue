@@ -7,6 +7,7 @@
           <label for=""></label>
           <input placeholder="Enter Age" type="number" />
         </div>
+        <h2></h2>
         <div class="actions">
           <button type="submit" v-on:click="setHealth()">Update Profile</button>
         </div>
@@ -90,6 +91,7 @@
           v-model.number="Blood_Sugar.targetHigh"
         />
         <br />
+        <h2></h2>
         <button type="submit" v-on:click.prevent="postNewBloodSugar()">
           Update Blood Sugar
         </button>
@@ -118,7 +120,6 @@ export default {
         emergencyContact1: "",
         emergencyContact2: "",
         username: "",
-        profilePic: ""
       },
       BaseInsulin: {
         insulinId: "",
@@ -219,6 +220,7 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
+  color: whitesmoke;
 }
 h2 {
   display: flex;
@@ -233,13 +235,16 @@ h2 {
   border-radius: 10px;
   padding: 1rem;
   text-align: center;
-  width: 50%;
-  max-width: 40rem;
+  width: 80%;
+  max-width: 80rem;
+  background-image: linear-gradient(#063053, #395873, #5c7c99);
+  color: whitesmoke;
 }
 .profile-form-element {
   display: flex;
   font-weight: bold;
   font-size: 1.5rem;
+  background-image: linear-gradient(#063053, #395873, #5c7c99);
 }
 </style>
 --cadet: #4f6d7aff; --columbia-blue: #c0d6dfff; --alice-blue: #dbe9eeff;

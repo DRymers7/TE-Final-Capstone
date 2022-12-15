@@ -13,8 +13,8 @@
         :srcObject.prop="videoStream"
         autoplay
         playsinline
-        width="320"
-        height="240"
+        width="344"
+        height="264"
       ></video>
       <canvas id="canvas" ref="canvas" width="320" height="240"></canvas>
     </div>
@@ -112,9 +112,15 @@ div#camcapture div.vid canvas {
   padding: 10px;
   border: 2px solid black;
   border-radius: 5px;
+  margin-inline-start: 28%;
 }
 
 div#camcapture canvas#canvas {
   margin-left: 50px;
+}
+
+button {
+  display: flex;
+  align-items: center;
 }
 </style>

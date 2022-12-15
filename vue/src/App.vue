@@ -19,8 +19,11 @@ header {
   align-items: center;
   justify-content: center;
   font-size: 100px;
-  color: #173054;
-  margin-top: 25px;
+  color: #181d42;
+}
+
+a {
+  margin-left: 20px;
 }
 
 body {
