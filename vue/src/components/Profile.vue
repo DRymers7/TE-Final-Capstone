@@ -2,6 +2,7 @@
   <div>
     <h1>Health Setup</h1>
     <div class="profile">
+      <div class="age">
       <form id="health" v-on:submit.prevent="setHealth">
         <div class="profile-baseline-form-element">
           <label for=""></label>
@@ -12,6 +13,7 @@
           <button type="submit" v-on:click="setHealth()">Update Profile</button>
         </div>
       </form>
+      </div>
     </div>
     <div>
       <h2>My Insulin Details</h2>
@@ -72,7 +74,7 @@
       <h2>My Blood Sugar Range</h2>
     </div>
     <form id="blood_sugar" class="profile">
-      <div>
+      <div class = "blood-sugar-range">
         <h2>Target Blood Sugar Range</h2>
         <label for="target_low">Target Low: </label>
         <input
@@ -237,9 +239,37 @@ h2 {
   text-align: center;
   width: 80%;
   max-width: 80rem;
+  background-color: white;
+  color: #181d42;
+}
+
+.age {
   background-image: linear-gradient(#063053, #395873, #5c7c99);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px;
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+  width: 100%;
   color: whitesmoke;
 }
+
+.profile-insulin-form-element {
+  background-image: linear-gradient(#063053, #395873, #5c7c99);
+  color: whitesmoke;
+  border-radius: 10px;
+  width: 500px;
+}
+
+.blood-sugar-range {
+  background-image: linear-gradient(#063053, #395873, #5c7c99);
+  color: whitesmoke;
+  border-radius: 10px;
+  width: 100%;
+}
+
 .profile-form-element {
   display: flex;
   font-weight: bold;

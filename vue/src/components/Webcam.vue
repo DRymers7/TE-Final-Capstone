@@ -18,6 +18,8 @@
       ></video>
       <canvas id="canvas" ref="canvas" width="320" height="240"></canvas>
     </div>
+    <h2></h2>
+    <h2></h2>
     <button v-on:click="retrieveProfileImage">Get Image</button>
     <img v-bind:src="apiImage" alt="">
   </div>
@@ -92,13 +94,19 @@ div#camcapture div.command button {
   font-size: 1.2rem;
   border-radius: 20px;
   border: 2px solid rgb(44, 44, 44);
-  color: gray;
-  background-color: aliceblue;
+  color: white;
+  background-color: #0a3356;
+  padding: 7px;
+
+}
+
+div.command {
+  margin-left: 77px;
 }
 
 div#camcapture div.command button:hover {
   cursor: pointer;
-  background-color: lightgrey;
+  background-color: rgb(5, 19, 48);
   border: 3px solid rgb(2, 2, 63);
   filter: drop-shadow(0 0.25rem 0.25rem rgb(0, 0, 0));
 }
@@ -119,8 +127,8 @@ div#camcapture canvas#canvas {
   margin-left: 50px;
 }
 
-button {
-  display: flex;
-  align-items: center;
+button{
+  margin-left: 20px;
 }
+
 </style>

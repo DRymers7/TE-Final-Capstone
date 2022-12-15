@@ -52,5 +52,5 @@ public class UserDataController {
         int userId = userDao.findIdByUsername(principal.getName());
         return userDataDao.retrieveProfilePicture(userId);
     }
-    
+
 }

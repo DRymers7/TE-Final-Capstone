@@ -90,7 +90,29 @@ export default {
 </script>
 
 <style>
-#table-container {
+/*
+ #table-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+} 
+ .styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+
+.table-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -103,6 +125,7 @@ export default {
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
+
 .styled-table {
   border-collapse: collapse;
   margin: 25px 0;
@@ -144,6 +167,14 @@ div input {
   outline: none;
 }
 button {
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+} 
+
   background-color: #009879;
   color: white;
   padding: 14px 20px;
@@ -151,6 +182,7 @@ button {
   border: none;
   cursor: pointer;
   width: 100%;
-}
+} */
+
 </style>
-*/
+
