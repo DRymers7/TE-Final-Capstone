@@ -3,6 +3,7 @@ package com.techelevator.dao.jdbcdao;
 import com.techelevator.dao.dao.UserDataDao;
 import com.techelevator.model.ModelClasses.Azure.BLOB;
 import com.techelevator.model.ModelClasses.Azure.UserInfoObject;
+import com.techelevator.model.ModelClasses.Image;
 import com.techelevator.model.ModelClasses.UserData;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -25,7 +26,7 @@ public class JdbcUserDataDao implements UserDataDao {
     @Override
     public UserData getUserData(int userId) throws SQLException {
 
-        String sql = "SELECT ud.user_id, a1c, fasting_glucose, diabetes_type, user_age, last_updated, weight, height, activity_level, emergency_contact_1, emergency_contact_2, profile_pic, u.username " +
+        String sql = "SELECT ud.user_id, a1c, fasting_glucose, diabetes_type, user_age, last_updated, weight, height, activity_level, emergency_contact_1, emergency_contact_2, u.username " +
                 "FROM user_data ud " +
                 "JOIN users u ON u.user_id = ud.user_id " +
                 "WHERE ud.user_id = ?";
@@ -39,17 +40,32 @@ public class JdbcUserDataDao implements UserDataDao {
     }
 
     @Override
-    public String postProfilePicture(int userId, byte[] imageData) throws SQLException {
+    public String postProfilePicture(int userId, String imageData) throws SQLException {
 
         String sql = "UPDATE user_data SET profile_pic = ? " +
                      "WHERE user_id = ?";
 
        int success = jdbcTemplate.update(sql, imageData, userId);
        if (success == 1) {
-          return imageData.toString();
+          return imageData;
        } else {
            throw new SQLException("update profile picture failed");
        }
+    }
+
+    @Override
+    public Image retrieveProfilePicture(int userId) {
+        String sql = "SELECT profile_pic " +
+                     "FROM user_data " +
+                     "WHERE user_id = ?";
+        SqlRowSet row = jdbcTemplate.queryForRowSet(sql, userId);
+
+        if (row.next()) {
+            Image newImage = new Image();
+            newImage.setImageData(row.getString("profile_pic"));
+            return newImage;
+        }
+        return null;
     }
 
     @Override
@@ -81,7 +97,6 @@ public class JdbcUserDataDao implements UserDataDao {
         userData.setActivityLevel(rowSet.getString("activity_level"));
         userData.setEmergencyContact1(rowSet.getString("emergency_contact_1"));
         userData.setEmergencyContact2(rowSet.getString("emergency_contact_2"));
-        userData.setProfilePic((byte[]) rowSet.getObject("profile_pic"));
         userData.setUsername(rowSet.getString("username"));
 
         return userData;

@@ -1,50 +1,15 @@
 <template>
   <div class="chart-wrapper">
-    <div class="toolbar">
-      <button
-        id="One-Day"
-        @click="updateData('One-Day')"
-        :class="{ active: selection === 'One-Day' }"
+    <div v-if="!isLoading">
+      <apexchart
+        ref=""
+        width="500"
+        type="line"
+        :options="options"
+        :series="series"
       >
-        1 Day
-      </button>
-      <button
-        id="Three-Days"
-        @click="updateData('Three-Days')"
-        :class="{ active: selection === 'Three-Days' }"
-      >
-        3 Days
-      </button>
-      <button
-        id="One-Week"
-        @click="updateData('One-Week')"
-        :class="{ active: selection === 'One-Week' }"
-      >
-        1 Week
-      </button>
-      <button
-        id="Two-Weeks"
-        @click="updateData('Two-Weeks')"
-        :class="{ active: selection === 'Two-Weeks' }"
-      >
-        2 Weeks
-      </button>
-      <button
-        id="One-Month"
-        @click="updateData('One-Month')"
-        :class="{ active: selection === 'One-Month' }"
-      >
-        1 Month
-      </button>
+      </apexchart>
     </div>
-    <apexchart
-      ref=""
-      width="500"
-      type="line"
-      :options="options"
-      :series="series"
-    >
-    </apexchart>
   </div>
 </template>
 <script>
@@ -52,6 +17,7 @@ import HistoryService from "../services/HistoryService";
 export default {
   data() {
     return {
+      isLoading: false,
       options: {
         chart: {
           id: "vuechart",
@@ -62,7 +28,6 @@ export default {
           type: "datetime",
           min: new Date("16 nov 2022").getTime(),
           max: new Date("16 dec 2022").getTime(),
-          tickAmount: 5,
           title: { text: "" },
         },
         yaxis: {
@@ -92,16 +57,15 @@ export default {
           ],
         },
 
-        // tooltip: {
-        //   x: {
-        //     format: "dd MMM yyyy",
-        //   },
-        // },
+        tooltip: {
+          x: {
+            format: "MMM dd yyyy HH mm ss",
+          },
+        },
       },
       series: [
         {
           name: "Blood-Sugar Log",
-          epochData: [],
           data: [],
         },
       ],
@@ -117,9 +81,24 @@ export default {
       for (var i = 0; i < newData.length; i++) {
         this.series[0].data = response.data[i];
       }
-        console.log(this.newData);
+      console.log(this.newData);
+    },
+
+    resizeWindow() {
+      /**
+       * use this event beacuse apexchart has an issue that when chart disappear because there is no data
+       * chart will not appear again if we get new data until you resize the browser
+       */
+      window.dispatchEvent(new Event("resize"));
     },
   },
+
+  // getUserBloodSugarOneDay(){
+  //   HistoryService.getUserBloodSugarOneDay()
+  // },
+
+  // getUserBloodSugar
+
   created() {
     HistoryService.getUserBloodSugarOneMonth()
       .then((response) => {
@@ -133,26 +112,27 @@ export default {
             response.data[i].lastMeasurement
           );
 
-          var epochArray = "";
+          var x = response.data[i].lastMeasurement.getTime();
+          var y = response.data[i].inputLevel;
+          console.log(x);
 
-          var myEpoch = response.data[i].lastMeasurement.getTime() / 1000.0;
-          console.log(myEpoch);
-          epochArray = myEpoch;
-          this.series[0].data.push(response.data[i].inputLevel);
-          this.series[0].epochData.push(epochArray);
+          this.series[0].data.push([x, y]);
           this.newData = response.data;
         }
 
         console.log(response.data + "this is newData");
         this.updateChart();
         this.series[0].data = response;
+        this.isLoading = false;
         console.log(response);
       })
 
       .catch((error) => console.error(error));
   },
+
+  mounted() {
+    this.resizeWindow();
+  },
 };
 </script>
-<style>
- 
-</style>
+<style></style>
