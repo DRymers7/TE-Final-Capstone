@@ -5,7 +5,7 @@ import Login from "../views/Login.vue";
 import Logout from "../views/Logout.vue";
 import Register from "../views/Register.vue";
 import store from "../store/index";
-import Profile from "../components/Profile";
+import Profile from "../views/Profile.vue";
 import NotFound from "../views/NotFound";
 import SplashPage from "../views/SplashPage";
 import Dashboard from "../views/Dashboard";

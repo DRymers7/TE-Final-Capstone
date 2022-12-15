@@ -1,8 +1,5 @@
 <template>
   <div>
-    <div class="profile-picture">
-        //call profile picture here
-      </div>
     <h1>Health Setup</h1>
     <div class="profile">
       <form id="health" v-on:submit.prevent="setHealth">
@@ -103,6 +100,7 @@
 <script>
 import ProfileService from "../services/ProfileService";
 import InsulinService from "../services/InsulinService";
+
 export default {
   name: "profile",
   data() {

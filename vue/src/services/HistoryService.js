@@ -1,20 +1,21 @@
 import axios from "axios";
 export default {
-    
-  getUserHistoryOneDay() {
-      return axios.get("/average/one-day");
+  getUserBloodSugarOneDay() {
+    return axios.get("/blood-sugars/one-day");
   },
-  getUserHistoryThreeDays() {
-      return axios.get("/average/three-days");
+  getUserBloodSugarThreeDays() {
+    return axios.get("/blood-sugars/three-days");
   },
-  getUserHistoryOneWeek() {
-      return axios.get("/average/one-week");
+  getUserBloodSugarOneWeek() {
+    return axios.get("/blood-sugars/one-week");
   },
-  getUserHistoryTwoWeeks() {
-      return axios.get("/average/two-weeks");
+  getUserBloodSugarTwoWeeks() {
+    return axios.get("/blood-sugars/two-weeks");
+  },
+  getUserBloodSugarOneMonth() {
+    return axios.get("/blood-sugars/one-month");
   },
   getUserHistoryOneMonth() {
-      return axios.get("/average/one-month");
-  }
-
+    return axios.get("/average/one-month");
+  },
 };

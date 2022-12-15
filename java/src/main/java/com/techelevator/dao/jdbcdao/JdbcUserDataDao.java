@@ -42,14 +42,12 @@ public class JdbcUserDataDao implements UserDataDao {
         String sql = "UPDATE user_data SET profile_pic = ? " +
                      "WHERE user_id = ?";
 
-//        int success = jdbcTemplate.update(sql, imageData, userId);
-//        if (success == 1) {
-//            String string = new String(byte[]);
-//            return imageData;
-//        } else {
-//            throw new SQLException("update profile picture failed");
-//        }
-        return null;
+       int success = jdbcTemplate.update(sql, imageData, userId);
+       if (success == 1) {
+          return imageData.toString();
+       } else {
+           throw new SQLException("update profile picture failed");
+       }
     }
 
     private UserData mapRowToUserData(SqlRowSet rowSet) {
@@ -64,7 +62,7 @@ public class JdbcUserDataDao implements UserDataDao {
         userData.setActivityLevel(rowSet.getString("activity_level"));
         userData.setEmergencyContact1(rowSet.getString("emergency_contact_1"));
         userData.setEmergencyContact2(rowSet.getString("emergency_contact_2"));
-        userData.setProfilePic(new byte[]{rowSet.getByte("profile_pic")});
+        userData.setProfilePic((byte[]) rowSet.getObject("profile_pic"));
         userData.setUsername(rowSet.getString("username"));
 
         return userData;

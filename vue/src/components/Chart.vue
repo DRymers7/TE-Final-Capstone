@@ -58,9 +58,10 @@ export default {
         },
         xaxis: {
           type: "datetime",
-          min: "",
-          max: "",
+          min: new Date("16 nov 2022").getTime(),
+          max: new Date("16 dec 2022").getTime(),
           tickAmount: 5,
+          title: { text: "" },
         },
         yaxis: {
           min: 30,
@@ -88,37 +89,55 @@ export default {
             },
           ],
         },
+
+        tooltip: {
+          x: {
+            format: "dd MMM yyyy",
+          },
+        },
       },
       series: [
         {
-          name: "series-1",
+          name: "Blood-Sugar Log",
           data: [],
         },
       ],
     };
   },
   methods: {
-    updateChart() {
+    updateChart(response) {
+      response = this.series[0].data;
       const newData = this.series[0].data;
-
-      console.log(newData);
-      this.series[0].data = [newData];
-      if (isNaN(this.series[0].data)) {
-        console.log("not a number found");
-        console.log(this.newData);
+      console.log(this.series[0].data);
+      console.log(this.series[0].data.length);
+      this.series[0].data = response;
+      for (var i = 0; i < newData.length; i++) {
+        this.series[0].data = response.data[i];
       }
+        console.log(this.newData);
     },
   },
   created() {
-    HistoryService.getUserHistoryOneMonth()
+    HistoryService.getUserBloodSugarOneMonth()
       .then((response) => {
+        console.log(response.data);
+        console.log(response.data.length);
         this.options.annotations.yaxis[0].y = response.data[0].targetLow;
         this.options.annotations.yaxis[0].y2 = response.data[0].targetHigh;
-        this.series[0].data = response.data[0].inputLevel;
-        this.newData = response.data[0];
-        console.log(this.newData.inputLevel);
+        for (var i = 0; i < response.data.length; i++) {
+          this.series[0].data.push(
+            response.data[i].lastMeasurement +
+              ", " +
+              response.data[i].inputLevel
+          );
+          this.newData = response.data;
+        }
+        console.log(response.data + "this is newData");
         this.updateChart();
+        this.series[0].data = response;
+        console.log(response);
       })
+
       .catch((error) => console.error(error));
   },
 };
