@@ -1,6 +1,5 @@
 <template>
   <div>
-      <h1>Hi</h1>
      <img id="profileImage" ref="profileImage" v-if="profilePic" v-bind:src="profileImage" alt=""> 
   </div>
 </template>

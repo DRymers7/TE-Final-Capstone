@@ -193,6 +193,7 @@ body {
   svg {
     width: 24px;
     cursor: pointer;
+    color: whitesmoke;
     & + svg {
       margin-top: 34px;
     }
@@ -201,7 +202,7 @@ body {
     }
     &.active,
     &:hover {
-      color: #4255d4;
+      color: whitesmoke;
     }
   }
 }
@@ -302,6 +303,10 @@ body {
   }
 }
 
+.user-name {
+  color: whitesmoke;
+}
+
 .user-info {
   margin-left: auto;
   display: flex;
@@ -312,6 +317,7 @@ body {
   .profile {
     margin: 0 20px 0 12px;
     width: 18px;
+    color: whitesmoke;
   }
 }
 .button {
