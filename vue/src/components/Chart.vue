@@ -57,6 +57,8 @@ export default {
           id: "vuechart",
         },
         xaxis: {
+          // min: 1,
+          // max: "",
           type: "datetime",
           min: new Date("16 nov 2022").getTime(),
           max: new Date("16 dec 2022").getTime(),
@@ -90,15 +92,16 @@ export default {
           ],
         },
 
-        tooltip: {
-          x: {
-            format: "dd MMM yyyy",
-          },
-        },
+        // tooltip: {
+        //   x: {
+        //     format: "dd MMM yyyy",
+        //   },
+        // },
       },
       series: [
         {
           name: "Blood-Sugar Log",
+          epochData: [],
           data: [],
         },
       ],
@@ -124,11 +127,6 @@ export default {
       for (var i = 0; i < newData.length; i++) {
         this.series[0].data = response.data[i];
       }
-
-      if (isNaN(this.series[0].data)) {
-        console.log("not a number found");
-        console.log(this.newData);
-      }
     },
   },
   created() {
@@ -138,14 +136,22 @@ export default {
         console.log(response.data.length);
         this.options.annotations.yaxis[0].y = response.data[0].targetLow;
         this.options.annotations.yaxis[0].y2 = response.data[0].targetHigh;
+        this.options.xaxis.max = response.data.length;
         for (var i = 0; i < response.data.length; i++) {
-          this.series[0].data.push(
-            response.data[i].lastMeasurement +
-              ", " +
-              response.data[i].inputLevel
+          response.data[i].lastMeasurement = new Date(
+            response.data[i].lastMeasurement
           );
+
+          var epochArray = "";
+
+          var myEpoch = response.data[i].lastMeasurement.getTime() / 1000.0;
+          console.log(myEpoch);
+          epochArray = myEpoch;
+          this.series[0].data.push(response.data[i].inputLevel);
+          this.series[0].epochData.push(epochArray);
           this.newData = response.data;
         }
+
         console.log(response.data + "this is newData");
         this.updateChart();
         this.series[0].data = response;
