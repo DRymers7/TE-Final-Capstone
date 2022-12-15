@@ -3,7 +3,7 @@
     <div v-if="!isLoading">
       <apexchart
         ref=""
-        width="500"
+        width="1000"
         type="line"
         :options="options"
         :series="series"
@@ -135,4 +135,10 @@ export default {
   },
 };
 </script>
-<style></style>
+<style>
+.chart-wrapper {
+  background: transparent;
+  display: flex;
+  justify-content: center;
+}
+</style>

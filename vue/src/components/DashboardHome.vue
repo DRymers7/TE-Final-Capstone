@@ -112,8 +112,6 @@
 
           <div class="activity-links"></div>
         </div>
-        <Chart />
-        <Carbs />
       </div>
     </div>
   </div>
@@ -121,10 +119,8 @@
 
 <script>
 import BloodSugarService from "../services/BloodSugarService";
-import Chart from "./Chart.vue";
-import Carbs from "./Carbs.vue";
 export default {
-  components: { Chart, Carbs },
+  components: {},
   data() {
     return {
       BloodSugar: [],
