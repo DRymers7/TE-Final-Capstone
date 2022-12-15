@@ -44,16 +44,6 @@ export default {
   grid-area: main-container;
 }
 
-.chart-wrapper {
-  grid-area: chart-wrapper;
-  background: white;
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  grid-template-areas:
-    "chart"
-    "Meals";
-}
-
 .table-container {
   grid-area: table-container;
 }
