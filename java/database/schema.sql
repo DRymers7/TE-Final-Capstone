@@ -145,7 +145,7 @@ VALUES (51, 'test food', 300, '2022/12/12 13:11:11');
 INSERT INTO meals (carbs, food, glycemic_index, meal_time)
 VALUES (52, 'test food', 300, '2022/12/12 13:12:11');
 INSERT INTO meals (carbs, food, glycemic_index, meal_time)
-VALUES (53, 'Salad', 301, '2022/11/11 13:13:11');
+VALUES (21, 'Salad', 301, '2022/11/11 13:13:11');
 INSERT INTO meals_user_join (meal_id, user_id) VALUES (1, 1);
 INSERT INTO meals_user_join (meal_id, user_id) VALUES (2, 1);
 INSERT INTO meals_user_join (meal_id, user_id) VALUES (3, 1);
@@ -385,4 +385,3 @@ INSERT INTO dose_user_data_join (dose_id, user_id) VALUES (2, 1);
 INSERT INTO dose_user_data_join (dose_id, user_id) VALUES (3, 1);
 INSERT INTO dose_user_data_join (dose_id, user_id) VALUES (4, 3);
 COMMIT TRANSACTION;
-

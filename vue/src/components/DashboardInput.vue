@@ -1,5 +1,4 @@
 <template>
-
   <div class="body">
     <div id="reading_form">
       <div>
@@ -64,7 +63,8 @@
             <div class="actions">
               <button type="submit" v-on:click="getDose()">Get new Dose</button>
             </div>
-            <h2>{{Dose}}</h2>
+            <h2>{{ Dose.CorrectionalDoseNormal }}</h2>
+
             <!-- <div>
               <button type="submit" v-on:click="getPrediction()">Predict Blood Sugar</button>
             </div> -->
@@ -78,6 +78,12 @@
             <div>
               <h2>{{predictionData}}</h2>
             </div>
+          <div>
+            <h2>{{ predictionData }}</h2>
+          </div>
+          <!-- <div>
+              <button type="submit" v-on:click="getPrediction()">Predict Blood Sugar</button>
+            </div> -->
         </form>
       </div>
     </div>
@@ -108,7 +114,7 @@ export default {
         emergencyContact1: "",
         emergencyContact2: "",
         username: "",
-        profilePic: ""
+        profilePic: "",
       },
       Meal: {
         carbs: "",
@@ -178,26 +184,28 @@ export default {
       ProfileService.getUserData().then((response) => {
         if (response.status == 200) {
           this.userData = response.data;
-          this.sendEmail()
+          this.sendEmail();
         } else {
-          console.log("unexpected response")
+          console.log("unexpected response");
         }
-      })
+      });
     },
     getDose() {
-      DashboardService.getDose().then((response) => {
-        if (response.status == 200) {
-          this.Dose = response.data;
-          console.log(this.Dose);
-        }
-      }).then(this.checkForAlert());
+      DashboardService.getDose()
+        .then((response) => {
+          if (response.status == 200) {
+            this.Dose = response.data;
+            console.log(this.Dose);
+          }
+        })
+        .then(this.checkForAlert());
     },
     postNewReading() {
       // this.findUsersTargetHighAndLow();
       DashboardService.postNewReading(this.Reading).then((response) => {
         if (response.status == 200) {
-          this.getDose()
-          this.getPrediction()
+          this.getDose();
+          this.getPrediction();
         } else {
           alert("unexpected response returned: ");
         }
@@ -227,12 +235,19 @@ export default {
         currentSugar > mostRecentReading.targetHigh * 0.8 ||
         currentSugar < mostRecentReading.targetLow * 1.2
       ) {
-        if (currentSugar > mostRecentReading.targetHigh || currentSugar < mostRecentReading.targetLow) {
-          alert("Your blood sugar has exceeded your target thresholds. Your emergency contacts have been notified. Please take a correctional dose immediately or eat a snack.")
-          this.sendEmailEmergency()
+        if (
+          currentSugar > mostRecentReading.targetHigh ||
+          currentSugar < mostRecentReading.targetLow
+        ) {
+          alert(
+            "Your blood sugar has exceeded your target thresholds. Your emergency contacts have been notified. Please take a correctional dose immediately or eat a snack."
+          );
+          this.sendEmailEmergency();
         } else {
-          alert("Your blood sugar is within 20% of your target range. Please plan on a correctional dose or snack.");
-          ProfileService.getUserData()
+          alert(
+            "Your blood sugar is within 20% of your target range. Please plan on a correctional dose or snack."
+          );
+          ProfileService.getUserData();
           this.sendEmail(); // Uncomment when we want to present
         }
       }
@@ -248,11 +263,11 @@ export default {
       BloodSugarService.getPredictions()
         .then((response) => {
           this.predictionData = response.data;
-          console.log(this.predictionData)
-          console.log("Prediction success!")
+          console.log(this.predictionData);
+          console.log("Prediction success!");
         })
         .catch((error) => console.error(error));
-    }
+    },
   },
   created() {
     BloodSugarService.getUserBloodSugarReadings()
@@ -320,6 +335,4 @@ button {
 ::placeholder {
   color: whitesmoke;
 }
-
-
 </style>
