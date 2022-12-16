@@ -57,11 +57,11 @@
             />
             <h2></h2>
             <div class="actions">
-              <button type="submit" v-on:click="postNewMeal()">Get Dose</button>
+              <button type="submit" v-on:click="postNewMeal()">Submit</button>
             </div>
             <h2></h2>
             <div class="actions">
-              <button type="submit" v-on:click="getDose()">Get new Dose</button>
+              <button type="submit" v-on:click="getDose()">Get New Dose</button>
             </div>
             <h2>{{ Dose.CorrectionalDoseNormal }}</h2>
 
