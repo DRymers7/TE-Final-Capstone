@@ -42,19 +42,19 @@ public class InsulinCalculator {
     // if it is lower than the lower bound we need an alert
     // if it is within the range we need a normal calc
 
-    public Map<String,Integer> calculateUserInsulinDose(int userId) throws SQLException, NullPointerException {
+    public Integer calculateUserInsulinDose(int userId) throws SQLException, NullPointerException {
         Map<String, Integer> dosageKey = new HashMap<>();
         if (determineCorrectionalDose(userId) == 1) {
-             dosageKey.put("CorrectionalDoseHigh", createHighCorrectionalDose(userId));
-             return dosageKey;
+             return createHighCorrectionalDose(userId);
+
         } else if (determineCorrectionalDose(userId) == 2) {
-             dosageKey.put("CorrectionalDoseLow", createLowCorrectionalDose(userId));
-             return dosageKey;
+             return createLowCorrectionalDose(userId);
+
         } else {
             int carbs = getUserCarbs(userId);
             double userRatio = getUserInsulinInfo(userId).getInsulinRatio();
-            dosageKey.put("CorrectionalDoseNormal", (int) Math.ceil(carbs/userRatio));
-            return dosageKey;
+            return (int) Math.ceil(carbs/userRatio);
+
         }
     }
 

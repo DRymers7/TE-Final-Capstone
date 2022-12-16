@@ -36,7 +36,7 @@ public class DosageController {
     }
 
     @RequestMapping(path = "/dose", method = RequestMethod.GET)
-    public Map<String,Integer> getUserInsulinDose(Principal principal) {
+    public Integer getUserInsulinDose(Principal principal) {
         try {
             return insulinCalculator.calculateUserInsulinDose(userDao.findIdByUsername(principal.getName()));
         } catch (NullPointerException | SQLException e) {
