@@ -58,15 +58,9 @@
             />
             <h2></h2>
             <div class="actions">
-              <button type="submit" v-on:click="postNewMeal()">Submit</button>
+              <button type="submit" v-on:click="postNewMeal()">Get Dose</button>
             </div>
             <h2></h2>
-            <div>
-              <button type="submit">Get Dose</button>
-            </div>
-            <!-- <div>
-              <button type="submit" v-on:click="getPrediction()">Predict Blood Sugar</button>
-            </div> -->
           </div>
         </form>
         <form id="prediction-form" class="readings-form" v-on:submit.prevent="">
@@ -77,10 +71,6 @@
             <div>
               <h2>{{predictionData}}</h2>
             </div>
-            <!-- <div>
-              <button type="submit" v-on:click="getPrediction()">Predict Blood Sugar</button>
-            </div> -->
-
         </form>
       </div>
     </div>

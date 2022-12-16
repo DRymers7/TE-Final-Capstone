@@ -62,7 +62,6 @@
       <div class="header">
         <div class="logo">Insulin Hero <span class="logo-det">I H</span></div>
         <div class="user-info">
-          <button v-on:click="getPicture()">Get Image</button>
           <div class="user-name">User</div>
           <svg class="profile" viewBox="-42 0 512 512" fill="currentColor">
             <path
