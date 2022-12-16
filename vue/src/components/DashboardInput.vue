@@ -64,7 +64,7 @@
             <div class="actions">
               <button type="submit" v-on:click="getDose()">Get new Dose</button>
             </div>
-            <h2>{{Dose}}</h2>
+            <h2>{{Dose.correctionalDoseNormal}}</h2>
             <!-- <div>
               <button type="submit" v-on:click="getPrediction()">Predict Blood Sugar</button>
             </div> -->
