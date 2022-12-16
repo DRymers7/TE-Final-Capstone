@@ -61,6 +61,13 @@
               <button type="submit" v-on:click="postNewMeal()">Get Dose</button>
             </div>
             <h2></h2>
+            <div class="actions">
+              <button type="submit" v-on:click="getDose()">Get new Dose</button>
+            </div>
+            <h2>{{Dose}}</h2>
+            <!-- <div>
+              <button type="submit" v-on:click="getPrediction()">Predict Blood Sugar</button>
+            </div> -->
           </div>
         </form>
         <form id="prediction-form" class="readings-form" v-on:submit.prevent="">
@@ -181,6 +188,7 @@ export default {
       DashboardService.getDose().then((response) => {
         if (response.status == 200) {
           this.Dose = response.data;
+          console.log(this.Dose);
         }
       }).then(this.checkForAlert());
     },

@@ -2,23 +2,22 @@
   <div>
     <div id="container">
       <DashboardHome />
+      <Chart />
+      <Carbs />
     </div>
-    <div class="chart-wrapper"></div>
-
-    <div class="table-container">
-    </div>
-
-    <div class="table-container"></div>
-
   </div>
 </template>
 
 <script>
+import Chart from "../components/Chart.vue";
 import DashboardHome from "../components/DashboardHome";
+import Carbs from "../components/Carbs.vue";
 
 export default {
   components: {
     DashboardHome,
+    Carbs,
+    Chart,
   },
 };
 </script>
@@ -43,16 +42,6 @@ export default {
 
 .main-container {
   grid-area: main-container;
-}
-
-.chart-wrapper {
-  grid-area: chart-wrapper;
-  background: white;
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  grid-template-areas:
-    "chart"
-    "Meals";
 }
 
 .table-container {

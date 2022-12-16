@@ -111,10 +111,6 @@
           <div class="title">Previous Blood Sugar Readings</div>
           <div class="activity-links"></div>
         </div>
-        <div class= "chart">
-        <Chart />
-        </div>
-        <Carbs />
       </div>
     </div>
   </div>
@@ -122,12 +118,8 @@
 
 <script>
 import BloodSugarService from "../services/BloodSugarService";
-import Chart from "./Chart.vue";
-import Carbs from "./Carbs.vue";
-
 export default {
-  components: { Chart, Carbs },
-
+  components: {},
   data() {
     return {
       BloodSugar: [],
@@ -187,7 +179,7 @@ body {
   margin: 0 auto;
 }
 
-.chart{
+.chart {
   margin: 10px;
 }
 
