@@ -107,7 +107,7 @@
       <div class="user-box third-box">
         <div class="activity card" style="--delay: .2s">
           <div class="title">
-            Previous Dose = {{ Dose.CorrectionalDoseNormal }}
+            Previous Dose = {{ Dose }}
           </div>
           <div class="activity-links"></div>
         </div>
