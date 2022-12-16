@@ -269,9 +269,10 @@ VALUES (51, 200, 89, '2022/12/15 09:00:11');
 INSERT INTO blood_sugar (target_low, target_high, input_level, last_measurement)
 VALUES (51, 200, 222, '2022/12/15 18:12:18');
 INSERT INTO blood_sugar (target_low, target_high, input_level, last_measurement)
-VALUES (51, 200, 110, '2022/12/16 08:00:11');
+VALUES (51, 200, 110, '2022/11/11 08:00:11');
 INSERT INTO blood_sugar (target_low, target_high, input_level, last_measurement)
-VALUES (51, 200, 200, '2022/12/16 16:12:18');
+VALUES (51, 200, 200, '2022/12/15 16:12:18');
+
 INSERT INTO blood_sugar_user_data_join (blood_sugar_id, user_id) VALUES (1, 3);
 INSERT INTO blood_sugar_user_data_join (blood_sugar_id, user_id) VALUES (2, 3);
 INSERT INTO blood_sugar_user_data_join (blood_sugar_id, user_id) VALUES (3, 3);
