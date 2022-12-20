@@ -63,7 +63,7 @@
             <div class="actions">
               <button type="submit" v-on:click="getDose()">Get new Dose</button>
             </div>
-            <h2>{{ Dose.CorrectionalDoseNormal }}</h2>
+            <h2>{{ Dose }}</h2>
 
             <!-- <div>
               <button type="submit" v-on:click="getPrediction()">Predict Blood Sugar</button>
@@ -137,15 +137,15 @@ export default {
       //will need to substitute values before we post to github, but the values are (service id, template, id, template params and public key)
       emailjs
         .send(
-          "service_nwrb0fr",
-          "template_c6kunah",
+          "EMAIL_JS_EMAILSERVICE",
+          "EMAIL_JS_TEMPLATE",
           {
             from_name: "test",
             // em1: "test",
             user_email: this.userData.username,
             message: "test",
           },
-          "7njRAw8N8MgG_lqIQ"
+          "EMAIL_JS_KEY"
         )
         .then(
           function(response) {
@@ -159,15 +159,15 @@ export default {
     sendEmailEmergency() {
       emailjs
         .send(
-          "service_nwrb0fr",
-          "template_c6kunah",
+          "EMAIL_JS_EMAILSERVICE",
+          "EMAIL_JS_TEMPLATE",
           {
             from_name: "test",
             em1: this.userData.emergencyContact1,
             user_email: this.userData.username,
             message: "test",
           },
-          "7njRAw8N8MgG_lqIQ"
+          "EMAIL_JS_KEY"
         )
         .then(
           function(response) {

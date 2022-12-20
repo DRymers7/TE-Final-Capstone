@@ -9,9 +9,9 @@ import org.springframework.web.client.RestTemplate;
 public class FDAService {
 
     private String baseApiUrl;
-     private String appId = "85ed73ec";
-     private String PUBLIC_KEY = "17b6f9730c4ce8c2392d1489077541e2";
-     private String nutritionType = "logging";
+     private String appId = "NUTRITION_API_ID";
+     private String PUBLIC_KEY = "NUTRITION_API_PUBLICKEY";
+     private String nutritionType = "NUTRITION_API_NUTRITIONTYPE";
     // private String PUBLIC_KEY = "bzXTRbJNlmD7MzEdK1XYXgOzVB8SUGq9tlT73Aku";
     RestTemplate restTemplate = new RestTemplate();;
 

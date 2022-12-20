@@ -32,7 +32,7 @@ public class MLModelService {
 
     public Prediction getUserPredictionAzure(UserInfoObject userInfoObject) throws ServersideOpException {
         try {
-            String url = "http://b9b9e03c-8cd6-4bd8-b114-80fe8fba5269.eastus2.azurecontainer.io/score";
+            String url = "ML_AZURE_URI";
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             HttpEntity<UserInfoObject> requestEntity = new HttpEntity<>(userInfoObject, headers);
