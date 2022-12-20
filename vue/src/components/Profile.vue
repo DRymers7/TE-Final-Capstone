@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div>
+      <img :src="{profilePic}" alt="">
+    </div>
     <h1>Health Setup</h1>
     <div class="profile">
       <div class="age">
@@ -104,6 +107,7 @@
 <script>
 import ProfileService from "../services/ProfileService";
 import InsulinService from "../services/InsulinService";
+import WebcamService from "../services/WebcamService";
 
 export default {
   name: "profile",
@@ -152,6 +156,7 @@ export default {
       },
       insulinId: 0,
       brandNames: "",
+      profilePic: null,
     };
   },
   methods: {
@@ -204,6 +209,14 @@ export default {
       })
       .catch((error) => console.error(error));
   },
+  beforeMount() {
+    let encodedImage = null;
+      WebcamService.getPicture().then (response => {
+        encodedImage = response.data
+        this.apiImage = Buffer.from(encodedImage.imageData, 'base64').toString('ascii');
+      }
+      )
+  }
 };
 </script>
 <style>
