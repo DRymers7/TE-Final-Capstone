@@ -42,7 +42,9 @@ Diabetes is an affliction that has profoundly negative impacts on many people ar
 
 
 ## Screenshots
-Stay tuned! 
+
+![ml readings](/screenshots/mlModelReadings.png)
+![graph](/screenshots/graphAndCarbCount.png)
 <!-- ![Example screenshot](./img/screenshot.png) -->
 <!-- If you have screenshots you'd like to share, include them here. -->
 
